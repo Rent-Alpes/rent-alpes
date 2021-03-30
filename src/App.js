@@ -36,7 +36,7 @@ function App() {
         )}
         {user ? (
           <Button variant="contained" color="primary" onClick={handleLogOut}>
-            LOGUOT
+            LOGOUT
           </Button>
         ) : (
           <Button variant="contained" color="primary" onClick={authWithGoogle}>
