@@ -16,6 +16,10 @@ function App() {
     firebase.auth().signInWithPopup(provider);
   };
 
+  const handleLogOut = () => {
+    firebase.auth().signOut();
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -30,9 +34,15 @@ function App() {
             <p>{user.displayName}</p>
           </>
         )}
-        <Button variant="contained" color="primary" onClick={authWithGoogle}>
-          LOGIN
-        </Button>
+        {user ? (
+          <Button variant="contained" color="primary" onClick={handleLogOut}>
+            LOGUOT
+          </Button>
+        ) : (
+          <Button variant="contained" color="primary" onClick={authWithGoogle}>
+            LOGIN
+          </Button>
+        )}
       </header>
     </div>
   );
