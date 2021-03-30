@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { app } from "./firebase";
-import { Button } from "@material-ui/core";
 import firebase from "firebase";
 
 function App() {
@@ -35,13 +34,13 @@ function App() {
           </>
         )}
         {user ? (
-          <Button variant="contained" color="primary" onClick={handleLogOut}>
+          <button type="button" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500 hover:bg-red-600 hover:shadow-lg" onClick={handleLogOut}>
             LOGOUT
-          </Button>
+          </button>
         ) : (
-          <Button variant="contained" color="primary" onClick={authWithGoogle}>
+          <button type="button" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg" onClick={authWithGoogle}>
             LOGIN
-          </Button>
+          </button>
         )}
       </header>
     </div>
