@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { firebaseContext } from '../Firebase'
 
 const Signup = () => {
+
+    const firebase = useContext(firebaseContext);
+
     //Objet contenant toutes les données remplies
     const data = {
         lastName: '',
@@ -10,42 +14,91 @@ const Signup = () => {
         confirmPassword: '',
     }
 
+
     const [loginData, setLoginData] = useState(data);
+    const [errordb, setErrorDB] = useState('');
 
     //Attribution de la value
     const handleChange = e => {
         setLoginData({ ...loginData, [e.target.id]: e.target.value })
     }
 
+    const handleSubmit = e => {
+        e.preventDefault();
+        setErrorDB('');
+        //destructuring
+        const { email, password } = loginData;
+
+        if (errorMsg === "") {
+            firebase.signupUser(email, password)
+                .then(user => {
+                    setLoginData({ ...data });
+
+                })
+                .catch(errordb => {
+                    document.getElementById('spanErrorMessage').innerHTML = ""; //Effacer le message d'erreur si erreur base
+                    setErrorDB(errordb);
+                    setLoginData({ ...data });
+                })
+        }
+
+    }
+
     //destructuring (epeche de voir le loginData)
     const { lastName, firstName, email, password, confirmPassword } = loginData;
 
 
-    // Conditions erreurs 
-    const isLastNameNull = lastName === ''
-        ? <label >Please enter your last name</label> : ""
 
-    const isFirstNameNull = firstName === ''
-        ? <label >Please enter your first name</label> : ""
+    //Gestion Erreurs
+    var errorMsg = "";
+    function verifyData() {
 
-    const isEmailNull = email === ''
-        ? <label >Please enter your first name</label> : ""
+        if (lastName == '' && firstName == '' && email === '' && password === '' && confirmPassword === '') {
+            errorMsg = "Please fill out the form";
+            document.getElementById('spanErrorMessage').innerHTML = errorMsg;
+        }
 
-    const isPasswordNull = password === ''
-        ? <label >Please enter your password</label> : ""
+        else if (lastName == '') {
+            errorMsg = "Please enter your last name";
+            document.getElementById('spanErrorMessage').innerHTML = errorMsg;
+        }
 
-    const isConfirmPasswordNull = confirmPassword === ''
-        ? <label >Please confirm your password</label> : ""
+        else if (firstName == '') {
+            errorMsg = "Please enter your first name";
+            document.getElementById('spanErrorMessage').innerHTML = errorMsg;
+        }
 
-    const isPasswordMatch = password !== confirmPassword
-        ? <label >Passwords do not match</label> : ""
+        else if (email === '') {
+            errorMsg = "Please enter your email";
+            document.getElementById('spanErrorMessage').innerHTML = errorMsg;
+        }
+
+        else if (password === '') {
+            errorMsg = "Please enter your password";
+            document.getElementById('spanErrorMessage').innerHTML = errorMsg;
+        }
+
+        else if (confirmPassword === '') {
+            errorMsg = "Please confirm your password";
+            document.getElementById('spanErrorMessage').innerHTML = errorMsg;
+        }
+
+        else if (password !== confirmPassword) {
+            errorMsg = "Passwords do not match";
+            document.getElementById('spanErrorMessage').innerHTML = errorMsg;
+        }
+
+    }
+
+    const errorMsgDB = errordb !== '' && <label className="red-text">{errordb.message}</label>;
+
 
     return (
         <div className="bg-yellow-500 min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                     <h1 className="mb-8 text-3xl text-center">Sign up</h1>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <input
                             type="text"
                             className="block border border-grey-light w-full p-3 rounded mb-4"
@@ -54,8 +107,6 @@ const Signup = () => {
                             placeholder="Last Name"
                             value={lastName}
                             onChange={handleChange} />
-
-                        {isLastNameNull}
 
                         <input
                             type="text"
@@ -66,8 +117,6 @@ const Signup = () => {
                             value={firstName}
                             onChange={handleChange} />
 
-                        {isFirstNameNull}
-
                         <input
                             type="email"
                             className="block border border-grey-light w-full p-3 rounded mb-4"
@@ -76,8 +125,6 @@ const Signup = () => {
                             placeholder="Email"
                             value={email}
                             onChange={handleChange} />
-
-                        {isEmailNull}
 
                         <input
                             type="password"
@@ -88,8 +135,6 @@ const Signup = () => {
                             value={password}
                             onChange={handleChange} />
 
-                        {isPasswordNull}
-
                         <input
                             type="password"
                             className="block border border-grey-light w-full p-3 rounded mb-4"
@@ -99,10 +144,10 @@ const Signup = () => {
                             value={confirmPassword}
                             onChange={handleChange} />
 
-                        {isConfirmPasswordNull}
-                        {isPasswordMatch}
+                        <p className="red-text"><span id="spanErrorMessage"></span></p>
+                        {errorMsgDB}
 
-                        <button type="button" className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg" >
+                        <button onClick={verifyData} className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg" >
                             SIGN UP
                         </button>
                     </form>
@@ -117,6 +162,7 @@ const Signup = () => {
             </div>
         </div>
     )
+
 }
 
 export default Signup;
