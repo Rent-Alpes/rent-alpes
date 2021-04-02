@@ -16,6 +16,17 @@ function App() {
     firebase.auth().signInWithPopup(provider);
   };
 
+  if (user) {
+    const document = firebase
+      .firestore()
+      .collection("User")
+      .doc(user.uid)
+      .get();
+    console.log(document);
+  }
+
+  //const userInfo = firebase.firestore().collection("User").doc(user.uid);
+
   const handleLogOut = () => {
     firebase.auth().signOut();
   };
