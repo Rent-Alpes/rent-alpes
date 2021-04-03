@@ -34,7 +34,7 @@ const Signup = () => {
             firebase.signupUser(email, password)
                 .then(user => {
                     setLoginData({ ...data });
-
+                    alert("Inscription réussie");
                 })
                 .catch(errordb => {
                     document.getElementById('spanErrorMessage').innerHTML = ""; //Effacer le message d'erreur si erreur base
