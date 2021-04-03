@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { firebaseContext } from '../Firebase'
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
 
@@ -53,17 +54,17 @@ const Signup = () => {
     var errorMsg = "";
     function verifyData() {
 
-        if (lastName == '' && firstName == '' && email === '' && password === '' && confirmPassword === '') {
+        if (lastName === '' && firstName === '' && email === '' && password === '' && confirmPassword === '') {
             errorMsg = "Please fill out the form";
             document.getElementById('spanErrorMessage').innerHTML = errorMsg;
         }
 
-        else if (lastName == '') {
+        else if (lastName === '') {
             errorMsg = "Please enter your last name";
             document.getElementById('spanErrorMessage').innerHTML = errorMsg;
         }
 
-        else if (firstName == '') {
+        else if (firstName === '') {
             errorMsg = "Please enter your first name";
             document.getElementById('spanErrorMessage').innerHTML = errorMsg;
         }
@@ -155,9 +156,9 @@ const Signup = () => {
 
                 <div className="text-grey-dark mt-6">
                     Already have an account?
-                    <a className="no-underline border-b border-blue text-blue pl-1">
+                    <Link to="/login" className="no-underline border-b border-blue text-blue pl-1">
                         Log in
-                    </a>.
+                    </Link>.
                 </div>
             </div>
         </div>
