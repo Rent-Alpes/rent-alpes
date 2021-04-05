@@ -28,11 +28,18 @@ const Signup = () => {
         e.preventDefault();
         setErrorDB('');
         //destructuring
-        const { email, password } = loginData;
+        const { email, password, firstName, lastName } = loginData;
 
         if (errorMsg === "") {
             firebase.signupUser(email, password)
-                .then(user => {
+                .then(authUser => {
+                    return firebase.user(authUser.user.uid).set({
+                        firstName,
+                        lastName,
+                        email,
+                    })
+                })
+                .then(() => {
                     setLoginData({ ...data });
                     alert("Inscription réussie");
                 })
