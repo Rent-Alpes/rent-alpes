@@ -86,9 +86,14 @@ const Login = () => {
 
                             {errorMsgDB}
 
-                            <button className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg" >
+                            <button className="w-full focus:outline-none text-white text-sm mb-2 p-3 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg" >
                                 SIGN UP
                             </button>
+                            <div className="text-grey-dark">
+                                <Link to="/forgetpassword" className="no-underline border-b border-blue text-blue pl-1">
+                                    Forgot Password ?
+                                </Link>
+                            </div>
                         </form>
                     </div>
 

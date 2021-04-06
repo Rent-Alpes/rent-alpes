@@ -2,6 +2,7 @@ import "../../App.css";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Signup from "../Signup/Signup";
 import Login from "../Login/Login";
+import ForgetPassword from "../ForgetPassword/ForgetPassword";
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
       <Switch>
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
+        <Route path="/forgetpassword" component={ForgetPassword} />
 
         {/* PENSER A CREER UN COMPOSANT POUR MAUVAIS PATH */}
       </Switch>
