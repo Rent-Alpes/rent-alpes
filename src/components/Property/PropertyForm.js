@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import InputAutocompleteAdress from "./Address/InputAutocompletteAdress";
 
 const PropertyForm = (props) => {
   const initialPropertyValues = {
@@ -46,7 +47,12 @@ const PropertyForm = (props) => {
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
-
+            <InputAutocompleteAdress
+              label="Address"
+              value={"this.props.query"}
+              onChange={handleInputChange}
+              placeholder="start typing"
+            />
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
