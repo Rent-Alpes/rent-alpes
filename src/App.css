@@ -44,3 +44,51 @@
 .red-text {
   color: red;
 }
+
+.loader {
+	border-top-color: orange;
+	-webkit-animation: spinner 1.5s linear infinite;
+	animation: spinner 1.5s linear infinite;
+
+}
+
+/* LOADER */
+.loader {
+  border: 10px solid grey;
+  border-radius: 50%;
+  border-top: 10px solid orange;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  margin: 40px auto 20px;
+}
+
+.loaderText {
+  text-align: center;
+  color: var(--white-color);
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* END LOADER */
+
+
+
