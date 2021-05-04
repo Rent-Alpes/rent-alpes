@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
 const PropertyForm = (props) => {
   const initialPropertyValues = {
@@ -24,6 +25,10 @@ const PropertyForm = (props) => {
         <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
           <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
           <form id="form" onSubmit={handleSubmit}>
+            <GooglePlacesAutocomplete
+              apiKey="AIzaSyAiAxghKBd9ecolQ7geSKUXCGWgV65Q3Bg"
+              apiOptions={{ language: "fr", region: "fr" }}
+            />
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
