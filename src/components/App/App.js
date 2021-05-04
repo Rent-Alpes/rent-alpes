@@ -12,17 +12,7 @@ function App() {
     console.log(propertyObject);
     await app.firestore().collection("Property").doc().set(propertyObject);
   };
-
-  React.useEffect(() => {
-    getProperty();
-  }, []);
-  const propertyRef = app.firestore().collection("Property");
-  const getProperty = async () => {
-    const querySnapshot = await propertyRef.get();
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, "=>", doc.data());
-    });
-  };
+  
   return (
     <Router>
       <Switch>
@@ -40,3 +30,5 @@ function App() {
 }
 
 export default App;
+
+
