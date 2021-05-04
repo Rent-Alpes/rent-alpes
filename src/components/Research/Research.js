@@ -4,7 +4,7 @@ import { firebaseContext } from '../Firebase';
 
 const Research = () => {
     const firebase = useContext(firebaseContext);
-    firebase.loginUser("david.serra@test.fr","davidtesttest");
+
     console.log(firebase);
     const resarchdata= {
         query:'',
@@ -13,25 +13,24 @@ const Research = () => {
         message:''
     } 
     
-    // fetchSearchResults= (updatePageNo, query) =>{
-    //     firebase.p 
-    //     const searchResult = 
-    // };
     const handleChange = event => {
         const query = event.target.value;
-        this.useState(resarchdata = {
-            query: query,
-            loading: true,
-            message: ''
-        });
         resarchdata.query = query;
-        console.log(resarchdata.query);
+        resarchdata.loading = true;
+        resarchdata.message = "";
+        
+        console.log(query);
     }
+
+    // const handleSubmit =event=>{
+    //     var message = firebase.database().ref
+    // }
+    const{query} = resarchdata.query;
     return(
         <div className="">
             <h2 className="heading">Recherche</h2>
             
-            <input type="text" value={resarchdata.query} name="query" id="search-input" placeholder="Rechercher..." onChange={handleChange} className="border-2 border-black"></input>
+            <input type="text" value={query} name="query" id="search-input" placeholder="Rechercher..." onChange={handleChange} className="border-2 border-black"></input>
             <button className="border-2 border-black">Rechercher</button>
         </div>
     );
