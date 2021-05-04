@@ -4,6 +4,7 @@ import Signup from "../Signup/Signup";
 import Login from "../Login/Login";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import Property from "../Property/PropertyForm";
+import { HereProvider } from "leaflet-geosearch";
 import app from "firebase/app";
 import React from "react";
 
@@ -11,6 +12,19 @@ function App() {
   const addOrEdit = async (propertyObject) => {
     console.log(propertyObject);
     await app.firestore().collection("Property").doc().set(propertyObject);
+  };
+
+  const provider = new HereProvider({
+    params: {
+      apiKey: "eRz09NXRI4hfk_pkqkcZvZ-4DhsJLTEpBCiEfEgGxb8",
+    },
+  });
+
+  const getResult = async (e) => {
+    provider.search({ query: e.value }).then(function (result) {
+      // do something with result;
+      console.log(e);
+    });
   };
 
   React.useEffect(() => {

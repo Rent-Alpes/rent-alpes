@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import InputAutocompleteAdress from "./Address/InputAutocompletteAdress";
+import InputAutocompletteAdress from "./Address/InputAutocompletteAdress";
 
 const PropertyForm = (props) => {
   const initialPropertyValues = {
@@ -10,6 +9,7 @@ const PropertyForm = (props) => {
     city: "",
     country: "",
   };
+
   const [propertyValues, setPropertyValues] = useState(initialPropertyValues);
 
   const handleSubmit = (e) => {
@@ -26,10 +26,6 @@ const PropertyForm = (props) => {
         <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
           <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
           <form id="form" onSubmit={handleSubmit}>
-            <GooglePlacesAutocomplete
-              apiKey="AIzaSyAiAxghKBd9ecolQ7geSKUXCGWgV65Q3Bg"
-              apiOptions={{ language: "fr", region: "fr" }}
-            />
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
@@ -47,12 +43,7 @@ const PropertyForm = (props) => {
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
-            <InputAutocompleteAdress
-              label="Address"
-              value={"this.props.query"}
-              onChange={handleInputChange}
-              placeholder="start typing"
-            />
+            <InputAutocompletteAdress />
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
