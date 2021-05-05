@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { firebaseContext } from '../Firebase';
 import Lougout from '../Logout/Logout';
 import app from 'firebase/app';
+import logo from '../../images/logo.png'
 
 const Login = () => {
 
@@ -57,11 +58,16 @@ const Login = () => {
     const errorMsgDB = errordb !== '' && <label className="red-text">{errordb.message}</label>;
     const lougOutCommponent = user != null && <Lougout />
 
+
     return (
         <div>
             <div className="bg-gray-50 min-h-screen flex flex-col">
+                <nav className="bg-white p-1 fixed w-full z-10 top-0 border flex justify-center " >
+                    <img src={logo} className="object-contain h-20"></img>
+                </nav>
+
                 <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-                    <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+                    <div className="bg-white px-6 py-8 rounded border text-black w-full">
                         <h1 className="mb-8 text-3xl text-center">Login</h1>
                         <form onSubmit={handleSubmit}>
                             <input
@@ -76,7 +82,7 @@ const Login = () => {
 
                             <input
                                 type="password"
-                                className="block border border-grey-light w-full p-3 rounded mb-4"
+                                className="block border border-grey-light w-full p-3 rounded "
                                 name="password"
                                 id="password"
                                 placeholder="Password"
@@ -84,16 +90,17 @@ const Login = () => {
                                 onChange={handleChange}
                             />
 
-                            {errorMsgDB}
-
-                            <button className="w-full focus:outline-none text-white text-sm mb-2 p-3 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg" >
-                                SIGN UP
-                            </button>
-                            <div className="text-grey-dark">
-                                <Link to="/forgetpassword" className="no-underline border-b border-blue text-blue pl-1">
+                            <div className="text-grey-dark left text-right mb-4">
+                                <Link to="/forgetpassword" className="no-underline pl-1 text-xs">
                                     Forgot Password ?
                                 </Link>
                             </div>
+
+                            {errorMsgDB}
+
+                            <button className="w-full focus:outline-none text-white text-sm mb-2 p-3 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg" >
+                                LOGIN
+                            </button>
                         </form>
                     </div>
 

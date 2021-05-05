@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { firebaseContext } from '../Firebase'
 import { Link } from 'react-router-dom';
+import logo from '../../images/logo.png'
 
 const Signup = () => {
 
@@ -103,8 +104,12 @@ const Signup = () => {
 
     return (
         <div className="bg-gray-50 min-h-screen flex flex-col">
+            <nav className="bg-white p-1 fixed w-full z-10 top-0 border flex justify-center " >
+                <img src={logo} className="object-contain h-20"></img>
+            </nav>
+
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-                <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+                <div className="bg-white px-6 py-8 rounded border text-black w-full">
                     <h1 className="mb-8 text-3xl text-center">Sign up</h1>
                     <form onSubmit={handleSubmit}>
                         <input
