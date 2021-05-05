@@ -82,8 +82,6 @@ const Profil = props => {
 
     function deleteUser() {
         var user = firebase.auth.currentUser;
-        var credential;
-
         //delete auth
         user.delete().then(function () {
             console.log("Success deletion");

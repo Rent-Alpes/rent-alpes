@@ -30,6 +30,11 @@ class Firebase {
     signOutUser = () =>
         this.auth.signOut();
 
+    //Mot de passe oublié
+    passwordReset = email =>
+        this.auth.sendPasswordResetEmail(email);
+
+
 
     user = uid => this.db.doc(`Users/${uid}`);
 

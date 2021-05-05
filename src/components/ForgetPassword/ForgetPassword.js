@@ -1,11 +1,30 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { firebaseContext } from '../Firebase';
 
-const ForgetPassword = () => {
+const ForgetPassword = props => {
+    const firebase = useContext(firebaseContext);
 
     const [email, setEmail] = useState("");
+    const [success, setSuccess] = useState(null);
+    const [error, setError] = useState(null);
 
-    const handleSubmit = () => {
+    const handleSubmit = e => {
+        e.preventDefault();
+        firebase.passwordReset(email)
+            .then(() => {
+                setError(null);
+                setSuccess('An email sent to reset your password');
+                setEmail("");
 
+                //Redirection to login 5 seconds
+                setTimeout(() => {
+                    props.history.push('/login');
+                }, 5000)
+            })
+            .catch(error => {
+                setError(error);
+                setEmail("");
+            })
     }
 
     return (
@@ -24,6 +43,9 @@ const ForgetPassword = () => {
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
                             />
+
+                            {success && <label className="green-text">{success}</label>}
+                            {error && <label className="red-text">{error}</label>}
 
                             <button className="w-full focus:outline-none text-white text-sm mb-2 p-3 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg" >
                                 SEND EMAIL

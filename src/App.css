@@ -45,6 +45,10 @@
   color: red;
 }
 
+.green-text {
+  color: #10B981;
+}
+
 .loader {
 	border-top-color: orange;
 	-webkit-animation: spinner 1.5s linear infinite;
