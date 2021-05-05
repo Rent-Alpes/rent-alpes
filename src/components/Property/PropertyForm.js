@@ -18,18 +18,27 @@ const PropertyForm = (props) => {
     traveler: "",
    picture:"",
   };
-
-  /*const onFileChange = (e) => {
+  
+function uploadFiles(){
+  // foreach
+  // var mountainImagesRef = app.storage().ref().child("image/"+file.name);
+  // await mountainImagesRef.put(file);
+  // const imageUrl = await mountainImagesRef.getDownloadURL();
+  //console.log(imageUrl);
+}
+  const onFileChange = async(e) => {
     const file = e.target.files[0];
-    const storageRef = app.storage().ref("Property");
-    const fileRef = storageRef.child(file.name);
-    fileRef.put(file);
-  };*/
+    console.log(file);
+    };
   const [propertyValues, setPropertyValues] = useState(initialPropertyValues);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     props.addOrEditProperty(propertyValues);
+    //recupérer id
+
+    //upload images avec id de la propriété
+    //uploadFiles()
   };
 
   const handleInputChange = (e) => {
@@ -171,7 +180,7 @@ const PropertyForm = (props) => {
                             className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                           >
                   
-                            <input  type="file" name="picture" /* onChange={onFileChange}*/ />
+                            <input multiple type="file" name="picture" accept="image/png,image/jpg,image/jpeg"  onChange={onFileChange} />
                           </label>
                      
                         </div>
