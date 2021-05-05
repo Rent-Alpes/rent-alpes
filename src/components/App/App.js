@@ -9,6 +9,7 @@ import app from "firebase/app";
 import React from "react";
 
 function App() {
+  const [properties, setProperties] = React.useState({});
   const addOrEdit = async (propertyObject) => {
     console.log(propertyObject);
     await app.firestore().collection("Property").doc().set(propertyObject);
@@ -30,11 +31,13 @@ function App() {
   React.useEffect(() => {
     getProperty();
   }, []);
+
   const propertyRef = app.firestore().collection("Property");
+
   const getProperty = async () => {
     const querySnapshot = await propertyRef.get();
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, "=>", doc.data());
+      setProperties(doc.id, "=>", doc.data());
     });
   };
   return (

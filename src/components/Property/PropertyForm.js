@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import InputAutocompletteAdress from "./Address/InputAutocompletteAdress";
 
 const PropertyForm = (props) => {
+  const [address, setAddress] = React.useState([]);
   const initialPropertyValues = {
     name: "",
     address: "",
@@ -15,6 +16,7 @@ const PropertyForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.addOrEditProperty(propertyValues);
+    console.log(address);
   };
 
   const handleInputChange = (e) => {
@@ -35,19 +37,32 @@ const PropertyForm = (props) => {
               />
             </div>
 
+            <InputAutocompletteAdress
+              state={{ address: [address, setAddress] }}
+            />
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
                 name="address"
                 onChange={handleInputChange}
+                value={
+                  address.length !== 0
+                    ? address.raw.address.houseNumber +
+                      " " +
+                      address.raw.address.street
+                    : ""
+                }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
-            <InputAutocompletteAdress />
+
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
                 name="postalCode"
+                value={
+                  address.length !== 0 ? address.raw.address.postalCode : ""
+                }
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -57,6 +72,7 @@ const PropertyForm = (props) => {
               <input
                 type="text"
                 name="city"
+                value={address.length !== 0 ? address.raw.address.city : ""}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -66,6 +82,9 @@ const PropertyForm = (props) => {
               <input
                 type="text"
                 name="country"
+                value={
+                  address.length !== 0 ? address.raw.address.countryName : ""
+                }
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
