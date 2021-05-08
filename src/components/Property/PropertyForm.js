@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import app from "firebase/app";
+import React, { useState,useEffect,useContext } from "react";
+import Firebase, {firebaseContext} from '../Firebase';
+
 
 
 const PropertyForm = (props) => {
+  const firebase = useContext(firebaseContext);
 
 
   const initialPropertyValues = {
@@ -16,9 +18,10 @@ const PropertyForm = (props) => {
     equipments: "",
     room: "",
     traveler: "",
-   picture:"",
+    picture:"",
+    idUser:"",
   };
-  
+  const [user, setUser] = useState(null);
 function uploadFiles(){
   // foreach
   // var mountainImagesRef = app.storage().ref().child("image/"+file.name);
@@ -26,15 +29,34 @@ function uploadFiles(){
   // const imageUrl = await mountainImagesRef.getDownloadURL();
   //console.log(imageUrl);
 }
+
+//var IdUtilisateur=firebase.auth.X;
+//idUser=IdUtilisateur;
+
+useEffect(()=>{
+  firebase.auth.onAuthStateChanged(data=>{
+     setUser(data);
+     
+     
+   })
+     //console.log(firebase.auth.X)
+     
+ })
+
   const onFileChange = async(e) => {
     const file = e.target.files[0];
-    console.log(file);
+    //console.log(file);
     };
   const [propertyValues, setPropertyValues] = useState(initialPropertyValues);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+   // initialPropertyValues.idUser=firebase.auth.X;
+    //console.log(initialPropertyValues.idUser);
+    var user = firebase.auth.currentUser;
+    initialPropertyValues.idUser=user.uid;
     props.addOrEditProperty(propertyValues);
+
     //recupérer id
 
     //upload images avec id de la propriété
@@ -42,7 +64,9 @@ function uploadFiles(){
   };
 
   const handleInputChange = (e) => {
+   
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
+    
 
   };
 
@@ -154,7 +178,7 @@ function uploadFiles(){
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
-
+         
         
             <div>
                     <label className="block text-sm font-medium text-gray-700">Add picture of property</label>

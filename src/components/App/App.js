@@ -4,6 +4,7 @@ import Signup from "../Signup/Signup";
 import Login from "../Login/Login";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import Property from "../Property/PropertyForm";
+import GetDataProperty from "../Property/GetDataProperty";
 import app from "firebase/app";
 import React from "react";
 
@@ -22,7 +23,7 @@ function App() {
         <Route path="/property">
           <Property addOrEditProperty={addOrEdit} />
         </Route>
-
+        <Route path="/readproperty" component={GetDataProperty} />
         {/* PENSER A CREER UN COMPOSANT POUR MAUVAIS PATH */}
       </Switch>
     </Router>
