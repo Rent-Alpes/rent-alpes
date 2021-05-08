@@ -1,0 +1,10 @@
+.bg-home {
+    background-image: url("../../images/home.jpg");
+
+}
+
+.btn-calendar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
