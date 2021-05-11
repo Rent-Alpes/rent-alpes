@@ -15,7 +15,7 @@ export default function SearchInMap() {
         const data = querySnapshot.docs.map((doc) => doc.data());
         setpropertyList(data);
       });
-  }, [propertyList]);
+  }, []);
 
   return (
     <>
@@ -25,12 +25,17 @@ export default function SearchInMap() {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
         {propertyList &&
-          propertyList.map((property) => (
-            <Marker
-              key={"test"}
-              position={[property.Latitude, property.Longitude]}
-            />
-          ))}
+          propertyList.map((property) => {
+            console.log(property);
+            return (
+              property.Longitude && (
+                <Marker
+                  key={property.id}
+                  position={[property.Latitude, property.Longitude]}
+                />
+              )
+            );
+          })}
       </MapContainer>
     </>
   );
