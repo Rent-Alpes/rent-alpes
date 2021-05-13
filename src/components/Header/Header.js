@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import logo from '../../images/logo.png'
+import { Link } from 'react-router-dom';
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
+import { firebaseContext } from '../Firebase';
+import app from 'firebase/app';
 
-
+//Menu
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-
 const Header = () => {
+    const firebase = useContext(firebaseContext);
 
+    const [userSession, setUserSession] = useState(null);
 
+    //Si connecté 
+    useEffect(() => {
+        app.auth().onAuthStateChanged((user) => {
+            setUserSession(user);
+        });
+    }, []);
 
     return (
         <div className="w-full bg-red-900 h-24 bg-contain">
             <nav class="flex  fixed  top-0 items-center justify-between bg-teal pt-3 px-3 w-full">
-                <div class="flex items-center flex-no-shrink text-white mr-6">
-                    <img src={logo} className="object-contain h-20"></img>
+                <div class="flex w-6/12 text-white mr-6" >
+                    <img src={logo} className="object-contain h-28"></img>
                 </div>
 
-                <div class="w-full block flex-grow grid justify-items-stretch">
+                <div class="w-6/12 block flex-grow grid justify-items-stretch">
                     <div className="justify-self-end">
 
                         {/* //////////////////////////// FAVORITES //////////////////////////// */}
@@ -69,35 +79,72 @@ const Header = () => {
                                         leaveFrom="transform opacity-100 scale-100"
                                         leaveTo="transform opacity-0 scale-95"
                                     >
-                                        <Menu.Items static className="origin-top-right absolute right-0 mt-2 w-56 mr-10 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <Menu.Items static className="origin-top-right absolute right-0 mt-2 w-28 mr-10 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
 
                                             <div className="py-1">
-                                                <Menu.Item>
-                                                    {({ active }) => (
-                                                        <a
-                                                            href="#"
-                                                            className={classNames(
-                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                'block px-4 py-2 text-sm'
-                                                            )}
-                                                        >
-                                                            Sign up
-                                                        </a>
-                                                    )}
-                                                </Menu.Item>
-                                                <Menu.Item>
-                                                    {({ active }) => (
-                                                        <a
-                                                            href="#"
-                                                            className={classNames(
-                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                'block px-4 py-2 text-sm'
-                                                            )}
-                                                        >
-                                                            Login
-                                                        </a>
-                                                    )}
-                                                </Menu.Item>
+                                                {!userSession && (
+                                                    <Menu.Item>
+                                                        {({ active }) => (
+                                                            <Link
+                                                                to="/signup"
+                                                                className={classNames(
+                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                    'block px-4 py-2 text-sm'
+                                                                )}
+                                                            >
+                                                                Sign up
+                                                            </Link>
+                                                        )}
+                                                    </Menu.Item>
+                                                )}
+
+                                                {!userSession && (
+                                                    <Menu.Item>
+                                                        {({ active }) => (
+                                                            <Link
+                                                                to="/login"
+                                                                className={classNames(
+                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                    'block px-4 py-2 text-sm'
+                                                                )}
+                                                            >
+                                                                Login
+                                                            </Link>
+                                                        )}
+                                                    </Menu.Item>
+                                                )}
+
+                                                {userSession && (
+                                                    <Menu.Item>
+                                                        {({ active }) => (
+                                                            <Link
+                                                                to="/profil"
+                                                                className={classNames(
+                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                    'block px-4 py-2 text-sm'
+                                                                )}
+                                                            >
+                                                                Profil
+                                                            </Link>
+                                                        )}
+                                                    </Menu.Item>
+                                                )}
+
+                                                {userSession && (
+                                                    <Menu.Item>
+                                                        {({ active }) => (
+                                                            <Link
+                                                                to="/"
+                                                                className={classNames(
+                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                    'block px-4 py-2 text-sm'
+                                                                )}
+                                                            >
+                                                                Disconnect
+                                                            </Link>
+                                                        )}
+                                                    </Menu.Item>
+                                                )}
 
                                             </div>
                                         </Menu.Items>

@@ -11,7 +11,7 @@ const Home = () => {
 
             <div className="mx-auto flex-1 flex items-center justify-center px-2 w-full min-h-screen min-h-screen flex flex-col">
                 <div className="mt-1 relative w-4/12">
-                    <input type="search" className="w-full pl-7 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Search" />
+                    <input type="search" className="w-full pl-7 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white bg-opacity-90" placeholder="Search" />
                     <div className="absolute inset-y-0 right-0 flex">
                         <button className="h-full py-0 px-5 rounded-md focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
