@@ -5,6 +5,7 @@ import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { firebaseContext } from '../Firebase';
 import app from 'firebase/app';
+import Lougout from '../Logout/Logout';
 
 //Menu
 function classNames(...classes) {
@@ -133,15 +134,7 @@ const Header = () => {
                                                 {userSession && (
                                                     <Menu.Item>
                                                         {({ active }) => (
-                                                            <Link
-                                                                to="/"
-                                                                className={classNames(
-                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                    'block px-4 py-2 text-sm'
-                                                                )}
-                                                            >
-                                                                Disconnect
-                                                            </Link>
+                                                            <Lougout />
                                                         )}
                                                     </Menu.Item>
                                                 )}

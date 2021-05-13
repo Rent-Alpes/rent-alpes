@@ -10,14 +10,17 @@ const Lougout = (props) => {
     }
 
     return (
-        <div>
-            <button
-                onClick={deconnectUser}
-                className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-red-500 hover:bg-red-600 hover:shadow-lg"
-            >
-                LOG OUT
-            </button>
-        </div>
+
+        <a
+            onClick={deconnectUser}
+            className="text-gray-700 block px-4 py-2 text-sm hover:bg-red-500 hover:text-white hover:bg-opacity-80 cursor-pointer"
+            id="headlessui-menu-item-8"
+            role="menuitem"
+            tabindex="-2"
+        >
+            Log out
+        </a>
+
     )
 }
 
