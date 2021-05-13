@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { firebaseContext } from '../Firebase';
+import firebaseContext from '../Firebase/context';
 import Lougout from '../Logout/Logout';
 import app from 'firebase/app';
 
