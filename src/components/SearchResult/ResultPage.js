@@ -1,5 +1,4 @@
 import CardItem from "./CardItem";
-import CardProperty from "./CardProperty";
 
 const ResultPage = () => {
   const propertyInfo = {
@@ -22,43 +21,46 @@ const ResultPage = () => {
 
   return (
     <div class="flex flex-wrap overflow-hidden">
-      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3">
+      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/4 xl:my-3 xl:px-3 xl:w-1/4">
         <CardItem
           name={propertyInfo.name}
           city={propertyInfo.city}
           price={propertyInfo.price}
+          bathroom={propertyInfo.bathroom}
+          room={propertyInfo.room}
+          traveler={propertyInfo.traveler}
         />
       </div>
 
-      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3">
+      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/4 xl:my-3 xl:px-3 xl:w-1/4">
         <CardItem
           name={propertyInfo.name}
           city={propertyInfo.city}
           price={propertyInfo.price}
         />
       </div>
-      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3">
+      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/4 xl:my-3 xl:px-3 xl:w-1/4">
         <CardItem
           name={propertyInfo.name}
           city={propertyInfo.city}
           price={propertyInfo.price}
         />
       </div>
-      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3">
+      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/4 xl:my-3 xl:px-3 xl:w-1/4">
         <CardItem
           name={propertyInfo.name}
           city={propertyInfo.city}
           price={propertyInfo.price}
         />
       </div>
-      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3">
+      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/4 xl:my-3 xl:px-3 xl:w-1/4">
         <CardItem
           name={propertyInfo.name}
           city={propertyInfo.city}
           price={propertyInfo.price}
         />
       </div>
-      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3">
+      <div class="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/4 xl:my-3 xl:px-3 xl:w-1/4">
         <CardItem
           name={propertyInfo.name}
           city={propertyInfo.city}

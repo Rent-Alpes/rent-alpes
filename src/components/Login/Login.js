@@ -1,115 +1,119 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import firebaseContext from '../Firebase/context';
-import Lougout from '../Logout/Logout';
-import app from 'firebase/app';
+import React, { useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
+import firebaseContext from "../Firebase/context";
+import Lougout from "../Logout/Logout";
+import app from "firebase/app";
 
 const Login = () => {
+  const firebase = useContext(firebaseContext);
 
-    const firebase = useContext(firebaseContext);
+  //Objet contenant toutes les données remplies
+  const data = {
+    email: "",
+    password: "",
+  };
 
-    //Objet contenant toutes les données remplies
-    const data = {
-        email: '',
-        password: '',
-    }
+  const [loginData, setLoginData] = useState(data);
+  const [errordb, setErrorDB] = useState("");
+  const [user, setUser] = useState();
 
-    const [loginData, setLoginData] = useState(data);
-    const [errordb, setErrorDB] = useState('');
-    const [user, setUser] = useState();
+  //Si connecté
+  useEffect(() => {
+    app.auth().onAuthStateChanged((user) => {
+      setUser(user);
+    });
+  }, []);
 
-    //Si connecté 
-    useEffect(() => {
-        app.auth().onAuthStateChanged((user) => {
-            setUser(user);
-        });
-    }, []);
+  //Attribution de la value
+  const handleChange = (e) => {
+    setLoginData({ ...loginData, [e.target.id]: e.target.value });
+  };
 
-    //Attribution de la value
-    const handleChange = e => {
-        setLoginData({ ...loginData, [e.target.id]: e.target.value })
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-
-    const handleSubmit = e => {
-        e.preventDefault();
-
-        //destructuring
-        const { email, password } = loginData;
-
-        firebase.loginUser(email, password)
-            .then(user => {
-                setLoginData({ ...data });
-                alert("connexion réussie");
-            })
-            .catch(error => {
-                setErrorDB(error);
-                setLoginData({ ...data });
-            })
-
-    }
-
-
-    //destructuring (epeche de voir le loginData)
+    //destructuring
     const { email, password } = loginData;
 
-    //Gestion des erreurs
-    const errorMsgDB = errordb !== '' && <label className="red-text">{errordb.message}</label>;
-    const lougOutCommponent = user != null && <Lougout />
+    firebase
+      .loginUser(email, password)
+      .then((user) => {
+        setLoginData({ ...data });
+        alert("connexion réussie");
+      })
+      .catch((error) => {
+        setErrorDB(error);
+        setLoginData({ ...data });
+      });
+  };
 
-    return (
-        <div>
-            <div className="bg-yellow-500 min-h-screen flex flex-col">
-                <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-                    <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
-                        <h1 className="mb-8 text-3xl text-center">Login</h1>
-                        <form onSubmit={handleSubmit}>
-                            <input
-                                type="email"
-                                className="block border border-grey-light w-full p-3 rounded mb-4"
-                                name="email"
-                                id="email"
-                                placeholder="Email"
-                                value={email}
-                                onChange={handleChange}
-                            />
+  //destructuring (epeche de voir le loginData)
+  const { email, password } = loginData;
 
-                            <input
-                                type="password"
-                                className="block border border-grey-light w-full p-3 rounded mb-4"
-                                name="password"
-                                id="password"
-                                placeholder="Password"
-                                value={password}
-                                onChange={handleChange}
-                            />
+  //Gestion des erreurs
+  const errorMsgDB = errordb !== "" && (
+    <label className="red-text">{errordb.message}</label>
+  );
+  const lougOutCommponent = user != null && <Lougout />;
 
-                            {errorMsgDB}
+  return (
+    <div>
+      <div className="bg-yellow-500 min-h-screen flex flex-col">
+        <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+          <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+            <h1 className="mb-8 text-3xl text-center">Login</h1>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="email"
+                className="block border border-grey-light w-full p-3 rounded mb-4"
+                name="email"
+                id="email"
+                placeholder="Email"
+                value={email}
+                onChange={handleChange}
+              />
 
-                            <button className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg" >
-                                SIGN UP
-                            </button>
-                        </form>
-                    </div>
+              <input
+                type="password"
+                className="block border border-grey-light w-full p-3 rounded mb-4"
+                name="password"
+                id="password"
+                placeholder="Password"
+                value={password}
+                onChange={handleChange}
+              />
 
-                    <div className="text-grey-dark mt-6">
-                        You don't have an account ?
-                        <Link to="/signup" className="no-underline border-b border-blue text-blue pl-1">
-                            Sign up
-                        </Link>
-                    </div>
-                    <br />
+              {errorMsgDB}
 
-                    {user && (
-                        <p style={{ color: "white", fontSize: "large" }}>You are connected with : <span className="red-text"> {user.email} </span> </p>
-                    )}
+              <button className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg">
+                SIGN UP
+              </button>
+            </form>
+          </div>
 
-                    {lougOutCommponent}
+          <div className="text-grey-dark mt-6">
+            You don't have an account ?
+            <Link
+              to="/signup"
+              className="no-underline border-b border-blue text-blue pl-1"
+            >
+              Sign up
+            </Link>
+          </div>
+          <br />
 
-                </div>
-            </div>
+          {user && (
+            <p style={{ color: "white", fontSize: "large" }}>
+              You are connected with :{" "}
+              <span className="red-text"> {user.email} </span>{" "}
+            </p>
+          )}
+
+          {lougOutCommponent}
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
 export default Login;
