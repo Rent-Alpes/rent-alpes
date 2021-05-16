@@ -3,7 +3,7 @@ import  {firebaseContext} from '../Firebase';
 
 
 
-const AddProperty = (props) => {
+const EditProperty = (props) => {
   const firebase = useContext(firebaseContext);
 
   const initialPropertyValues = {
@@ -19,6 +19,9 @@ const AddProperty = (props) => {
     traveler: "",
     picture:"",
     idUser:"",
+    price:"",
+    thumb:"",
+    surface:"",
   };
  // const [user, setUser] = useState(null);
   const [error,setError]=useState("");
@@ -60,7 +63,6 @@ function uploadFiles(id){
     uploadFiles()
   };
   const HandleUpdate = ()=>{
-    
     if(onFileChange){
      
     }else{
@@ -229,4 +231,4 @@ function uploadFiles(id){
   );
 };
 
-export default AddProperty;
+export default EditProperty;
