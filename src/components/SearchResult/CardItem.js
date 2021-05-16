@@ -1,12 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CardImage from "./CardItem/CardImage";
 import CardInfo from "./CardItem/CardInfo";
+import AddFavorites from "./CardItem/AddFavorites";
 
 const CardItem = (props) => {
   return (
     <div className="wrapper antialiased text-gray-900">
-      <div>
-        <CardImage image={props.image} />
+      <div className="relative">
+        <div>
+          <CardImage image={props.image} />
+          <div className="absolute top-0.5 right-0.5">
+            <AddFavorites />
+          </div>
+        </div>
         <CardInfo
           city={props.city}
           name={props.name}
