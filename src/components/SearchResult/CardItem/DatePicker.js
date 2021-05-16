@@ -23,6 +23,10 @@ const DatePicker = () => {
       startDate: moment("15/07/2021", "DD/MM/YYYY"),
       endDate: moment("21/07/2021", "DD/MM/YYYY"),
     },
+    {
+      startDate: moment("15/06/2021", "DD/MM/YYYY"),
+      endDate: moment("21/06/2021", "DD/MM/YYYY"),
+    },
   ];
 
   useEffect(() => {
