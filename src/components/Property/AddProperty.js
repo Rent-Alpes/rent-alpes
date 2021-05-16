@@ -3,9 +3,8 @@ import Firebase, {firebaseContext} from '../Firebase';
 
 
 
-const PropertyForm = (props) => {
+const AddProperty = (props) => {
   const firebase = useContext(firebaseContext);
-
 
   const initialPropertyValues = {
     name: "",
@@ -21,27 +20,25 @@ const PropertyForm = (props) => {
     picture:"",
     idUser:"",
   };
-  const [user, setUser] = useState(null);
-function uploadFiles(){
+ // const [user, setUser] = useState(null);
+  const [error,setError]=useState("");
+
+function uploadFiles(id){
+  
   // foreach
-  // var mountainImagesRef = app.storage().ref().child("image/"+file.name);
+  // var mountainImagesRef = app.storage().ref().child("image/property/"+file.name);
   // await mountainImagesRef.put(file);
-  // const imageUrl = await mountainImagesRef.getDownloadURL();
+ //  const imageUrl = await mountainImagesRef.getDownloadURL();
   //console.log(imageUrl);
 }
 
 //var IdUtilisateur=firebase.auth.X;
 //idUser=IdUtilisateur;
 
-useEffect(()=>{
-  firebase.auth.onAuthStateChanged(data=>{
-     setUser(data);
-     
-     
-   })
+
      //console.log(firebase.auth.X)
      
- })
+
 
   const onFileChange = async(e) => {
     const file = e.target.files[0];
@@ -54,25 +51,30 @@ useEffect(()=>{
    // initialPropertyValues.idUser=firebase.auth.X;
     //console.log(initialPropertyValues.idUser);
     var user = firebase.auth.currentUser;
-    initialPropertyValues.idUser=user.uid;
+    propertyValues.idUser=user.uid;
     props.addOrEditProperty(propertyValues);
 
     //recupérer id
 
     //upload images avec id de la propriété
-    //uploadFiles()
+    uploadFiles()
   };
+  const HandleUpdate = ()=>{
+    if(onFileChange){
+     
+    }else{
+      setError("Error please change an image")
+    }
+
+  }
 
   const handleInputChange = (e) => {
    
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
-    
 
   };
 
   
-
-
   return (
     <>
       <div className="min-h-screen bg-gray-100 p-0 sm:p-12">
@@ -160,13 +162,7 @@ useEffect(()=>{
             </div>
 
             <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="equipments"
-                placeholder="Equipments"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
+    
             </div>
 
             <div className="relative z-0 w-full mb-5">
@@ -210,6 +206,9 @@ useEffect(()=>{
                         </div>
                         
                       </div>
+                      <div style={{height:"100px"}}>
+                        <p style={{color:"red"}}>{error}</p>
+                      </div>
                     </div>
                   </div>
                 
@@ -218,6 +217,7 @@ useEffect(()=>{
               id="button"
               type="submit"
               className="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none"
+              onClick={HandleUpdate}
             >
               Register Property
             </button>
@@ -228,4 +228,4 @@ useEffect(()=>{
   );
 };
 
-export default PropertyForm;
+export default AddProperty;

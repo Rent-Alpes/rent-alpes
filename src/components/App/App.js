@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Signup from "../Signup/Signup";
 import Login from "../Login/Login";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
-import Property from "../Property/PropertyForm";
+import Property from "../Property/AddProperty";
 import GetDataProperty from "../Property/GetDataProperty";
 import app from "firebase/app";
 import React from "react";
@@ -14,16 +14,27 @@ function App() {
     await app.firestore().collection("Property").doc().set(propertyObject);
   };
   
+ /* const getData = async (propertyObject) => {
+    //console.log(propertyObject);
+    //const propertyList = await app.firestore().collection("Property").doc().get().where('IdUser', '==', "GsA2tiwaaYV5CFBxVRYqa4HQIcx1");   
+      // console.log(propertyList);
+       console.log("je suis la");
+    const prop=await app.firestore().collection("Property").doc().get(propertyObject); 
+    console.log(prop);
+  };*/
+
   return (
     <Router>
       <Switch>
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path="/forgetpassword" component={ForgetPassword} />
-        <Route path="/property">
+        <Route path="/addproperty">
           <Property addOrEditProperty={addOrEdit} />
         </Route>
-        <Route path="/readproperty" component={GetDataProperty} />
+        <Route path="/getdataproperty">
+          <GetDataProperty/>
+          </Route> 
         {/* PENSER A CREER UN COMPOSANT POUR MAUVAIS PATH */}
       </Switch>
     </Router>
@@ -31,5 +42,3 @@ function App() {
 }
 
 export default App;
-
-
