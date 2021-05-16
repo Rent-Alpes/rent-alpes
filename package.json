@@ -23,7 +23,6 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "lint": "eslint \"src/**/*.{js, jsx}\"",
     "format": "prettier --write \"src/**/*.{js, jsx}\"",
     "start": "craco start",
     "build": "craco build",
@@ -45,8 +44,6 @@
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.4",
     "autoprefixer": "^9.8.6",
-    "eslint": "^7.18.0",
-    "eslint-config-prettier": "^8.1.0",
     "postcss": "^7.0.35",
     "prettier": "^2.3.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4"
