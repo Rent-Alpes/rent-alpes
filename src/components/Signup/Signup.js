@@ -42,7 +42,6 @@ const Signup = () => {
                 })
                 .then(() => {
                     setLoginData({ ...data });
-                    alert("Inscription réussie");
                 })
                 .catch(errordb => {
                     document.getElementById('spanErrorMessage').innerHTML = ""; //Effacer le message d'erreur si erreur base

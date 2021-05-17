@@ -5,7 +5,6 @@ const Lougout = (props) => {
     const firebase = useContext(firebaseContext);
 
     function deconnectUser() {
-        alert("Deconnexion réussie")
         firebase.signOutUser();
     }
 

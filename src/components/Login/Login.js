@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { firebaseContext } from '../Firebase';
-import Lougout from '../Logout/Logout';
+
 import app from 'firebase/app';
 import logo from '../../images/logo.png'
 
@@ -56,7 +56,6 @@ const Login = (props) => {
 
     //Gestion des erreurs
     const errorMsgDB = errordb !== '' && <label className="red-text">{errordb.message}</label>;
-    const lougOutCommponent = user != null && <Lougout />
 
 
     return (
@@ -113,12 +112,6 @@ const Login = (props) => {
                         </Link>
                     </div>
                     <br />
-
-                    {user && (
-                        <p style={{ color: "white", fontSize: "large" }}>You are connected with : <span className="red-text"> {user.email} </span> </p>
-                    )}
-
-                    {lougOutCommponent}
 
                 </div>
             </div>
