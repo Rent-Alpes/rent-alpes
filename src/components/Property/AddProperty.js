@@ -1,5 +1,7 @@
 import React, { useState,useEffect,useContext } from "react";
-import  {firebaseContext} from '../Firebase';
+import {firebaseContext} from '../Firebase';
+import app from 'firebase/app';
+
 
 
 
@@ -19,8 +21,11 @@ const AddProperty = (props) => {
     traveler: "",
     picture:"",
     idUser:"",
+    price:"",
+    thumb:"",
+    surface:"",
   };
- // const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
   const [error,setError]=useState("");
 
 function uploadFiles(id){
@@ -37,19 +42,25 @@ function uploadFiles(id){
 
 
      //console.log(firebase.auth.X)
-     
+    
+  const onFileChange = (e) => {
 
-
-  const onFileChange = async(e) => {
+    const users = firebase.auth.currentUser;
+    
+    
     const file = e.target.files[0];
-    //console.log(file);
+    initialPropertyValues.picture=app.storage().ref("image/"+users.uid+"/Property").child(file.name);
+    //initialPropertyValues.picture=app.storage().ref("image/property/"+file.name).child(users.uid);
+    initialPropertyValues.picture.put(file);
+    console.log(file);
     };
+
+
   const [propertyValues, setPropertyValues] = useState(initialPropertyValues);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   // initialPropertyValues.idUser=firebase.auth.X;
-    //console.log(initialPropertyValues.idUser);
+ 
     var user = firebase.auth.currentUser;
     propertyValues.idUser=user.uid;
     props.addOrEditProperty(propertyValues);
@@ -61,12 +72,7 @@ function uploadFiles(id){
   };
   const HandleUpdate = ()=>{
     
-    if(onFileChange){
-     
-    }else{
-      setError("Error please change an image")
-    }
-
+  
   }
 
   const handleInputChange = (e) => {
@@ -78,7 +84,7 @@ function uploadFiles(id){
   
   return (
     <>
-      <div className="min-h-screen bg-gray-100 p-0 sm:p-12">
+      <div className="min-h-screen bg-gray-200 p-0 sm:p-12">
         <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
           <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
           <form id="form" onSubmit={handleSubmit}>
@@ -162,9 +168,6 @@ function uploadFiles(id){
               />
             </div>
 
-            <div className="relative z-0 w-full mb-5">
-    
-            </div>
 
             <div className="relative z-0 w-full mb-5">
               <input
@@ -176,6 +179,24 @@ function uploadFiles(id){
               />
             </div>
          
+            <div className="relative z-0 w-full mb-5">
+              <input
+                type="text"
+                name="surface"
+                placeholder="Surface"
+                onChange={handleInputChange}
+                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+              />
+            </div>
+            <div className="relative z-0 w-full mb-5">
+              <input
+                type="text"
+                name="price"
+                placeholder="Price / Night"
+                onChange={handleInputChange}
+                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+              />
+            </div>
         
             <div>
                     <label className="block text-sm font-medium text-gray-700">Add picture of property</label>
@@ -207,9 +228,7 @@ function uploadFiles(id){
                         </div>
                         
                       </div>
-                      <div style={{height:"100px"}}>
-                        <p style={{color:"red"}}>{error}</p>
-                      </div>
+                 
                     </div>
                   </div>
                 
@@ -218,7 +237,7 @@ function uploadFiles(id){
               id="button"
               type="submit"
               className="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none"
-              onClick={HandleUpdate}
+             
             >
               Register Property
             </button>
