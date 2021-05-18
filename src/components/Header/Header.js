@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import logo from '../../images/logo.png'
 import { Link } from 'react-router-dom';
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import app from 'firebase/app';
 import Lougout from '../Logout/Logout';
+import { firebaseContext } from '../Firebase';
 
 //Menu
 function classNames(...classes) {
@@ -13,7 +14,11 @@ function classNames(...classes) {
 
 const Header = () => {
 
+    const firebase = useContext(firebaseContext);
+
     const [userSession, setUserSession] = useState(null);
+    const [userData, setUserData] = useState(null);
+    var admin = false;
 
     //Si connecté 
     useEffect(() => {
@@ -21,7 +26,35 @@ const Header = () => {
             setUserSession(user);
         });
 
+
+        if (!!userSession) {
+            firebase.user(userSession.uid).get()
+                .then(doc => {
+                    if (doc && doc.exists) {
+                        const myData = doc.data();
+                        setUserData(myData);
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        } else {
+            admin = false;
+        }
+
+
+
     }, [userSession]);
+
+
+    function setShowModal() {
+        if (userData != null) {
+            if (userData.isAdmin === true) {
+                admin = true;
+            }
+        }
+    }
+
 
     return (
         <div>
@@ -54,7 +87,7 @@ const Header = () => {
                                 {({ open }) => (
                                     <>
                                         <div>
-                                            <Menu.Button className="inline-block text-sm pl-4 mr-10 sm:mr-2 md:mr-5 xl:mr-10 mdrounded text-white mt-6 font-bold block text-center focus:outline-none">
+                                            <Menu.Button className="inline-block text-sm pl-4 mr-10 sm:mr-2 md:mr-5 xl:mr-10 mdrounded text-white mt-6 font-bold block text-center focus:outline-none" onClick={setShowModal()}>
                                                 <div className="flex">
                                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -125,6 +158,22 @@ const Header = () => {
                                                                     )}
                                                                 >
                                                                     Profil
+                                                                </Link>
+                                                            )}
+                                                        </Menu.Item>
+                                                    )}
+
+                                                    {admin && (
+                                                        <Menu.Item>
+                                                            {({ active }) => (
+                                                                <Link
+                                                                    to="/"
+                                                                    className={classNames(
+                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                        'block px-4 py-2 text-sm'
+                                                                    )}
+                                                                >
+                                                                    Administration
                                                                 </Link>
                                                             )}
                                                         </Menu.Item>
