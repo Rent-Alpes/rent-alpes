@@ -20,7 +20,8 @@ const Header = () => {
         app.auth().onAuthStateChanged((user) => {
             setUserSession(user);
         });
-    }, []);
+
+    }, [userSession]);
 
     return (
         <div>

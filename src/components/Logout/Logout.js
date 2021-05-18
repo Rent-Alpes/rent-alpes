@@ -15,7 +15,7 @@ const Lougout = (props) => {
             className="text-gray-700 block px-4 py-2 text-sm hover:bg-red-500 hover:text-white hover:bg-opacity-80 cursor-pointer"
             id="headlessui-menu-item-8"
             role="menuitem"
-            tabindex="-2"
+            tabIndex="-2"
             href="/#"
         >
             Log out
