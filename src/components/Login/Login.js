@@ -1,11 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { firebaseContext } from '../Firebase';
-import Lougout from '../Logout/Logout';
-import app from 'firebase/app';
 import logo from '../../images/logo.png'
 
-const Login = () => {
+const Login = (props) => {
 
     const firebase = useContext(firebaseContext);
 
@@ -17,14 +15,7 @@ const Login = () => {
 
     const [loginData, setLoginData] = useState(data);
     const [errordb, setErrorDB] = useState('');
-    const [user, setUser] = useState();
 
-    //Si connecté 
-    useEffect(() => {
-        app.auth().onAuthStateChanged((user) => {
-            setUser(user);
-        });
-    }, []);
 
     //Attribution de la value
     const handleChange = e => {
@@ -41,7 +32,7 @@ const Login = () => {
         firebase.loginUser(email, password)
             .then(user => {
                 setLoginData({ ...data });
-                alert("connexion réussie");
+                props.history.push('/');
             })
             .catch(error => {
                 setErrorDB(error);
@@ -56,19 +47,20 @@ const Login = () => {
 
     //Gestion des erreurs
     const errorMsgDB = errordb !== '' && <label className="red-text">{errordb.message}</label>;
-    const lougOutCommponent = user != null && <Lougout />
 
 
     return (
         <div>
             <div className="bg-gray-50 min-h-screen flex flex-col">
                 <nav className="bg-white p-1 fixed w-full z-10 top-0 border flex justify-center " >
-                    <img src={logo} className="object-contain h-20"></img>
+                    <Link to="/">
+                        <img src={logo} className="object-contain h-20" alt="logo Rent'alpes" />
+                    </Link>
                 </nav>
 
                 <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                     <div className="bg-white px-6 py-8 rounded border text-black w-full">
-                        <h1 className="mb-8 text-3xl text-center">Login</h1>
+                        <h1 className="mb-8 text-3xl text-center"> Login </h1>
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="email"
@@ -111,12 +103,6 @@ const Login = () => {
                         </Link>
                     </div>
                     <br />
-
-                    {user && (
-                        <p style={{ color: "white", fontSize: "large" }}>You are connected with : <span className="red-text"> {user.email} </span> </p>
-                    )}
-
-                    {lougOutCommponent}
 
                 </div>
             </div>
