@@ -14,7 +14,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/map" component={SearchInMap} />
         <Route path="/result" component={ResultPage} />
-        <Route path="/" component={DatePicker} />
+        <Route path="/date" component={DatePicker} />
         {/* PENSER A CREER UN COMPOSANT POUR MAUVAIS PATH */}
       </Switch>
     </Router>

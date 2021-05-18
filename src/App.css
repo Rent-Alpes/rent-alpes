@@ -56,3 +56,11 @@
 .bg-gold {
   background-color: #ff9f00;
 }
+
+.request-popup {
+  width: 300px;
+}
+
+.leaflet-popup-content p {
+  margin: 5px 0;
+}

@@ -10,7 +10,7 @@ const CardItem = (props) => {
         <div>
           <CardImage image={props.image} />
           <div className="absolute top-0.5 right-0.5">
-            <AddFavorites />
+            {/* <AddFavorites /> */}
           </div>
         </div>
         <CardInfo

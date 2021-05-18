@@ -1,5 +1,6 @@
 import React from "react";
 import CardPropertyIcons from "./CardPropertyIcons";
+import CardPriceButton from "./CardPriceButton";
 import { BiCalendar } from "react-icons/bi";
 import "../../../App.css";
 
@@ -22,10 +23,7 @@ const CardInfo = (props) => {
           {props.city}
         </div>
         <div className="flex justify-end mt-4">
-          <button className="bg-gold hover:bg-gray-200 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-            <BiCalendar className="mr-2" />
-            {props.price}€<span className="ml-1 text-sm"> /nuit</span>
-          </button>
+          <CardPriceButton price={props.price} />
         </div>
       </div>
     </div>
