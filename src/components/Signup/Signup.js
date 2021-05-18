@@ -14,6 +14,12 @@ const Signup = () => {
         email: '',
         password: '',
         confirmPassword: '',
+        isAdmin: false,
+        phonenumber: '',
+        address: '',
+        postalcode: '',
+        city: '',
+        country: '',
     }
 
 
@@ -29,7 +35,7 @@ const Signup = () => {
         e.preventDefault();
         setErrorDB('');
         //destructuring
-        const { email, password, firstName, lastName } = loginData;
+        const { email, password, firstName, lastName, isAdmin, phonenumber, address, postalcode, city, country } = loginData;
 
         if (errorMsg === "") {
             firebase.signupUser(email, password)
@@ -38,6 +44,12 @@ const Signup = () => {
                         firstName,
                         lastName,
                         email,
+                        isAdmin,
+                        phonenumber,
+                        address,
+                        postalcode,
+                        city,
+                        country
                     })
                 })
                 .then(() => {
