@@ -16,6 +16,7 @@ const Lougout = (props) => {
             id="headlessui-menu-item-8"
             role="menuitem"
             tabindex="-2"
+            href="/#"
         >
             Log out
         </a>

@@ -105,7 +105,7 @@ const Signup = () => {
         <div className="bg-gray-50 min-h-screen flex flex-col">
             <nav className="bg-white p-1 fixed w-full z-10 top-0 border flex justify-center " >
                 <Link to="/">
-                    <img src={logo} className="object-contain h-20" />
+                    <img src={logo} className="object-contain h-20" alt="logo Rent'alpes" />
                 </Link>
             </nav>
 
