@@ -1,7 +1,7 @@
 import React from "react";
 import CardPropertyIcons from "./CardPropertyIcons";
 import CardPriceButton from "./CardPriceButton";
-import { BiCalendar } from "react-icons/bi";
+import { BiMap } from "react-icons/bi";
 import "../../../App.css";
 
 const CardInfo = (props) => {
@@ -19,7 +19,10 @@ const CardInfo = (props) => {
         <h3 className="mt-1 text-xl font-semibold uppercase leading-tight truncate">
           {props.name}
         </h3>
-        <div className="gold-color mt-2 uppercase text-xs font-semibold tracking-wider">
+        <div className="flex items-center gold-color mt-2 uppercase text-xs font-semibold tracking-wider">
+          <span className="text-black pr-0.5">
+            <BiMap />
+          </span>
           {props.city}
         </div>
         <div className="flex justify-end mt-4">
