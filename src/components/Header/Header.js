@@ -66,8 +66,8 @@ const Header = () => {
                         </Link>
                     </div>
 
-                    <div className="w-6/12 block flex-grow grid justify-items-stretch">
-                        <div className="justify-self-end">
+                    <div className="w-6/12 block flex-grow flex-nowrap grid justify-items-stretch">
+                        <div className="justify-self-end flex flex-nowrap">
 
                             {/* //////////////////////////// FAVORITES //////////////////////////// */}
                             <button className="inline-block text-sm px-4 rounded text-white mt-4 font-bold block text-center focus:outline-none">
@@ -89,7 +89,7 @@ const Header = () => {
                                 {({ open }) => (
                                     <>
                                         <div>
-                                            <Menu.Button className="inline-block text-sm pl-4 mr-10 sm:mr-2 md:mr-5 xl:mr-10 mdrounded text-white mt-6 font-bold block text-center focus:outline-none" onClick={setShowModal()}>
+                                            <Menu.Button className="inline-block marginHeader text-sm pl-4 sm:mr-2 md:mr-5 xl:mr-10 mdrounded text-white mt-6 font-bold block text-center focus:outline-none" onClick={setShowModal()}>
                                                 <div className="flex">
                                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

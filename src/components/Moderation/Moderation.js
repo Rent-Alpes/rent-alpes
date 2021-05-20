@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { firebaseContext } from '../Firebase';
 import Header from '../Header/Header';
-import "../Home/Home.css"
 
-const Home = () => {
-
+const Moderation = () => {
+    const firebase = useContext(firebaseContext);
 
 
     return (
@@ -14,7 +14,7 @@ const Home = () => {
             <Header />
             <div className="h-full w-full flex flex-col justify-center">
 
-                <div className="relative widthSearchBar xl:w-4/12 lg:w-8/12 md:w-10/12 sm:w-10/12 mx-auto">
+                <div className="relative lg:w-8/12 md:w-20 sm:w-12/12 xl:w-4/12  lg:mx-9 mx-auto">
                     <input type="search" className="static w-full pl-7 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white bg-opacity-90" placeholder="Search" />
                     <div className="absolute inset-y-0 right-0">
                         <button className="static h-14 px-5 rounded-md focus:outline-none">
@@ -34,7 +34,8 @@ const Home = () => {
 
         </div>
 
+
     )
 }
 
-export default Home;
+export default Moderation;
