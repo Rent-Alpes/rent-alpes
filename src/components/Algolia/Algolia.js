@@ -1,20 +1,29 @@
 import algoliasearch from 'algoliasearch';
+import React, { useState } from "react";
+import app from "firebase/app";
 
-const client = algoliasearch('WM2R73MT8D', '8f1fea58043949f2ba7714b32998a65d');
-const index = client.initIndex("Property");
+  const client = algoliasearch('WM2R73MT8D', '8f1fea58043949f2ba7714b32998a65d');
+  const index = client.initIndex("Property");
 
-class Algolia {
-    // Ajouter une propriété 
-    addProperty = (objects) => 
-        index.saveObjects(objects);
+ 
 
-    //Recherche d'une propriété 
-    searchProperty = (query) =>
-        index.search(query).then(({ hits }) => {
-            return hits;
-          }).catch(err => {
-            console.log(err);
-          });;  
-}
+  export const AddProperty = (propertyValues, propertyId) => {
+    const objects  = [
+      {
+      objectID :propertyId,
+      name: propertyValues.name,
+      address: propertyValues.address,
+      postalCode: propertyValues.postalCode,
+      city: propertyValues.city,
+      country: propertyValues.country,
+      bathroom: propertyValues.bathroom,
+      description: propertyValues.description,
+      equipments: propertyValues.equipments,
+      room: propertyValues.room,
+      traveler: propertyValues.traveler,
+    }
+  ];
+    index.saveObjects(objects);
+  };
 
-export default Algolia;
+

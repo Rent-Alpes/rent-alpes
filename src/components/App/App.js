@@ -7,11 +7,16 @@ import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import Property from "../Property/PropertyForm";
 import app from "firebase/app";
 import React from "react";
+import {AddProperty} from "../Algolia/Algolia";
 
 function App() {
   const addOrEdit = async (propertyObject) => {
+
     console.log(propertyObject);
-    await app.firestore().collection("Property").doc().set(propertyObject);
+    await app.firestore().collection("Property").add(propertyObject)
+    .then(function(docRef) {
+      AddProperty(propertyObject, docRef.id);
+  });
   };
   
   return (
