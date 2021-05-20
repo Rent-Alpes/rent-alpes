@@ -61,7 +61,9 @@ const Header = () => {
             <div className="w-full h-32 ">
                 <nav className="flex  fixed  top-0 items-center justify-between pt-3 px-3 w-full">
                     <div className="flex w-6/12 text-white mr-6" >
-                        <img src={logo} className="object-contain h-28" alt="logo Rent'alpes"></img>
+                        <Link to="/">
+                            <img src={logo} className="object-contain h-28" alt="logo Rent'alpes"></img>
+                        </Link>
                     </div>
 
                     <div className="w-6/12 block flex-grow grid justify-items-stretch">
