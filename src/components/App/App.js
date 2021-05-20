@@ -6,6 +6,7 @@ import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import Profil from "../Profil/Profil";
 import Home from "../Home/Home";
 import Header from "../Header/Header";
+import Administration from "../Administration/Administration";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/forgetpassword" component={ForgetPassword} />
         <Route path="/profil" component={Profil} />
+        <Route path="/administration" component={Administration} />
 
         {/* PENSER A CREER UN COMPOSANT POUR MAUVAIS PATH */}
       </Switch>
