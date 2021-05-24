@@ -8,11 +8,15 @@ import GetDataProperty from "../Property/GetDataProperty";
 import EditDataProperty from "../Property/EditDataProperty";
 import app from "firebase/app";
 import React from "react";
+import {UploadFiles} from "../Property/AddProperty";
 
 function App() {
   const addOrEdit = async (propertyObject) => {
     console.log(propertyObject);
-    await app.firestore().collection("Property").doc().set(propertyObject);
+    await app.firestore().collection("Property").add(propertyObject).then(function(docRef){
+      UploadFiles(docRef.id);
+    });
+  
   };
   
  /* const getData = async (propertyObject) => {

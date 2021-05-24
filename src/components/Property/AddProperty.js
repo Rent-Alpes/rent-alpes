@@ -2,7 +2,11 @@ import React, { useState,useEffect,useContext } from "react";
 import {firebaseContext} from '../Firebase';
 import app from 'firebase/app';
 
+export const UploadFiles=(id)=>{
 
+  //console.log(id);
+return id;
+}
 
 
 const AddProperty = (props) => {
@@ -28,28 +32,13 @@ const AddProperty = (props) => {
   const [user, setUser] = useState(null);
   const [error,setError]=useState("");
 
-function uploadFiles(id){
-  
-  // foreach
-  // var mountainImagesRef = app.storage().ref().child("image/property/"+file.name);
-  // await mountainImagesRef.put(file);
- //  const imageUrl = await mountainImagesRef.getDownloadURL();
-  //console.log(imageUrl);
-}
 
-//var IdUtilisateur=firebase.auth.X;
-//idUser=IdUtilisateur;
-
-
-     //console.log(firebase.auth.X)
-    
   const onFileChange = (e) => {
 
     const users = firebase.auth.currentUser;
-    
-    
+    //const idPicture=UploadFiles()
     const file = e.target.files[0];
-    initialPropertyValues.picture=app.storage().ref("image/"+users.uid+"/Property").child(file.name);
+    initialPropertyValues.picture=app.storage().ref("image/"+"Property/").child(file.name);
     //initialPropertyValues.picture=app.storage().ref("image/property/"+file.name).child(users.uid);
     initialPropertyValues.picture.put(file);
     console.log(file);
@@ -67,12 +56,10 @@ function uploadFiles(id){
 
     //recupérer id
 
-    //upload images avec id de la propriété
-    uploadFiles()
+
   };
   const HandleUpdate = ()=>{
     
-  
   }
 
   const handleInputChange = (e) => {
