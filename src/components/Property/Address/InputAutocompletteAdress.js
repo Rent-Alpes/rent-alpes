@@ -40,7 +40,7 @@ const InputAutocompletteAdress = (props) => {
       {address && (
         <AsyncSelect
           onChange={onChangeInput}
-          placeholder="Aqui"
+          placeholder="écrivez votre adresse..."
           value={address}
           loadOptions={loadOptions}
         />
