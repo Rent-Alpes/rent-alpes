@@ -5,6 +5,7 @@ import Login from "../Login/Login";
 import SearchInMap from "../MapLocations/SearchInMap";
 import ResultPage from "../SearchResult/ResultPage";
 import DatePicker from "../SearchResult/CardItem/DatePicker";
+import { TestWrapper } from "react-dates";
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
         <Route path="/map" component={SearchInMap} />
         <Route path="/result" component={ResultPage} />
         <Route path="/date" component={DatePicker} />
+        <Route path="/" component={TestWrapper} />
+
         {/* PENSER A CREER UN COMPOSANT POUR MAUVAIS PATH */}
       </Switch>
     </Router>

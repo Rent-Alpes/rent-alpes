@@ -20,6 +20,7 @@ const ResultPage = () => {
 
   useEffect(() => {
     fbContext.auth.onAuthStateChanged((data) => {
+      console.log(data.uid);
       propertyList(data.uid);
     });
   }, []);
