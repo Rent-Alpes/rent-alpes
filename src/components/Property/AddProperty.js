@@ -3,7 +3,6 @@ import {firebaseContext} from '../Firebase';
 import app from 'firebase/app';
 
 export const UploadFiles=(id)=>{
-
   //console.log(id);
 return id;
 }
@@ -32,13 +31,12 @@ const AddProperty = (props) => {
   const [user, setUser] = useState(null);
   const [error,setError]=useState("");
 
+ 
 
   const onFileChange = (e) => {
-
-    const users = firebase.auth.currentUser;
-    //const idPicture=UploadFiles()
+    //const users = firebase.auth.currentUser;
     const file = e.target.files[0];
-    initialPropertyValues.picture=app.storage().ref("image/"+"Property/").child(file.name);
+    initialPropertyValues.picture=app.storage().ref("image/"+"Property/"+initialPropertyValues.picture).child(file.name);
     //initialPropertyValues.picture=app.storage().ref("image/property/"+file.name).child(users.uid);
     initialPropertyValues.picture.put(file);
     console.log(file);
@@ -54,21 +52,15 @@ const AddProperty = (props) => {
     propertyValues.idUser=user.uid;
     props.addOrEditProperty(propertyValues);
 
-    //recupérer id
-
 
   };
-  const HandleUpdate = ()=>{
-    
-  }
-
+ 
   const handleInputChange = (e) => {
    
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
 
   };
 
-  
   return (
     <>
       <div className="min-h-screen bg-gray-200 p-0 sm:p-12">
@@ -180,6 +172,15 @@ const AddProperty = (props) => {
                 type="text"
                 name="price"
                 placeholder="Price / Night"
+                onChange={handleInputChange}
+                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+              />
+            </div>
+            <div className="relative z-0 w-full mb-5">
+              <input
+                type="text"
+                name="thumb"
+                placeholder="Thumb"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
