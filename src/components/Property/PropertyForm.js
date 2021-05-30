@@ -1,11 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { firebaseContext } from "../Firebase";
-import idprops from "../Property/GetDataProperty";
 
-const EditProperty = (props) => {
+const PropertyForm = (props) => {
   const firebase = useContext(firebaseContext);
-  const propertyId = window.location.href.split("/")[4];
-  console.log(propertyId);
   const PropertyValues = {
     name: "",
     address: "",
@@ -24,39 +21,7 @@ const EditProperty = (props) => {
     surface: "",
     idDocument: "",
   };
-
-  function getIdproperty(id) {
-    console.log(id);
-  }
-
-  console.log(props.idproperty);
-  getIdproperty(idprops.idDocument);
-  const [userSession, setUserSession] = useState(null);
   const [propertyData, setpropertyData] = useState(PropertyValues);
-
-  useEffect(() => {
-    let listener = firebase.auth.onAuthStateChanged((user) => {
-      user ? setUserSession(user) : props.history.push("/login");
-    });
-
-    /*  if (!!userSession) {
-          firebase.addOrEdit(PropertyValues).get()
-              .then(doc => {
-                  if (doc && doc.exists) {
-                      //const myData = doc.data();
-                      setpropertyData({ ...PropertyValues});
-                  }
-              })
-              .catch(error => {
-                  console.log(error);
-              })
-      }*/
-
-    return () => {
-      listener();
-    };
-  }, [userSession]);
-
   const handleInputChange = (e) => {
     setpropertyData({ ...propertyData, [e.target.name]: e.target.value });
   };
@@ -72,55 +37,36 @@ const EditProperty = (props) => {
 
     //props.addOrEditProperty(PropertyValues);
     /*    var user = firebase.property.uid;
-          user.updateProperty(propertyData.name,
-            propertyData.address,
-            propertyData.postalCode,
-            propertyData.city,
-            propertyData.country,
-            propertyData.bathroom,
-            propertyData.description,
-            propertyData.equipments,
-            propertyData.room,
-            propertyData.traveler,
-            propertyData.picture,
-            propertyData.idUser,
-            propertyData.price,
-            propertyData.thumb,
-            propertyData.surface
-
-            ).then(function () {
-              console.log("Success modification");
-          }).catch(function (error) {
-              console.log(error);
-          });
-
-      firebase.property(userSession.uid).set(
-        propertyData,
-        console.log(propertyData)
-      )
-          .catch(errordb => {
-              console.log(errordb)
-          })*/
+              user.updateProperty(propertyData.name,
+                propertyData.address,
+                propertyData.postalCode,
+                propertyData.city,
+                propertyData.country,
+                propertyData.bathroom,
+                propertyData.description,
+                propertyData.equipments,
+                propertyData.room,
+                propertyData.traveler,
+                propertyData.picture,
+                propertyData.idUser,
+                propertyData.price,
+                propertyData.thumb,
+                propertyData.surface
+    
+                ).then(function () {
+                  console.log("Success modification");
+              }).catch(function (error) {
+                  console.log(error);
+              });
+    
+          firebase.property(userSession.uid).set(
+            propertyData,
+            console.log(propertyData)
+          )
+              .catch(errordb => {
+                  console.log(errordb)
+              })*/
   };
-  function deleteUser() {
-    var property = firebase
-      .firestore()
-      .collection("Property")
-      .doc(PropertyValues.idDocument);
-    //delete auth
-
-    property
-      .delete()
-      .then(function () {
-        console.log("Success deletion");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    //delete users
-    firebase.property(propertyData.uid).delete();
-  }
 
   return (
     <>
@@ -133,7 +79,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="name"
                 placeholder="Name"
-                defaultValue={props.propertyData.name}
+                defaultValue={props.propertyId.name}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -144,7 +90,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="address"
                 placeholder="Address"
-                defaultValue={propertyData.address}
+                defaultValue={props.propertyId.address}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -155,7 +101,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="postalCode"
                 placeholder="Postal Code"
-                defaultValue={propertyData.postalCode}
+                defaultValue={props.propertyId.postalCode}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -166,7 +112,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="city"
                 placeholder="City"
-                defaultValue={propertyData.city}
+                defaultValue={props.propertyId.city}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -177,7 +123,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="country"
                 placeholder="Country"
-                defaultValue={propertyData.country}
+                defaultValue={props.propertyId.country}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -188,7 +134,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="bathroom"
                 placeholder="Number of Bathroom"
-                defaultValue={propertyData.bathroom}
+                defaultValue={props.propertyId.bathroom}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -199,7 +145,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="room"
                 placeholder="Number of Room"
-                defaultValue={propertyData.room}
+                defaultValue={props.propertyId.room}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -210,7 +156,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="traveler"
                 placeholder="Number of Traveler"
-                defaultValue={propertyData.traveler}
+                defaultValue={props.propertyId.traveler}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -221,7 +167,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="description"
                 placeholder="Description"
-                defaultValue={propertyData.description}
+                defaultValue={props.propertyId.description}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -232,7 +178,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="surface"
                 placeholder="Surface"
-                defaultValue={propertyData.surface}
+                defaultValue={props.propertyId.surface}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -242,7 +188,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="price"
                 placeholder="Price / Night"
-                defaultValue={propertyData.price}
+                defaultValue={props.propertyId.price}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -252,7 +198,7 @@ const EditProperty = (props) => {
                 type="text"
                 name="thumb"
                 placeholder="Thumb"
-                defaultValue={propertyData.thumb}
+                defaultValue={props.propertyId.thumb}
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -313,4 +259,4 @@ const EditProperty = (props) => {
   );
 };
 
-export default EditProperty;
+export default PropertyForm;
