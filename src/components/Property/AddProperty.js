@@ -1,6 +1,7 @@
 import React, { useState,useEffect,useContext } from "react";
 import {firebaseContext} from '../Firebase';
 import app from 'firebase/app';
+import InputAutocompletteAdress from './Address/InputAutocompletteAdress';
 
 export const UploadFiles=(id)=>{
   //console.log(id);
@@ -77,6 +78,8 @@ const AddProperty = (props) => {
               />
             </div>
 
+            <InputAutocompletteAdress />
+
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
@@ -119,7 +122,7 @@ const AddProperty = (props) => {
 
             <div className="relative z-0 w-full mb-5">
               <input
-                type="text"
+                type="number"
                 name="bathroom"
                 placeholder="Number of Bathroom"
                 onChange={handleInputChange}
@@ -129,7 +132,7 @@ const AddProperty = (props) => {
 
             <div className="relative z-0 w-full mb-5">
               <input
-                type="text"
+                type="number"
                 name="room"
                 placeholder="Number of Room"
                 onChange={handleInputChange}
@@ -139,7 +142,7 @@ const AddProperty = (props) => {
 
             <div className="relative z-0 w-full mb-5">
               <input
-                type="text"
+                type="number"
                 name="traveler"
                 placeholder="Number of Traveler"
                 onChange={handleInputChange}
@@ -149,10 +152,11 @@ const AddProperty = (props) => {
 
 
             <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
+              <textarea
                 name="description"
                 placeholder="Description"
+                cols="40"
+                rows="5"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -160,7 +164,7 @@ const AddProperty = (props) => {
          
             <div className="relative z-0 w-full mb-5">
               <input
-                type="text"
+                type="numer"
                 name="surface"
                 placeholder="Surface"
                 onChange={handleInputChange}
@@ -169,7 +173,7 @@ const AddProperty = (props) => {
             </div>
             <div className="relative z-0 w-full mb-5">
               <input
-                type="text"
+                type="number"
                 name="price"
                 placeholder="Price / Night"
                 onChange={handleInputChange}

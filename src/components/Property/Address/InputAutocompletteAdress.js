@@ -27,7 +27,6 @@ const InputAutocompletteAdress = (props) => {
   const loadOptions = async (inputValue, callback) => {
     try {
       await provider.search({ query: inputValue }).then(function (result) {
-        // do something with result;
         callback(result.map((item) => item));
       });
     } catch (e) {
