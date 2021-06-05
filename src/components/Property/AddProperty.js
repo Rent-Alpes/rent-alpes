@@ -48,11 +48,10 @@ const AddProperty = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
- 
     var user = firebase.auth.currentUser;
     propertyValues.idUser=user.uid;
     props.addOrEditProperty(propertyValues);
-
+    alert ("Your property has been success add  !!");
 
   };
  
@@ -73,6 +72,7 @@ const AddProperty = (props) => {
                 type="text"
                 name="name"
                 placeholder="Name"
+                required pattern="[0-9a-zA-Z-\.]"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -85,6 +85,7 @@ const AddProperty = (props) => {
                 type="text"
                 name="address"
                 placeholder="Address"
+                required pattern="[0-9a-zA-Z-\.]"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -95,6 +96,7 @@ const AddProperty = (props) => {
                 type="text"
                 name="postalCode"
                 placeholder="Postal Code"
+                required pattern="[0-9a-zA-Z-\.]"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -105,6 +107,7 @@ const AddProperty = (props) => {
                 type="text"
                 name="city"
                 placeholder="City"
+                required pattern="[0-9a-zA-Z-\.]"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -115,6 +118,7 @@ const AddProperty = (props) => {
                 type="text"
                 name="country"
                 placeholder="Country"
+                required pattern="[0-9a-zA-Z-\.]"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -125,6 +129,7 @@ const AddProperty = (props) => {
                 type="number"
                 name="bathroom"
                 placeholder="Number of Bathroom"
+                required pattern="[0-9a-zA-Z-\.]"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -135,6 +140,7 @@ const AddProperty = (props) => {
                 type="number"
                 name="room"
                 placeholder="Number of Room"
+                required pattern="[0-9a-zA-Z-\.]"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -145,6 +151,7 @@ const AddProperty = (props) => {
                 type="number"
                 name="traveler"
                 placeholder="Number of Traveler"
+                required pattern="[0-9a-zA-Z-\.]"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -155,6 +162,7 @@ const AddProperty = (props) => {
               <textarea
                 name="description"
                 placeholder="Description"
+                required pattern="[0-9a-zA-Z-\.]"
                 cols="40"
                 rows="5"
                 onChange={handleInputChange}
@@ -167,6 +175,7 @@ const AddProperty = (props) => {
                 type="numer"
                 name="surface"
                 placeholder="Surface"
+                required pattern="[0-9a-zA-Z-\.]"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -176,6 +185,7 @@ const AddProperty = (props) => {
                 type="number"
                 name="price"
                 placeholder="Price / Night"
+                required pattern="[0-9a-zA-Z-\.]"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
