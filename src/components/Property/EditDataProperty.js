@@ -1,13 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { firebaseContext } from "../Firebase";
-import idprops from "../Property/GetDataProperty";
+import GetDataList from "./GetDataProperty";
 import app from "firebase/app";
+import { Link } from "react-router-dom";
 
 const EditProperty = (props) => {
   const firebase = useContext(firebaseContext);
   const db = app.firestore();
   const propertyId = window.location.href.split("/")[4];
-  console.log(propertyId);
+  //console.log(propertyId);
   const PropertyValues = {
     name: "",
     address: "",
@@ -24,12 +25,10 @@ const EditProperty = (props) => {
     price: "",
     thumb: "",
     surface: "",
-    idDocument: "",
+   
   };
 
-  function getIdproperty(id) {
-    console.log(id);
-  }
+  
 
   function getPropertyData() {
     var docRef = db.collection("Property").doc(propertyId);
@@ -38,7 +37,7 @@ const EditProperty = (props) => {
       .then((doc) => {
         if (doc.exists) {
           setpropertyData(doc.data());
-          console.log(propertyData);
+        //  console.log(propertyData);
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -49,8 +48,6 @@ const EditProperty = (props) => {
       });
   }
 
-  console.log(props.idproperty);
-  getIdproperty(idprops.idDocument);
   const [userSession, setUserSession] = useState(null);
   const [propertyData, setpropertyData] = useState(null);
 
@@ -58,21 +55,8 @@ const EditProperty = (props) => {
     let listener = firebase.auth.onAuthStateChanged((user) => {
       user ? setUserSession(user) : props.history.push("/login");
       getPropertyData();
-      console.log(propertyData);
+     // console.log(propertyData);
     });
-
-    /*  if (!!userSession) {
-          firebase.addOrEdit(PropertyValues).get()
-              .then(doc => {
-                  if (doc && doc.exists) {
-                      //const myData = doc.data();
-                      setpropertyData({ ...PropertyValues});
-                  }
-              })
-              .catch(error => {
-                  console.log(error);
-              })
-      }*/
 
     return () => {
       listener();
@@ -85,64 +69,27 @@ const EditProperty = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    var propertys = firebase
-      .firestore()
-      .collection("Property")
-      .then()
-      .doc(PropertyValues.idDocument);
-    console.log(propertys);
+   
 
-    //props.addOrEditProperty(PropertyValues);
-    /*    var user = firebase.property.uid;
-          user.updateProperty(propertyData.name,
-            propertyData.address,
-            propertyData.postalCode,
-            propertyData.city,
-            propertyData.country,
-            propertyData.bathroom,
-            propertyData.description,
-            propertyData.equipments,
-            propertyData.room,
-            propertyData.traveler,
-            propertyData.picture,
-            propertyData.idUser,
-            propertyData.price,
-            propertyData.thumb,
-            propertyData.surface
-
-            ).then(function () {
-              console.log("Success modification");
-          }).catch(function (error) {
-              console.log(error);
-          });
-
-      firebase.property(userSession.uid).set(
-        propertyData,
-        console.log(propertyData)
-      )
-          .catch(errordb => {
-              console.log(errordb)
-          })*/
-  };
-  function deleteUser() {
-    var property = firebase
-      .firestore()
-      .collection("Property")
-      .doc(PropertyValues.idDocument);
-    //delete auth
-
-    property
-      .delete()
-      .then(function () {
-        console.log("Success deletion");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    //delete users
-    firebase.property(propertyData.uid).delete();
   }
+const deleteProperty= ()=>{
+  const docRef=db.collection('Property').doc(propertyId)
+  docRef.get().then(docSnap=>{
+    docSnap=docRef.delete()
+  })
+}
+function deleteUser() {
+  const res =  db.collection('Property').doc(propertyId).delete();
+  if (!!propertyId  ){
+alert("Delete property success !");
+return <GetDataList/>
+  }
+  else{
+    alert("Property no exists"); 
+    return <GetDataList/>
+
+  }
+}
 
   return (
     <>
@@ -322,14 +269,22 @@ const EditProperty = (props) => {
               <button
                 id="button"
                 type="submit"
-                className="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none"
+                className="w-full px-5 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none"
               >
                 UpdateProperty
               </button>
-
-              <button className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-red-500 hover:bg-red-600 hover:shadow-lg">
-                Delete property
-              </button>
+              <Link  >
+                  <div className="w-full px-5 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-red-700 hover:bg-red-600 hover:shadow-lg focus:outline-none " onClick={deleteUser}   to={{
+                            pathname: `/getdataproperty`,
+                          }} >
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+</svg>
+                            
+               Delete 
+                </div>
+              </Link>
             </form>
           )}
         </div>
