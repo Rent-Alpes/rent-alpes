@@ -37,6 +37,7 @@ const AddProperty = (props) => {
   const onFileChange = (e) => {
     //const users = firebase.auth.currentUser;
     const file = e.target.files[0];
+    
     initialPropertyValues.picture=app.storage().ref("image/"+"Property/"+initialPropertyValues.picture).child(file.name);
     //initialPropertyValues.picture=app.storage().ref("image/property/"+file.name).child(users.uid);
     initialPropertyValues.picture.put(file);
