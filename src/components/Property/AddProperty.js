@@ -1,10 +1,16 @@
-import React, { useState,useEffect,useContext } from "react";
-import {firebaseContext} from '../Firebase';
+import React, { useState, useEffect, useContext } from "react";
+import { firebaseContext } from '../Firebase';
 import app from 'firebase/app';
+import { InputFileChange } from '../InputFile/InputFile';
+import { InputFileDelete } from '../InputFile/InputFile';
+import { GetFile } from '../InputFile/InputFile';
 
-export const UploadFiles=(id)=>{
-  //console.log(id);
-return id;
+export const UploadFiles = (id) => {
+  var files = GetFile();
+  for (var i = 0; files.length > i; i++) {
+    var picture = app.storage().ref("image/property/" + id).child(files[i].name);
+    picture.put(files[i]);
+  }
 }
 
 
@@ -22,217 +28,154 @@ const AddProperty = (props) => {
     equipments: "",
     room: "",
     traveler: "",
-    picture:"",
-    idUser:"",
-    price:"",
-    thumb:"",
-    surface:"",
+    picture: "",
+    idUser: "",
+    price: "",
+    thumb: "",
+    surface: "",
   };
   const [user, setUser] = useState(null);
-  const [error,setError]=useState("");
-
- 
-
-  const onFileChange = (e) => {
-    //const users = firebase.auth.currentUser;
-    const file = e.target.files[0];
-    initialPropertyValues.picture=app.storage().ref("image/"+"Property/"+initialPropertyValues.picture).child(file.name);
-    //initialPropertyValues.picture=app.storage().ref("image/property/"+file.name).child(users.uid);
-    initialPropertyValues.picture.put(file);
-    console.log(file);
-    };
+  const [error, setError] = useState("");
 
 
   const [propertyValues, setPropertyValues] = useState(initialPropertyValues);
 
   const handleSubmit = (e) => {
     e.preventDefault();
- 
+
     var user = firebase.auth.currentUser;
-    propertyValues.idUser=user.uid;
+    propertyValues.idUser = user.uid;
     props.addOrEditProperty(propertyValues);
 
 
   };
- 
+
   const handleInputChange = (e) => {
-   
+
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
 
   };
-
   return (
-    <>
-      <div className="min-h-screen bg-gray-200 p-0 sm:p-12">
-        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
-          <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
-          <form id="form" onSubmit={handleSubmit}>
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
+    <div className="min-h-screen bg-gray-200 p-0 sm:p-12">
+      <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
+        <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
+        <form id="form" onSubmit={handleSubmit}>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="postalCode"
+              placeholder="Postal Code"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="city"
+              placeholder="City"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="country"
+              placeholder="Country"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="bathroom"
+              placeholder="Number of Bathroom"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="room"
+              placeholder="Number of Room"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="traveler"
+              placeholder="Number of Traveler"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="description"
+              placeholder="Description"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="surface"
+              placeholder="Surface"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="price"
+              placeholder="Price / Night"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="thumb"
+              placeholder="Thumb"
+              onChange={handleInputChange}
+              className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+          </div>
 
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="address"
-                placeholder="Address"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
-
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="postalCode"
-                placeholder="Postal Code"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
-
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="city"
-                placeholder="City"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
-
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="country"
-                placeholder="Country"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
-
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="bathroom"
-                placeholder="Number of Bathroom"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
-
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="room"
-                placeholder="Number of Room"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
-
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="traveler"
-                placeholder="Number of Traveler"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
-
-
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="description"
-                placeholder="Description"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
-         
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="surface"
-                placeholder="Surface"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="price"
-                placeholder="Price / Night"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
-            <div className="relative z-0 w-full mb-5">
-              <input
-                type="text"
-                name="thumb"
-                placeholder="Thumb"
-                onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-              />
-            </div>
-        
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Add picture to the property</label>
             <div>
-                    <label className="block text-sm font-medium text-gray-700">Add picture of property</label>
-                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                      <div className="space-y-1 text-center">
-                        <svg
-                          className="mx-auto h-12 w-12 text-gray-400"
-                          stroke="currentColor"
-                          fill="none"
-                          viewBox="0 0 48 48"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                            strokeWidth={2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <div className="flex text-sm text-gray-600">
-                          <label
-                            htmlFor="file-upload"
-                            className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                          >
-                  
-                            <input multiple type="file" name="picture" accept="image/png,image/jpg,image/jpeg"  onChange={onFileChange} />
-                          </label>
-                     
-                        </div>
-                        
-                      </div>
-                 
-                    </div>
-                  </div>
-                
-                  
-            <button
-              id="button"
-              type="submit"
-              className="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none"
-             
-            >
-              Register Property
+              <div className="mt-5 text-center">
+                <label htmlFor="property-images" className="btn flex justify-center border-2 rounded-lg p-3 text-2xl cursor-pointer hover:border-0 hover:bg-gray-300">+ Add</label>
+                <input type="file" name="property-images" onChange={InputFileChange} accept=".JPG, .png, .jpeg, .png" id="property-images" max-size="20000" multiple style={{ visibility: "hidden" }} />
+              </div>
+              <div id="filesList"> </div>
+            </div>
+          </div>
+          <button
+            id="button"
+            type="submit"
+            className="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none">
+            Register Property
             </button>
-          </form>
-        </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 
