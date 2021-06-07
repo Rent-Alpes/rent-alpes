@@ -12,7 +12,6 @@ const InputAutocompletteAdress = (props) => {
     address: React.useState([]),
     ...(props.state || {}),
   };
-  //const [address, setAddress] = React.useState([]);
   const provider = new HereProvider({
     params: {
       apiKey: "eRz09NXRI4hfk_pkqkcZvZ-4DhsJLTEpBCiEfEgGxb8",
@@ -21,7 +20,6 @@ const InputAutocompletteAdress = (props) => {
 
   const onChangeInput = (event) => {
     setAddress(event);
-    console.log(firebase.auth.X);
   };
 
   const loadOptions = async (inputValue, callback) => {

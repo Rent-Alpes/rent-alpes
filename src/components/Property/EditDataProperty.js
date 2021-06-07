@@ -28,8 +28,6 @@ const EditProperty = (props) => {
    
   };*/
 
-  
-
   function getPropertyData() {
     var docRef = db.collection("Property").doc(propertyId);
     docRef
@@ -37,7 +35,7 @@ const EditProperty = (props) => {
       .then((doc) => {
         if (doc.exists) {
           setpropertyData(doc.data());
-        //  console.log(propertyData);
+          //  console.log(propertyData);
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -55,7 +53,7 @@ const EditProperty = (props) => {
     let listener = firebase.auth.onAuthStateChanged((user) => {
       user ? setUserSession(user) : props.history.push("/login");
       getPropertyData();
-     // console.log(propertyData);
+      // console.log(propertyData);
     });
 
     return () => {
@@ -67,30 +65,24 @@ const EditProperty = (props) => {
     setpropertyData({ ...propertyData, [e.target.name]: e.target.value });
   };
 
-
   function UpdateProperty() {
-    const ref=db.collection('Property').doc(propertyId);
-    ref.update({...propertyData});
+    const ref = db.collection("Property").doc(propertyId);
+    ref.update({ ...propertyData });
     alert("Update property success !");
-    <GetDataList/>
-  
- 
-}
-function deleteProperty() {
-    db.collection('Property').doc(propertyId).delete();
-  if (!!propertyId  ){
-alert("Delete property success !");
- <GetDataList/>
+    <GetDataList />;
   }
- 
-}
+  function deleteProperty() {
+    db.collection("Property").doc(propertyId).delete();
+    if (!!propertyId) {
+      alert("Delete property success !");
+      <GetDataList />;
+    }
+  }
 
   return (
     <>
       <div className="min-h-screen bg-gray-200 p-0 sm:p-12">
         <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
-          
-
           <h1 className="text-2xl font-bold mb-8">Update your Property</h1>
           {propertyData && (
             <form id="form">
@@ -262,32 +254,54 @@ alert("Delete property success !");
                 </div>
               </div>
 
-              <Link to={{pathname: `/getdataproperty`}}>
-              <div className="w-full px-5 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-700 hover:bg-green-600 hover:shadow-lg focus:outline-none flex justify-center"onClick={UpdateProperty} >
-               <span>UPDATE</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 pl-1 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round"  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-</svg>
-<div></div></div>
-              </Link>
-
-
-              <Link className="text-center " to={{pathname: `/getdataproperty`}}  >
-              
-                  <div className="w-full px-4 py-4 mt-4 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-red-700 hover:bg-red-600 hover:shadow-lg focus:outline-none flex justify-center" onClick={deleteProperty}    >
-                  <span>DELETE</span>
-                  
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 pl-1" fill="currentColor"  viewBox="0 0 24 24" >
-  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-</svg>
+              <Link to={{ pathname: `/getdataproperty` }}>
+                <div
+                  className="w-full px-5 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-700 hover:bg-green-600 hover:shadow-lg focus:outline-none flex justify-center"
+                  onClick={UpdateProperty}
+                >
+                  <span>UPDATE</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-10 w-10 pl-1 "
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                  <div></div>
                 </div>
               </Link>
 
+              <Link
+                className="text-center "
+                to={{ pathname: `/getdataproperty` }}
+              >
+                <div
+                  className="w-full px-4 py-4 mt-4 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-red-700 hover:bg-red-600 hover:shadow-lg focus:outline-none flex justify-center"
+                  onClick={deleteProperty}
+                >
+                  <span>DELETE</span>
 
-            
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-10 w-10 pl-1"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                    />
+                  </svg>
+                </div>
+              </Link>
             </form>
-
           )}
         </div>
       </div>
