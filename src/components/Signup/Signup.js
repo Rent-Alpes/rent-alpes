@@ -14,6 +14,12 @@ const Signup = () => {
         email: '',
         password: '',
         confirmPassword: '',
+        isAdmin: false,
+        phonenumber: '',
+        address: '',
+        postalcode: '',
+        city: '',
+        country: '',
     }
 
 
@@ -29,7 +35,7 @@ const Signup = () => {
         e.preventDefault();
         setErrorDB('');
         //destructuring
-        const { email, password, firstName, lastName } = loginData;
+        const { email, password, firstName, lastName, isAdmin, phonenumber, address, postalcode, city, country } = loginData;
 
         if (errorMsg === "") {
             firebase.signupUser(email, password)
@@ -38,11 +44,16 @@ const Signup = () => {
                         firstName,
                         lastName,
                         email,
+                        isAdmin,
+                        phonenumber,
+                        address,
+                        postalcode,
+                        city,
+                        country
                     })
                 })
                 .then(() => {
                     setLoginData({ ...data });
-                    alert("Inscription réussie");
                 })
                 .catch(errordb => {
                     document.getElementById('spanErrorMessage').innerHTML = ""; //Effacer le message d'erreur si erreur base
@@ -105,7 +116,9 @@ const Signup = () => {
     return (
         <div className="bg-gray-50 min-h-screen flex flex-col">
             <nav className="bg-white p-1 fixed w-full z-10 top-0 border flex justify-center " >
-                <img src={logo} className="object-contain h-20"></img>
+                <Link to="/">
+                    <img src={logo} className="object-contain h-20" alt="logo Rent'alpes" />
+                </Link>
             </nav>
 
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
