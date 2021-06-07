@@ -38,11 +38,11 @@ const GetDataProperty = (props) => {
 
   return (
     <div className="flex flex-col">
-      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div className="my-2 overflow-x-auto sm:-mx-4 lg:-mx-2 bg-gray-100">
         <div className="py-2 align-middle inline-block min-w-full sm:px-4 lg:px-5">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead >
                 <tr>
                   <th
                     scope="col"
@@ -82,13 +82,13 @@ const GetDataProperty = (props) => {
                 {propertylist &&
                   propertylist.map((property) => (
                     <tr key={property.name}>
-                      <td className="px-6 py-3 whitespace-nowrap">
+                      <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0">
                             <img
                               className="h-30 w-40 rounded-full"
                               src={property.thumb}
-                              alt=""
+                             
                             />
                           </div>
                           <div className="ml-4">
@@ -126,13 +126,14 @@ const GetDataProperty = (props) => {
                             pathname: `/editdataproperty/${property.idDocument}`,
                           }} 
                         >
-                         <div className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-yellow-500 hover:bg-yellow-600 hover:shadow-lg" >
+                         <div className="w-full focus:outline-none text-white text-sm p-3 rounded-md bg-yellow-500 hover:bg-yellow-600 hover:shadow-lg flex justify-center" >
                          <svg 
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-8 w-8"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
+
                           >
                             <path
                               strokeLinecap="round"
@@ -150,8 +151,8 @@ const GetDataProperty = (props) => {
                       </td>
 
                       {/*View property*/}
-                    {/*  <td className=" whitespace-nowrap font-medium">
-                        <button className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">
+                      <td className=" whitespace-nowrap font-medium">
+                        <button className="w-full focus:outline-none text-white text-sm  p-3 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg flex justify-center">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-8 w-8"
@@ -173,7 +174,7 @@ const GetDataProperty = (props) => {
                         />
                           </svg>
                         </button>
-                        </td>*/}
+                        </td>
                     </tr>
                   ))}
               </tbody>

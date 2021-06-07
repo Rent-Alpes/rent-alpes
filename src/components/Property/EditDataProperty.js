@@ -87,18 +87,19 @@ alert("Delete property success !");
 
   return (
     <>
-      <div className="min-h-screen bg-gray-200 p-0 sm:p-12">
-        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
-          
-
+      <div className="min-h-screen bg-gray-200 p-0 sm:p-15 w-full h-screen overflow-hidden flex"
+      style={{backgroundImage:`url(" https://images2.alphacoders.com/238/thumb-1920-238870.jpg")`}} >
+        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto" >
+        
           <h1 className="text-2xl font-bold mb-8">Update your Property</h1>
           {propertyData && (
-            <form id="form">
+            <form id="form" className="overflow-auto my-auto px-6"  style={{height:"92%"}}>
               <div className="relative z-0 w-full mb-5">
                 <label>Name</label>
                 <input
                   type="text"
                   name="name"
+                  maxLength={50}
                   defaultValue={propertyData.name}
                   onChange={handleInputChange}
                   className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -110,6 +111,7 @@ alert("Delete property success !");
                 <input
                   type="text"
                   name="address"
+                  maxLength={50}
                   defaultValue={propertyData.address}
                   onChange={handleInputChange}
                   className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -121,6 +123,7 @@ alert("Delete property success !");
                 <input
                   type="text"
                   name="postalCode"
+                  maxLength={50}
                   defaultValue={propertyData.postalCode}
                   onChange={handleInputChange}
                   className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -132,6 +135,7 @@ alert("Delete property success !");
                 <input
                   type="text"
                   name="city"
+                  maxLength={50}
                   defaultValue={propertyData.city}
                   onChange={handleInputChange}
                   className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -143,6 +147,7 @@ alert("Delete property success !");
                 <input
                   type="text"
                   name="country"
+                  maxLength={50}
                   defaultValue={propertyData.country}
                   onChange={handleInputChange}
                   className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -186,6 +191,7 @@ alert("Delete property success !");
                 <label>Description</label>
                 <textarea
                   name="description"
+                  maxLength={2000}
                   rows={5}
                   cols={5}
                   defaultValue={propertyData.description}
@@ -263,23 +269,22 @@ alert("Delete property success !");
               </div>
 
               <Link to={{pathname: `/getdataproperty`}}>
-              <div className="w-full px-5 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-700 hover:bg-green-600 hover:shadow-lg focus:outline-none flex justify-center"onClick={UpdateProperty} >
-               <span>UPDATE</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 pl-1 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-full px-2 py-2 mt-2 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-yellow-600 hover:shadow-lg focus:outline-none flex justify-center"onClick={UpdateProperty} >
+               <span>Update</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 pl-1 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round"  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
 </svg>
-<div></div></div>
+</div>
               </Link>
 
 
               <Link className="text-center " to={{pathname: `/getdataproperty`}}  >
               
-                  <div className="w-full px-4 py-4 mt-4 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-red-700 hover:bg-red-600 hover:shadow-lg focus:outline-none flex justify-center" onClick={deleteProperty}    >
-                  <span>DELETE</span>
+                  <div className="w-full px-2 py-2 mt-2 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-red-700 hover:bg-red-600 hover:shadow-lg focus:outline-none flex justify-center" onClick={deleteProperty}    >
+                  <span >Delete</span>
                   
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 pl-1" fill="currentColor"  viewBox="0 0 24 24" >
-  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 pl-1" viewBox="0 0 24 24" fill="currentColor">
+  <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
 </svg>
                 </div>
               </Link>
