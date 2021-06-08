@@ -119,18 +119,15 @@ const GetDataProperty = (props) => {
                       </td>
                       {/*Edition property*/}
                       <td>
-                        <Link
+                       
+                        
+                           <Link   
                           to={{
                             pathname: `/editdataproperty/${property.idDocument}`,
-                          }}
+                          }} 
                         >
-                          <strong>click</strong>
-                        </Link>
-                        <button
-                          onClick={props.setIdProperty}
-                          className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-yellow-500 hover:bg-yellow-600 hover:shadow-lg"
-                        >
-                          <svg
+                         <div className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-yellow-500 hover:bg-yellow-600 hover:shadow-lg" >
+                         <svg 
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-8 w-8"
                             fill="none"
@@ -144,11 +141,16 @@ const GetDataProperty = (props) => {
                               d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                             />
                           </svg>
-                        </button>
+
+                         </div>
+                      
+                        </Link>
+                         
+                      
                       </td>
 
                       {/*View property*/}
-                      <td className=" whitespace-nowrap font-medium">
+                    {/*  <td className=" whitespace-nowrap font-medium">
                         <button className="w-full focus:outline-none text-white text-sm mb-4 p-3 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -168,10 +170,10 @@ const GetDataProperty = (props) => {
                               strokeLinejoin="round"
                               strokeWidth={2}
                               d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                            />
+                        />
                           </svg>
                         </button>
-                      </td>
+                        </td>*/}
                     </tr>
                   ))}
               </tbody>

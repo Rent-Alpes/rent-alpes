@@ -14,7 +14,6 @@ function App() {
   const idProperty="";
   const [idproperty,setIdProperty]=useState('Default property');
   const addOrEdit = async (propertyObject) => {
-    console.log(propertyObject);
     await app.firestore().collection("Property").add(propertyObject).then(function(docRef){
       UploadFiles(docRef.id);
     });
