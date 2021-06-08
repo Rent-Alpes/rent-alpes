@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { firebaseContext } from '../Firebase';
 import app from 'firebase/app';
 import InputAutocompletteAdress from './Address/InputAutocompletteAdress';
@@ -24,7 +24,7 @@ const AddProperty = (props) => {
     country: "",
     bathroom: "",
     description: "",
-    equipments: "",
+    equipments: [],
     room: "",
     traveler: "",
     picture: "",
@@ -33,8 +33,9 @@ const AddProperty = (props) => {
     thumb: "",
     surface: "",
   };
-  const [userSession, setUserSession] = useState(null);
-  const [error,setError]=useState("");
+
+ 
+  const [isChecked, setIsChecked] = useState(false);
   const adresse =  <InputAutocompletteAdress /> 
   initialPropertyValues.address=adresse;
 
@@ -58,8 +59,12 @@ const AddProperty = (props) => {
   const handleInputChange = (e) => {
 
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
+    setIsChecked(!isChecked);
 
   };
+
+
+
   return (
     <>
       <div className="w-full h-screen bg-home h-full bg-no-repeat bg-cover bg-center overflow-hidden flex" 
@@ -102,6 +107,24 @@ const AddProperty = (props) => {
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
+            </div>
+
+            <label>Equipment</label>
+            <div className="relative z-0 w-full mb-5">
+              {}
+              <input
+                type="checkbox" className="form-checkbox h-5 w-5 text-teal-600" checked={isChecked}
+                name="equipments"
+                required 
+                onChange={handleInputChange}
+                
+              />
+              <span class="ml-2 text-gray-700 ">Jacuzzi inside</span>
+         
+
+
+
+
             </div>
             <label>City</label>
             <div className="relative z-0 w-full mb-5">
@@ -200,7 +223,7 @@ const AddProperty = (props) => {
 
             <div>
               <div className="mt-5 text-center">
-                <label htmlFor="property-images" className="btn flex justify-center border-2 rounded-lg p-3 text-2xl cursor-pointer hover:border-0 hover:bg-gray-300">+ Add</label>
+                <label htmlFor="property-images" className="btn flex justify-center border-2 rounded-lg p-3 text-2xl cursor-pointer hover:border-0 hover:bg-gray-300">+ Add pictures</label>
                 <input type="file" name="property-images" onChange={InputFileChange} accept=".JPG, .png, .jpeg, .png" id="property-images" max-size="20000" multiple style={{ visibility: "hidden" }} />
               </div>
               <div id="filesList"> </div>

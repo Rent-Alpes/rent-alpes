@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import app from "firebase/app";
 import { firebaseContext } from "../Firebase";
-import EditDataProperty from "./EditDataProperty";
 import { Link } from "react-router-dom";
 
 const GetDataProperty = (props) => {
@@ -23,6 +22,7 @@ const GetDataProperty = (props) => {
     const response = db.collection("Property");
     const data = [];
     const items = await response.where("idUser", "==", id).get();
+    
     items.forEach((doc) => {
       data.push({ idDocument: doc.id, ...doc.data() });
 
@@ -31,17 +31,17 @@ const GetDataProperty = (props) => {
     setPropertylist(data);
   };
 
-  function getIdproperty(id) {
+ /* function getIdproperty(id) {
     //console.log(id);
     return <EditDataProperty propertyData={id} />;
-  }
+  }*/
 
   return (
     <div className="flex flex-col">
       <div className="my-2 overflow-x-auto sm:-mx-4 lg:-mx-2 bg-gray-100">
         <div className="py-2 align-middle inline-block min-w-full sm:px-4 lg:px-5">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 ">
               <thead >
                 <tr>
                   <th
@@ -78,11 +78,11 @@ const GetDataProperty = (props) => {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-300">
+              <tbody className="bg-white divide-y divide-gray-300 ">
                 {propertylist &&
                   propertylist.map((property) => (
                     <tr key={property.name}>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4 whitespace-nowrap ">
                         <div className="flex items-center">
                           <div className="flex-shrink-0">
                             <img

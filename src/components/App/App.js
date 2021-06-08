@@ -12,6 +12,7 @@ import EditDataProperty from "../Property/EditDataProperty";
 import app from "firebase/app";
 import React, { useState } from "react";
 import {UploadFiles} from "../Property/AddProperty";
+import Equipment from "../Property/GetEquipment"
 
 function App() {
   const idProperty="";
@@ -51,6 +52,9 @@ function App() {
           </Route>
           <Route path="/editdataproperty">
           <EditDataProperty addOrEditProperty={addOrEdit} idproperty={idproperty} />
+          </Route>
+          <Route path="/equipment">
+          <Equipment />
           </Route>
         {/* PENSER A CREER UN COMPOSANT POUR MAUVAIS PATH */}
       </Switch>
