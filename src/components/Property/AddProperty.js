@@ -16,7 +16,6 @@ export const UploadFiles = (id) => {
 
 const AddProperty = (props) => {
   const firebase = useContext(firebaseContext);
-
   const initialPropertyValues = {
     name: "",
     address: "",
@@ -34,21 +33,28 @@ const AddProperty = (props) => {
     thumb: "",
     surface: "",
   };
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState("");
+  const [userSession, setUserSession] = useState(null);
+  const [error,setError]=useState("");
+  const adresse =  <InputAutocompletteAdress /> 
+  initialPropertyValues.address=adresse;
 
-
-  const [propertyValues, setPropertyValues] = useState(initialPropertyValues);
-
+  const [propertyValues, setPropertyValues] = useState();
+  
   const handleSubmit = (e) => {
+
+    try{
     e.preventDefault();
+    
     var user = firebase.auth.currentUser;
     propertyValues.idUser = user.uid;
     props.addOrEditProperty(propertyValues);
-    alert("Your property has been success add  !!");
+    alert ("Your property has been success add  !!");
+    }
+    catch {
 
-  };
-
+    alert("Error add property");
+  }
+}
   const handleInputChange = (e) => {
 
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
@@ -56,138 +62,137 @@ const AddProperty = (props) => {
   };
   return (
     <>
-      <div className="min-h-screen bg-gray-200 p-0 sm:p-12">
-        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
+      <div className="w-full h-screen bg-home h-full bg-no-repeat bg-cover bg-center overflow-hidden flex" 
+      style={{backgroundImage:`url("https://images7.alphacoders.com/594/thumb-1920-594150.jpg")` }}>
+
+        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto">
           <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
-          <form id="form" onSubmit={handleSubmit}>
+          <form id="form" onSubmit={handleSubmit} className="overflow-auto  my-auto px-6" style={{height:"90%"}}>
+          <label>Name</label>
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
                 name="name"
-                placeholder="Name"
-                required pattern="[0-9a-zA-Z-\.]"
+              
+                required 
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
 
             <InputAutocompletteAdress />
-
-            <div className="relative z-0 w-full mb-5">
+            <label>Address</label>
+            <div className="relative z-0 w-full mb-5" InputAutocompletteAdress>
               <input
                 type="text"
                 name="address"
-                placeholder="Address"
-                required pattern="[0-9a-zA-Z-\.]"
+                
+                
+                required 
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
-
+            <label>Postal Code</label>
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
                 name="postalCode"
-                placeholder="Postal Code"
-                required pattern="[0-9a-zA-Z-\.]"
+                required 
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
-
+            <label>City</label>
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
                 name="city"
-                placeholder="City"
-                required pattern="[0-9a-zA-Z-\.]"
+                required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
-
+            <label>Country</label>
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
                 name="country"
-                placeholder="Country"
-                required pattern="[0-9a-zA-Z-\.]"
+                
+                required 
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
-
+            <label>Bathroom</label>
             <div className="relative z-0 w-full mb-5">
               <input
                 type="number"
                 name="bathroom"
-                placeholder="Number of Bathroom"
-                required pattern="[0-9a-zA-Z-\.]"
+               
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
-
+            <label>Room</label>
             <div className="relative z-0 w-full mb-5">
               <input
                 type="number"
                 name="room"
-                placeholder="Number of Room"
-                required pattern="[0-9a-zA-Z-\.]"
+               
+                required 
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
-
+            <label>Traveler</label>
             <div className="relative z-0 w-full mb-5">
               <input
                 type="number"
                 name="traveler"
-                placeholder="Number of Traveler"
-                required pattern="[0-9a-zA-Z-\.]"
+               required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
 
-
+            <label>Description</label>
             <div className="relative z-0 w-full mb-5">
               <textarea
                 name="description"
-                placeholder="Description"
-                required pattern="[0-9a-zA-Z-\.]"
                 cols="40"
                 rows="5"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
-
+            <label>Surface</label>
             <div className="relative z-0 w-full mb-5">
               <input
                 type="number"
                 name="surface"
-                placeholder="Surface"
-                required pattern="[0-9a-zA-Z-\.]"
+                required 
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
+            <label>Price</label>
             <div className="relative z-0 w-full mb-5">
               <input
                 type="number"
                 name="price"
                 placeholder="Price / Night"
-                required pattern="[0-9a-zA-Z-\.]"
+                required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
+            <label>Thumb</label>
             <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
                 name="thumb"
-                placeholder="Thumb"
+               required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -203,8 +208,11 @@ const AddProperty = (props) => {
             <button
               id="button"
               type="submit"
-              className="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none">
-              Register Property
+              className="w-full px-6 py-3 mt-3  text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none flex justify-center">
+              Add Property
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
             </button>
           </form>
         </div>

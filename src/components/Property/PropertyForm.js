@@ -35,37 +35,7 @@ const PropertyForm = (props) => {
       .doc(PropertyValues.idDocument);
     console.log(propertys);
 
-    //props.addOrEditProperty(PropertyValues);
-    /*    var user = firebase.property.uid;
-              user.updateProperty(propertyData.name,
-                propertyData.address,
-                propertyData.postalCode,
-                propertyData.city,
-                propertyData.country,
-                propertyData.bathroom,
-                propertyData.description,
-                propertyData.equipments,
-                propertyData.room,
-                propertyData.traveler,
-                propertyData.picture,
-                propertyData.idUser,
-                propertyData.price,
-                propertyData.thumb,
-                propertyData.surface
-    
-                ).then(function () {
-                  console.log("Success modification");
-              }).catch(function (error) {
-                  console.log(error);
-              });
-    
-          firebase.property(userSession.uid).set(
-            propertyData,
-            console.log(propertyData)
-          )
-              .catch(errordb => {
-                  console.log(errordb)
-              })*/
+  
   };
 
   return (
