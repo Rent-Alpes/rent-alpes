@@ -3,19 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.1.1",
+    "@craco/craco": "^6.1.2",
     "@headlessui/react": "^1.1.1",
     "@material-ui/icons": "^4.11.2",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.2.6",
+    "@testing-library/jest-dom": "^5.13.0",
+    "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.1.10",
     "craco": "0.0.3",
-    "firebase": "^8.3.1",
+    "esri-leaflet-geocoder": "^3.0.0",
+    "firebase": "^8.6.5",
+    "leaflet-geosearch": "^3.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-google-places-autocomplete": "^3.3.1",
+    "react-leaflet": "^3.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "react-select": "^4.3.1",
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "craco start",
@@ -42,7 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@tailwindcss/postcss7-compat": "^2.0.4",
+    "@tailwindcss/postcss7-compat": "^2.1.4",
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4"
