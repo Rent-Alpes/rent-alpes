@@ -6,7 +6,7 @@ import Search from "../Search/Search";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import Profil from "../Profil/Profil";
 import Home from "../Home/Home";
-import Header from "../Header/Header";
+import ErrorComponent from "../Error404/Error404";
 import Property from "../Property/AddProperty";
 import GetDataProperty from "../Property/GetDataProperty";
 import EditDataProperty from "../Property/EditDataProperty";
@@ -41,7 +41,6 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/header" component={Header} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path="/Search" component={Search} />
@@ -62,7 +61,7 @@ function App() {
             idproperty={idproperty}
           />
         </Route>
-        {/* PENSER A CREER UN COMPOSANT POUR MAUVAIS PATH */}
+        <Route component={ErrorComponent} />
       </Switch>
     </Router>
   );
