@@ -14,6 +14,7 @@ import app from "firebase/app";
 import React, { useState } from "react";
 import { UploadFiles } from "../Property/AddProperty";
 import { AddProperty } from "../Algolia/Algolia";
+import Review from "../Review/Review";
 
 function App() {
   const idProperty = "";
@@ -61,6 +62,7 @@ function App() {
             idproperty={idproperty}
           />
         </Route>
+        <Route path="/review" component={Review} />
         <Route component={ErrorComponent} />
       </Switch>
     </Router>
