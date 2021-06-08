@@ -1,9 +1,10 @@
 import React from 'react';
 import Header from '../Header/Header';
-import "../Home/Home.css"
+import "../Home/Home.css";
+import { SynchPropertys } from "../Algolia/Algolia";
 
 const Home = () => {
-
+    SynchPropertys();
 
 
     return (
