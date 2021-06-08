@@ -45,6 +45,22 @@
   color: red;
 }
 
+/* InputFile */
+.file-block{
+	display: flex;
+	margin: 5px;
+}
+.file-delete{
+  display: flex;
+	width: 24px;
+	color: initial;
+	background-color: #6eb4ff00;
+	font-size: large;
+	justify-content: center;
+	margin-right: 3px;
+	cursor: pointer;
+}
+
 .green-text {
   color: #10B981;
 }
