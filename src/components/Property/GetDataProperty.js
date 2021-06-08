@@ -81,7 +81,7 @@ const GetDataProperty = (props) => {
               <tbody className="bg-white divide-y divide-gray-300 ">
                 {propertylist &&
                   propertylist.map((property) => (
-                    <tr key={property.name}>
+                    <tr key={property.name} className=" hover:bg-gray-100">
                       <td className="px-6 py-4 whitespace-nowrap ">
                         <div className="flex items-center">
                           <div className="flex-shrink-0">
