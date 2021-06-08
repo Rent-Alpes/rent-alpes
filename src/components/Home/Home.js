@@ -10,7 +10,7 @@ const Home = () => {
 
         <div className="w-full h-screen bg-home h-full bg-no-repeat bg-cover bg-center overflow-hidden flex" >
 
-            {/* HEADER DDE LA PAGE  */}
+            {/* HEADER DE LA PAGE  */}
             <Header />
             <div className="h-full w-full flex flex-col justify-center">
 
