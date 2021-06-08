@@ -64,7 +64,7 @@ const Header = () => {
           </div>
 
           <div className="w-6/12 block flex-grow grid justify-items-stretch">
-            <div className="justify-self-end">
+            <div className="flex justify-end">
               {/* //////////////////////////// FAVORITES //////////////////////////// */}
               <button className="inline-block text-sm px-4 rounded text-white mt-4 font-bold block text-center focus:outline-none">
                 <div className="flex justify-center">
@@ -96,7 +96,7 @@ const Header = () => {
                   <>
                     <div>
                       <Menu.Button
-                        className="inline-block text-sm pl-4 mr-10 sm:mr-2 md:mr-5 xl:mr-10 mdrounded text-white mt-6 font-bold block text-center focus:outline-none"
+                        className="inline-block text-sm pl-4 mr-10 sm:mr-0 md:mr-5 xl:mr-10 mdrounded text-white mt-6 font-bold block text-center focus:outline-none"
                         onClick={setShowModal()}
                       >
                         <div className="flex">
