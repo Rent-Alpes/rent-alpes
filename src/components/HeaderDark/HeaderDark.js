@@ -44,10 +44,11 @@ const HeaderDark = () => {
   return (
     <div>
       <div className="w-full h-32 shadow mb-10">
-        <nav className="flex  fixed  top-0 items-center justify-between pt-3 px-3 w-full">
+        <nav className="flex fixed top-0 bg-white z-10 items-center justify-between pt-3 px-3 w-full">
           <div className="flex w-6/12 text-white mr-6">
             <img
               src={logo}
+              href="/"
               className="object-contain h-28"
               alt="logo Rent'alpes"
             ></img>

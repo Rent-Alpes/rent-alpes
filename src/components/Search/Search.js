@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CardItem from "../SearchResult/CardItem";
 import HeaderDark from "../HeaderDark/HeaderDark";
 import { SearchBar } from "./SearchBar";
+import { useLocation } from "react-router-dom";
 
 const Search = (props) => {
   const [properties, setProperties] = useState();
+  const { state } = useLocation();
 
   function handleChange(value) {
     setProperties(value);
   }
+
+  useEffect(() => {
+    setProperties(state);
+  }, []);
 
   return (
     <>
