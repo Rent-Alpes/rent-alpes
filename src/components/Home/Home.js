@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState, Fragment, useContext, useEffect } from "react";
 import Header from '../Header/Header';
 import "../Home/Home.css";
 import { SynchPropertys } from "../Algolia/Algolia";
 
-const Home = () => {
+const Home = (props) => {
     SynchPropertys();
-
-
+    // const handleKeyPress = (event) => {
+    //     if (event.key === 'Enter') {
+    //         console.log(document.getElementById("search-input").value);
+    //     }
+    // }
+    const SearchProperty = () => {
+        props.history.push("/search");
+    }
     return (
 
         <div className="w-full h-screen bg-home h-full bg-no-repeat bg-cover bg-center overflow-hidden flex" >
@@ -15,9 +21,11 @@ const Home = () => {
             <Header />
             <div className="h-full w-full flex flex-col justify-center">
 
-                <div className="relative xl:w-4/12 mx-auto">
-                    <input type="search" className="static w-full pl-7 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white bg-opacity-90" placeholder="Search" />
-                    <div className="absolute inset-y-0 right-0">
+                <div className="relative xl:w-4/12 mx-auto" onClick={SearchProperty}>
+                    <input type="text"
+                        id="search-input" placeholder="Rechercher..."
+                        className="static w-full pl-7 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white bg-opacity-90"
+                        placeholder="Search" />                    <div className="absolute inset-y-0 right-0">
                         <button className="static h-14 px-5 rounded-md focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

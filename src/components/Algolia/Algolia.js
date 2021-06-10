@@ -17,20 +17,19 @@ export const AddProperty = (propertyValues, propertyId) => {
 
 export const SearchProperty = (searchText) => {
 
-  SearchSame(searchText);
-  console.log(resultProperty);
-  // index.search(searchText, {
-  //   minWordSizefor1Typo: 3,
-  //   minWordSizefor2Typos: 3,
-  //   allowTyposOnNumericTokens: true
-  // })
-  //   .then(({ hits }) => {
-  //     console.log("No result");
-  //     console.log(hits);
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
+  //SearchSame(searchText);
+  index.search(searchText, {
+    minWordSizefor1Typo: 3,
+    minWordSizefor2Typos: 3,
+    allowTyposOnNumericTokens: true
+  })
+    .then(({ hits }) => {
+      console.log("No result");
+      console.log(hits);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 
 
 };

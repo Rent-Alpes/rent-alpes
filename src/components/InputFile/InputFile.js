@@ -54,3 +54,7 @@ export const InputFileDelete = (event) => {
 export const GetFile = () => {
     return dt.files;
 };
+
+// export const UpdateInputFile = () => {
+
+// };

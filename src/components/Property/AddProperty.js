@@ -14,6 +14,8 @@ export const UploadFiles = (id) => {
   }
 }
 
+
+
 const AddProperty = (props) => {
   const firebase = useContext(firebaseContext);
   const initialPropertyValues = {
@@ -39,7 +41,7 @@ const AddProperty = (props) => {
   initialPropertyValues.address=adresse;
 
   const [propertyValues, setPropertyValues] = useState();
-  
+
   const handleSubmit = (e) => {
 
     try{
@@ -63,9 +65,9 @@ const AddProperty = (props) => {
   return (
     <>
       <div className="w-full h-screen bg-home h-full bg-no-repeat bg-cover bg-center overflow-hidden flex" 
-      style={{backgroundImage:`url("https://images7.alphacoders.com/594/thumb-1920-594150.jpg")` }}>
+      style={{backgroundImage:`url("https://images7.alphacoders.com/594/thumb-1920-594150.jpg")`}}>
 
-        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto">
+        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto" style={{width:"500px"}}>
           <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
           <form id="form" onSubmit={handleSubmit} className="overflow-auto  my-auto px-6" style={{height:"90%"}}>
           <label>Name</label>
@@ -198,20 +200,20 @@ const AddProperty = (props) => {
               />
             </div>
 
-            <div>
-              <div className="mt-5 text-center">
-                <label htmlFor="property-images" className="btn flex justify-center border-2 rounded-lg p-3 text-2xl cursor-pointer hover:border-0 hover:bg-gray-300">+ Add</label>
-                <input type="file" name="property-images" onChange={InputFileChange} accept=".JPG, .png, .jpeg, .png" id="property-images" max-size="20000" multiple style={{ visibility: "hidden" }} />
-              </div>
-              <div id="filesList"> </div>
-            </div>
+            <div className="mt-5 mb-5">
+                  <div className="text-center">
+                    <label htmlFor="property-images" className="btn flex justify-center border-2 rounded-lg p-3 text-2l cursor-pointer hover:border-0 hover:bg-gray-300">+ Add picture</label>
+                    <input className="hidden" type="file" name="property-images" onChange={InputFileChange} accept=".JPG, .png, .jpeg, .png" id="property-images" max-size="20000" multiple />
+                  </div>
+                  <div id="filesList"> </div>
+                </div>
             <button
               id="button"
               type="submit"
               className="w-full px-6 py-3 mt-3  text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none flex justify-center">
               Add Property
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
             </button>
           </form>
