@@ -46,7 +46,7 @@ const Profil = (props) => {
     return () => {
       listener();
     };
-  }, [userSession]);
+  }, [userSession, firebase, props.history]);
 
   //Attribution de la value
   const handleChange = (e) => {
@@ -87,9 +87,6 @@ const Profil = (props) => {
       .catch(function (error) {
         console.log(error);
       });
-
-    
-
   }
 
   return userSession === null ? (
