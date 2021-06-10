@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Header/Header";
 import "../Home/Home.css";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
+  const [query, setQuery] = useState();
+  let history = useHistory();
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const handleClick = () => {
+    history.push({
+      pathname: "/search",
+      search: query,
+    });
+  };
+
   return (
     <div className="w-full h-screen bg-home h-full bg-no-repeat bg-cover bg-center overflow-hidden flex">
       {/* HEADER DE LA PAGE  */}
@@ -13,9 +28,13 @@ const Home = () => {
             type="search"
             className="static w-full pl-7 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white bg-opacity-90"
             placeholder="Search"
+            onChange={handleInputChange}
           />
           <div className="absolute inset-y-0 right-0">
-            <button className="static h-14 px-5 rounded-md focus:outline-none">
+            <button
+              onClick={handleClick}
+              className="static h-14 px-5 rounded-md focus:outline-none"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"

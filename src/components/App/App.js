@@ -5,7 +5,6 @@ import Login from "../Login/Login";
 import SearchInMap from "../MapLocations/SearchInMap";
 import ResultPage from "../SearchResult/ResultPage";
 import DatePicker from "../SearchResult/CardItem/DatePicker";
-import { TestWrapper } from "react-dates";
 import Search from "../Search/Search";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import Profil from "../Profil/Profil";
