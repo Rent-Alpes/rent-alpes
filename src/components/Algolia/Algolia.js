@@ -1,6 +1,4 @@
 import algoliasearch from "algoliasearch";
-import { useState } from "react";
-import app from "firebase/app";
 
 const client = algoliasearch("WM2R73MT8D", "8f1fea58043949f2ba7714b32998a65d");
 const index = client.initIndex("Property");
