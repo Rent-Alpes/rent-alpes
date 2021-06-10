@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import Header from "../Header/Header";
 import "../Home/Home.css";
 import { SearchBar } from "../Search/HomeSearchBar";
+import { SynchPropertys } from "../Algolia/Algolia";
 
 const Home = () => {
   const [properties, setProperties] = useState();
-
+    SynchPropertys();
   function handleChange(value) {
     setProperties(value);
     console.log(properties);

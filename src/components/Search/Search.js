@@ -5,6 +5,9 @@ import { SearchBar } from "./SearchBar";
 import { useLocation } from "react-router-dom";
 import SearchInMap from "../MapLocations/SearchInMap";
 import { BiMapAlt } from "react-icons/bi";
+import { firebaseContext } from '../Firebase';
+import algoliasearch from 'algoliasearch';
+import { SearchProperty } from "../Algolia/Algolia";
 
 const Search = (props) => {
   const [properties, setProperties] = useState();

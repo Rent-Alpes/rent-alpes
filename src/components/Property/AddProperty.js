@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import { firebaseContext } from "../Firebase";
-import app from "firebase/app";
-import InputAutocompletteAdress from "./Address/InputAutocompletteAdress";
-import { InputFileChange } from "../InputFile/InputFile";
-import { GetFile } from "../InputFile/InputFile";
+import { firebaseContext } from '../Firebase';
+import app from 'firebase/app';
+import InputAutocompletteAdress from './Address/InputAutocompletteAdress';
+import { InputFileChange } from '../InputFile/InputFile';
+import { GetFile } from '../InputFile/InputFile';
 
 export const UploadFiles = (id) => {
   var files = GetFile();
@@ -40,7 +40,7 @@ const AddProperty = (props) => {
   initialPropertyValues.address = adresse;
 
   const [propertyValues, setPropertyValues] = useState();
-
+  
   const handleSubmit = (e) => {
     try {
       e.preventDefault();
@@ -55,7 +55,13 @@ const AddProperty = (props) => {
   };
   const handleInputChange = (e) => {
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
+
   };
+
+  const handleInputFileChange = () => {
+    InputFileChange(null);
+  }
+
   return (
     <>
       <div

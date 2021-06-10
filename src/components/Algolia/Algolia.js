@@ -1,15 +1,24 @@
 import algoliasearch from "algoliasearch";
 
-const client = algoliasearch("WM2R73MT8D", "8f1fea58043949f2ba7714b32998a65d");
+const client = algoliasearch('WM2R73MT8D', '8f1fea58043949f2ba7714b32998a65d');
 const index = client.initIndex("Property");
-var resultProperty;
+
+
 
 export const AddProperty = (propertyValues, propertyId) => {
   const objects = propertyValues;
   objects.objectID = propertyId;
-  index.saveObjects(objects);
+  index.saveObject(objects);
 };
 
+export const UpdateAlgolia = (propertyValues, propertyId) => {
+  const objects = propertyValues;
+  objects.objectID = propertyId;
+  index.saveObject(objects);
+};
+export const DeleteAlgolia = (propertyId) => {
+  index.deleteObject(propertyId)
+};
 export const SearchProperty = (searchText) => {
   function SearchSame(searchText) {
     index
