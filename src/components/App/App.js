@@ -2,6 +2,10 @@ import "../../App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Signup from "../Signup/Signup";
 import Login from "../Login/Login";
+import SearchInMap from "../MapLocations/SearchInMap";
+import ResultPage from "../SearchResult/ResultPage";
+import DatePicker from "../SearchResult/CardItem/DatePicker";
+import { TestWrapper } from "react-dates";
 import Search from "../Search/Search";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import Profil from "../Profil/Profil";
@@ -43,6 +47,9 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
+        <Route path="/map" component={SearchInMap} />
+        <Route path="/result" component={ResultPage} />
+        <Route path="/date" component={DatePicker} />
         <Route path="/Search" component={Search} />
         <Route path="/forgetpassword" component={ForgetPassword} />
         <Route path="/profil" component={Profil} />
