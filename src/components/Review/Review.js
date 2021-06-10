@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 
 const Review = () => {
+<<<<<<< HEAD
   //  CLEANLESS
   const [ratingCleanless, setRatingCleanless] = useState(null);
   const [hoverCleanless, setHoverCleanless] = useState(null);
