@@ -28,21 +28,27 @@ const ViewProperty = () => {
       let result = await storageRef
         .child("image/property/" + propertyId)
         .listAll();
-      let urlPromises = result.items.map((imageRef) =>
-        imageRef.getDownloadURL()
-      );
+      let urlPromises = result.items.map((imageRef) => {
+        imageRef.getDownloadURL();
+      });
 
       return Promise.all(urlPromises);
     };
 
     const loadImages = async () => {
+      let urlList = [];
       const urls = await fetchImages();
-      setFiles(urls);
+      urls.forEach((link) => {
+        urlList.push({ url: link });
+      });
+      setFiles(urlList);
     };
     loadImages();
+    console.log(files);
   }
-
-  getImages();
+  useEffect(() => {
+    getImages();
+  }, []);
 
   return (
     <>
