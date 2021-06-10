@@ -17,39 +17,29 @@ const Header = () => {
 
   const [userSession, setUserSession] = useState(null);
   const [userData, setUserData] = useState(null);
-  var admin = false;
 
   //Si connecté
   useEffect(() => {
-    app.auth().onAuthStateChanged((user) => {
+    return app.auth().onAuthStateChanged((user) => {
       setUserSession(user);
-    });
-
-    if (!!userSession) {
-      firebase
-        .user(userSession.uid)
-        .get()
-        .then((doc) => {
-          if (doc && doc.exists) {
-            const myData = doc.data();
-            setUserData(myData);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      admin = false;
-    }
-  }, [userSession]);
-
-  function setShowModal() {
-    if (userData != null) {
-      if (userData.isAdmin === true) {
-        admin = true;
+      if (!user) {
+        setUserData(null);
+      } else {
+        firebase
+          .user(user.uid)
+          .get()
+          .then((doc) => {
+            if (doc && doc.exists) {
+              const myData = doc.data();
+              setUserData(myData);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-    }
-  }
+    });
+  }, []);
 
   return (
     <div>
@@ -95,10 +85,7 @@ const Header = () => {
                 {({ open }) => (
                   <>
                     <div>
-                      <Menu.Button
-                        className="inline-block text-sm pl-4 mr-10 sm:mr-0 md:mr-5 xl:mr-10 mdrounded text-white mt-6 font-bold block text-center focus:outline-none"
-                        onClick={setShowModal()}
-                      >
+                      <Menu.Button className="inline-block text-sm pl-4 mr-10 sm:mr-0 md:mr-10 xl:mr-10 mdrounded text-white mt-6 font-bold block text-center focus:outline-none">
                         <div className="flex">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +134,7 @@ const Header = () => {
                     >
                       <Menu.Items
                         static
-                        className="origin-top-right absolute right-0 mt-2 w-28 mr-10 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        className="origin-top-right absolute right-0 mt-2 w-28 mr-10 sm:mr-0 md:mr-10 xl:mr-10 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                       >
                         <div className="py-1">
                           {!userSession && (
@@ -204,7 +191,25 @@ const Header = () => {
                             </Menu.Item>
                           )}
 
-                          {admin && (
+                          {userSession && (
+                            <Menu.Item>
+                              {({ active }) => (
+                                <Link
+                                  to="/getDataProperty"
+                                  className={classNames(
+                                    active
+                                      ? "bg-gray-100 text-gray-900"
+                                      : "text-gray-700",
+                                    "block px-4 py-2 text-sm"
+                                  )}
+                                >
+                                  Property
+                                </Link>
+                              )}
+                            </Menu.Item>
+                          )}
+
+                          {userData?.isAdmin && (
                             <Menu.Item>
                               {({ active }) => (
                                 <Link
