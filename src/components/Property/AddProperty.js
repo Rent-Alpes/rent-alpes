@@ -23,13 +23,14 @@ const AddProperty = (props) => {
   const [Equipmentlist, setEquipmentlist] = useState([]);
   const [propertyValues, setPropertyValues] = useState();
   const [address, setAddress] = useState([]);
-  console.log(Equipmentlist);
+  //console.log(Equipmentlist);
   const handleSubmit = (e) => {
     try {
       e.preventDefault();
       var user = firebase.auth.currentUser;
+    
       propertyValues.idUser = user.uid;
-
+      propertyValues.equipments=Equipmentlist; 
       props.addOrEditProperty(propertyValues);
 
       console.log(propertyValues);
@@ -71,6 +72,7 @@ const AddProperty = (props) => {
             </div>
             <InputAutocompletteAdress
               state={{ address: [address, setAddress] }}
+         
             />
 
             <label className=" mb-5">Address</label>
