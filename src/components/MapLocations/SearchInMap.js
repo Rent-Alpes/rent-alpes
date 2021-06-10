@@ -25,7 +25,7 @@ export default function SearchInMap() {
       });
   }, []);
 
-  const getLatLngBounds = () => {
+  /*const getLatLngBounds = () => {
     const latLngs = propertyPositions.map((position) => {
       console.log(propertyPositions);
       return L.latLng(position[0], position[1]);
@@ -35,7 +35,7 @@ export default function SearchInMap() {
     return bounds;
   };
 
-  getLatLngBounds();
+  getLatLngBounds();*/
 
   return (
     <>
