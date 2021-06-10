@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { firebaseContext } from '../Firebase';
 import app from 'firebase/app';
 import InputAutocompletteAdress from './Address/InputAutocompletteAdress';
 import { InputFileChange } from '../InputFile/InputFile';
-import { InputFileDelete } from '../InputFile/InputFile';
 import { GetFile } from '../InputFile/InputFile';
 
 export const UploadFiles = (id) => {
@@ -13,9 +12,6 @@ export const UploadFiles = (id) => {
     picture.put(files[i]);
   }
 }
-
-
-
 const AddProperty = (props) => {
   const firebase = useContext(firebaseContext);
   const initialPropertyValues = {
@@ -35,8 +31,6 @@ const AddProperty = (props) => {
     thumb: "",
     surface: "",
   };
-  const [userSession, setUserSession] = useState(null);
-  const [error,setError]=useState("");
   const adresse =  <InputAutocompletteAdress /> 
   initialPropertyValues.address=adresse;
 
@@ -62,6 +56,11 @@ const AddProperty = (props) => {
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
 
   };
+
+  const handleInputFileChange = () => {
+    InputFileChange(null);
+  }
+
   return (
     <>
       <div className="w-full h-screen bg-home h-full bg-no-repeat bg-cover bg-center overflow-hidden flex" 
@@ -203,7 +202,7 @@ const AddProperty = (props) => {
             <div className="mt-5 mb-5">
                   <div className="text-center">
                     <label htmlFor="property-images" className="btn flex justify-center border-2 rounded-lg p-3 text-2l cursor-pointer hover:border-0 hover:bg-gray-300">+ Add picture</label>
-                    <input className="hidden" type="file" name="property-images" onChange={InputFileChange} accept=".JPG, .png, .jpeg, .png" id="property-images" max-size="20000" multiple />
+                    <input className="hidden" type="file" name="property-images" onChange={handleInputFileChange} accept=".JPG, .png, .jpeg, .png" id="property-images" max-size="20000" multiple />
                   </div>
                   <div id="filesList"> </div>
                 </div>

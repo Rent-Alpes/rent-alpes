@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { firebaseContext } from '../Firebase';
 import app from 'firebase/app';
 import algoliasearch from 'algoliasearch';
-import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 import { SearchProperty } from "../Algolia/Algolia";
 
 const Search = () => {

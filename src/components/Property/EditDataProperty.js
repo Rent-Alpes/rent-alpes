@@ -3,8 +3,10 @@ import { firebaseContext } from "../Firebase";
 import GetDataList from "./GetDataProperty";
 import app from "firebase/app";
 import { Link } from "react-router-dom";
-import { UpdateInputFile } from '../InputFile/InputFile';
+import { SetInputFile } from '../InputFile/InputFile';
 import { InputFileChange } from '../InputFile/InputFile';
+import { UpdateAlgolia } from '../Algolia/Algolia';
+import { DeleteAlgolia } from '../Algolia/Algolia';
 
 
 const EditProperty = (props) => {
@@ -13,16 +15,13 @@ const EditProperty = (props) => {
   const propertyId = window.location.href.split("/")[4];
 
   function getPropertyData() {
-    SetImageInput(propertyId);
     var docRef = db.collection("Property").doc(propertyId);
     docRef
       .get()
       .then((doc) => {
         if (doc.exists) {
           setpropertyData(doc.data());
-          //  console.log(propertyData);
         } else {
-          // doc.data() will be undefined in this case
           console.log("No such document!");
         }
       })
@@ -35,16 +34,17 @@ const EditProperty = (props) => {
   const [propertyData, setpropertyData] = useState(null);
 
   useEffect(() => {
-    let listener = firebase.auth.onAuthStateChanged((user) => {
+    //let listener = firebase.auth.onAuthStateChanged((user) => {
+    firebase.auth.onAuthStateChanged((user) => {
       user ? setUserSession(user) : props.history.push("/login");
       getPropertyData();
-      // console.log(propertyData);
     });
-
-    return () => {
-      listener();
-    };
-  }, [userSession]);
+    SetImageInput(propertyId);
+  }, []);
+  //   return () => {
+  //     listener();
+  //   };
+  // }, [userSession]);
 
   const handleInputChange = (e) => {
     setpropertyData({ ...propertyData, [e.target.name]: e.target.value });
@@ -56,28 +56,56 @@ const EditProperty = (props) => {
     ref.update({ ...propertyData });
     alert("Update property success !");
     <GetDataList />
-
-
+    UpdateAlgolia(propertyData,propertyId);
   }
   function deleteProperty() {
     db.collection('Property').doc(propertyId).delete();
     if (!!propertyId) {
       alert("Delete property success !");
       <GetDataList />
+      deleteFiles();
+      DeleteAlgolia(propertyId);
     }
 
   }
+  const deleteFiles = async()=>{
+    var picture = await app.storage().ref("image/property");
+    picture.child(propertyId).listAll().then((res) => {
+      res.items.forEach((folderRef) => {
+        folderRef.delete().then(() => {
+        }).catch((error) => {
+          console.log(error);
+        });
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+  const SetImageInput = async () => {
+    var picture = await app.storage().ref("image/property");
+    picture.child(propertyId).listAll().then((res) => {
+      res.items.forEach((itemRef) => {
+        itemRef.getMetadata().then((metadata) => {
+          var file = new File([null], metadata.name, { type: metadata.contentType });
+          SetInputFile(file, propertyId);
+        }).catch((error) => {
+          console.log(error);
+        });
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 
-  function SetImageInput(propertyId){
-    var picture = app.storage().ref("image/property/" + propertyId);
-    console.log(picture)
+  const handleInputFileChange = () => {
+    InputFileChange(propertyId);
   }
 
   return (
     <>
       <div className="min-h-screen bg-gray-200 p-0 sm:p-15 w-full h-screen overflow-hidden flex"
         style={{ backgroundImage: `url(" https://images2.alphacoders.com/238/thumb-1920-238870.jpg")` }} >
-        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto" style={{width:"500px"}}>
+        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto" style={{ width: "500px" }}>
           <h1 className="text-2xl font-bold mb-8">Update your Property</h1>
           {propertyData && (
             <form id="form" className="overflow-auto my-auto px-6" style={{ height: "92%" }}>
@@ -89,7 +117,7 @@ const EditProperty = (props) => {
                   maxLength={50}
                   defaultValue={propertyData.name}
                   onChange={handleInputChange}
-                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"/>
+                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
               </div>
               <div className="relative z-0 w-full mb-5">
                 <label>Address</label>
@@ -99,7 +127,7 @@ const EditProperty = (props) => {
                   maxLength={50}
                   defaultValue={propertyData.address}
                   onChange={handleInputChange}
-                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"/>
+                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
               </div>
               <div className="relative z-0 w-full mb-5">
                 <label>Postal Code</label>
@@ -109,7 +137,7 @@ const EditProperty = (props) => {
                   maxLength={50}
                   defaultValue={propertyData.postalCode}
                   onChange={handleInputChange}
-                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"/>
+                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
               </div>
               <div className="relative z-0 w-full mb-5">
                 <label>City</label>
@@ -119,7 +147,7 @@ const EditProperty = (props) => {
                   maxLength={50}
                   defaultValue={propertyData.city}
                   onChange={handleInputChange}
-                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"/>
+                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
               </div>
               <div className="relative z-0 w-full mb-5">
                 <label>Country</label>
@@ -140,7 +168,7 @@ const EditProperty = (props) => {
                   name="bathroom"
                   defaultValue={propertyData.bathroom}
                   onChange={handleInputChange}
-                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"/>
+                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
               </div>
               <div className="relative z-0 w-full mb-5">
                 <label>Room</label>
@@ -149,7 +177,7 @@ const EditProperty = (props) => {
                   name="room"
                   defaultValue={propertyData.room}
                   onChange={handleInputChange}
-                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"/>
+                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
               </div>
               <div className="relative z-0 w-full mb-5">
                 <label>Traveler</label>
@@ -158,7 +186,7 @@ const EditProperty = (props) => {
                   name="traveler"
                   defaultValue={propertyData.traveler}
                   onChange={handleInputChange}
-                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"/>
+                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
               </div>
               <div className="relative z-0 w-full mb-5">
                 <label>Description</label>
@@ -169,7 +197,7 @@ const EditProperty = (props) => {
                   cols={5}
                   defaultValue={propertyData.description}
                   onChange={handleInputChange}
-                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"/>
+                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
               </div>
               <div className="relative z-0 w-full mb-5">
                 <label>Surface</label>
@@ -178,7 +206,7 @@ const EditProperty = (props) => {
                   name="surface"
                   defaultValue={propertyData.surface}
                   onChange={handleInputChange}
-                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"/>
+                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
               </div>
               <div className="relative z-0 w-full mb-5">
                 <label>Price</label>
@@ -187,7 +215,7 @@ const EditProperty = (props) => {
                   name="price"
                   defaultValue={propertyData.price}
                   onChange={handleInputChange}
-                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"/>
+                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
               </div>
               <div className="relative z-0 w-full mb-5">
                 <label>Thumb</label>
@@ -196,14 +224,14 @@ const EditProperty = (props) => {
                   name="thumb"
                   defaultValue={propertyData.thumb}
                   onChange={handleInputChange}
-                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"/>
+                  className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Edit picture of property</label>
                 <div className="mt-5 mb-5">
                   <div className="text-center">
                     <label htmlFor="property-images" className="btn flex justify-center border-2 rounded-lg p-3 text-2l cursor-pointer hover:border-0 hover:bg-gray-300">+ Add picture</label>
-                    <input className="hidden" type="file" name="property-images" onChange={InputFileChange} accept=".JPG, .png, .jpeg, .png" id="property-images" max-size="20000" multiple />
+                    <input className="hidden" type="file" name="property-images" onChange={handleInputFileChange} accept=".JPG, .png, .jpeg, .png" id="property-images" max-size="20000" multiple />
                   </div>
                   <div id="filesList"> </div>
                 </div>

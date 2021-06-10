@@ -19,22 +19,10 @@ function App() {
   const idProperty = "";
   const [idproperty, setIdProperty] = useState("Default property");
   const addOrEdit = async (propertyObject) => {
-    await app
-      .firestore()
-      .collection("Property")
-      .add(propertyObject)
-      .then(function (docRef) {
-        UploadFiles(docRef.id);
-      });
-
-    console.log(propertyObject);
-    await app
-      .firestore()
-      .collection("Property")
-      .add(propertyObject)
-      .then(function (docRef) {
-        AddProperty(propertyObject, docRef.id);
-      });
+    await app.firestore().collection("Property").add(propertyObject).then(function(docRef){
+      AddProperty(propertyObject, docRef.id);
+      UploadFiles(docRef.id);
+    });
   };
 
   return (
