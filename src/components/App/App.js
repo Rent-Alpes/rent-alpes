@@ -10,6 +10,7 @@ import Home from "../Home/Home";
 import HeaderDark from "../HeaderDark/HeaderDark";
 import ErrorComponent from "../Error404/Error404";
 import Property from "../Property/AddProperty";
+import ViewProperty from "../Property/ViewProperty/ViewProperty";
 import GetDataProperty from "../Property/GetDataProperty";
 import EditDataProperty from "../Property/EditDataProperty";
 import app from "firebase/app";
@@ -66,6 +67,9 @@ function App() {
             addOrEditProperty={addOrEdit}
             idproperty={idproperty}
           />
+        </Route>
+        <Route path="/view-property">
+          <ViewProperty idproperty={idproperty} />
         </Route>
         <Route component={ErrorComponent} />
       </Switch>
