@@ -25,11 +25,11 @@ function App() {
 
   };
 
- /* const getData = async (propertyObject) => {
+  /*const getData = async (propertyObject) => {
     //console.log(propertyObject);
-    //const propertyList = await app.firestore().collection("Property").doc().get().where('IdUser', '==', "GsA2tiwaaYV5CFBxVRYqa4HQIcx1");
+    const EquipmentList = await app.firestore().collection("Property").doc().get().where('equipment', '==', "GsA2tiwaaYV5CFBxVRYqa4HQIcx1");
       // console.log(propertyList);
-       console.log("je suis la");
+     
     const prop=await app.firestore().collection("Property").doc().get(propertyObject);
     console.log(prop);
   };*/

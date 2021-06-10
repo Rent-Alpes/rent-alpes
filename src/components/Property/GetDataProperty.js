@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import app from "firebase/app";
 import { firebaseContext } from "../Firebase";
 import { Link } from "react-router-dom";
+import Header from '../Header/Header';
 
 const GetDataProperty = (props) => {
   const db = app.firestore();
@@ -10,7 +11,7 @@ const GetDataProperty = (props) => {
   const [propertylist, setPropertylist] = useState([]);
   const firebase = useContext(firebaseContext);
 
-  //Récupération de L'id  utilisateur
+  //Récupération de L'id  property
   useEffect(() => {
     firebase.auth.onAuthStateChanged((data) => {
       setUser(data);
@@ -22,7 +23,7 @@ const GetDataProperty = (props) => {
     const response = db.collection("Property");
     const data = [];
     const items = await response.where("idUser", "==", id).get();
-    
+
     items.forEach((doc) => {
       data.push({ idDocument: doc.id, ...doc.data() });
 
@@ -31,16 +32,14 @@ const GetDataProperty = (props) => {
     setPropertylist(data);
   };
 
- /* function getIdproperty(id) {
-    //console.log(id);
-    return <EditDataProperty propertyData={id} />;
-  }*/
 
   return (
-    <div className="flex flex-col">
+
+    <div className="flex flex-col ">
+      <Header />
       <div className="my-2 overflow-x-auto sm:-mx-4 lg:-mx-2 bg-gray-100">
-        <div className="py-2 align-middle inline-block min-w-full sm:px-4 lg:px-5">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <div className="py-2 align-middle inline-block min-w-full sm:px-4 lg:px-5 ">
+          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg ">
             <table className="min-w-full divide-y divide-gray-200 ">
               <thead >
                 <tr>
@@ -78,7 +77,14 @@ const GetDataProperty = (props) => {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-300 ">
+              <tbody className="bg-white divide-y divide-gray-300 "> 
+              <tr>
+                  <td colSpan='5' className="text-center">
+                    {propertylist.length === 0 && (
+                      <p className="text-2xl"> You have no property </p>
+                    )}
+                  </td>
+                </tr>
                 {propertylist &&
                   propertylist.map((property) => (
                     <tr key={property.name} className=" hover:bg-gray-100">
@@ -88,7 +94,7 @@ const GetDataProperty = (props) => {
                             <img
                               className="h-30 w-40 rounded-full"
                               src={property.thumb}
-                             
+
                             />
                           </div>
                           <div className="ml-4">
@@ -119,35 +125,35 @@ const GetDataProperty = (props) => {
                       </td>
                       {/*Edition property*/}
                       <td>
-                       
-                        
-                           <Link   
+
+
+                        <Link
                           to={{
                             pathname: `/editdataproperty/${property.idDocument}`,
-                          }} 
+                          }}
                         >
-                         <div className="w-full focus:outline-none text-white text-sm p-3 rounded-md bg-yellow-500 hover:bg-yellow-600 hover:shadow-lg flex justify-center" >
-                         <svg 
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-8 w-8"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+                          <div className="w-full focus:outline-none text-white text-sm p-3 rounded-md bg-yellow-500 hover:bg-yellow-600 hover:shadow-lg flex justify-center" >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-8 w-8"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
 
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                            />
-                          </svg>
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                              />
+                            </svg>
 
-                         </div>
-                      
+                          </div>
+
                         </Link>
-                         
-                      
+
+
                       </td>
 
                       {/*View property*/}
@@ -171,10 +177,10 @@ const GetDataProperty = (props) => {
                               strokeLinejoin="round"
                               strokeWidth={2}
                               d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                        />
+                            />
                           </svg>
                         </button>
-                        </td>
+                      </td>
                     </tr>
                   ))}
               </tbody>

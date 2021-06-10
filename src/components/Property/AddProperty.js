@@ -4,6 +4,7 @@ import app from 'firebase/app';
 import InputAutocompletteAdress from './Address/InputAutocompletteAdress';
 import { InputFileChange } from '../InputFile/InputFile';
 import { InputFileDelete } from '../InputFile/InputFile';
+import Equipment from './GetEquipment'
 import { GetFile } from '../InputFile/InputFile';
 
 export const UploadFiles = (id) => {
@@ -16,40 +17,21 @@ export const UploadFiles = (id) => {
 
 const AddProperty = (props) => {
   const firebase = useContext(firebaseContext);
-  const initialPropertyValues = {
-    name: "",
-    address: "",
-    postalCode: "",
-    city: "",
-    country: "",
-    bathroom: "",
-    description: "",
-    equipments: [],
-    room: "",
-    traveler: "",
-    picture: "",
-    idUser: "",
-    price: "",
-    thumb: "",
-    surface: "",
-  };
-
- 
-  const [isChecked, setIsChecked] = useState(false);
-  const adresse =  <InputAutocompletteAdress /> 
-  initialPropertyValues.address=adresse;
 
   const [propertyValues, setPropertyValues] = useState();
-  
+  const [address, setAddress] = useState([]);
+
   const handleSubmit = (e) => {
 
     try{
     e.preventDefault();
-    
     var user = firebase.auth.currentUser;
     propertyValues.idUser = user.uid;
+   
     props.addOrEditProperty(propertyValues);
-    alert ("Your property has been success add  !!");
+ 
+   console.log(propertyValues);
+   alert ("Your property has been success add  !!");
     }
     catch {
 
@@ -57,9 +39,8 @@ const AddProperty = (props) => {
   }
 }
   const handleInputChange = (e) => {
-
+ //console.log(propertyValues);
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
-    setIsChecked(!isChecked);
 
   };
 
@@ -84,20 +65,28 @@ const AddProperty = (props) => {
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
+            <InputAutocompletteAdress
+              state={{ address: [address, setAddress] }}
+           />
 
-            <InputAutocompletteAdress />
-            <label>Address</label>
-            <div className="relative z-0 w-full mb-5" InputAutocompletteAdress>
+            <label className=" mb-5">Address</label>
+            <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
                 name="address"
-                
-                
                 required 
                 onChange={handleInputChange}
+                value={
+                  address.length !== 0
+                    ? address.raw.address.houseNumber +
+                      " " +
+                      address.raw.address.street
+                    : ""
+                }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
+            
             <label>Postal Code</label>
             <div className="relative z-0 w-full mb-5">
               <input
@@ -105,27 +94,14 @@ const AddProperty = (props) => {
                 name="postalCode"
                 required 
                 onChange={handleInputChange}
+                value={
+                  address.length !== 0 ? address.raw.address.postalCode : ""
+                }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
 
-            <label>Equipment</label>
-            <div className="relative z-0 w-full mb-5">
-              {}
-              <input
-                type="checkbox" className="form-checkbox h-5 w-5 text-teal-600" checked={isChecked}
-                name="equipments"
-                required 
-                onChange={handleInputChange}
-                
-              />
-              <span class="ml-2 text-gray-700 ">Jacuzzi inside</span>
-         
-
-
-
-
-            </div>
+           
             <label>City</label>
             <div className="relative z-0 w-full mb-5">
               <input
@@ -133,6 +109,7 @@ const AddProperty = (props) => {
                 name="city"
                 required
                 onChange={handleInputChange}
+                value={address.length !== 0 ? address.raw.address.city : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
@@ -141,11 +118,25 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="country"
-                
                 required 
                 onChange={handleInputChange}
+                value={
+                  address.length !== 0 ? address.raw.address.countryName : ""
+                }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
+ </div>
+            <label>Equipment</label>
+            <div className="relative z-0 w-full mb-5">
+              
+            <div 
+            name="equipments"
+            onChange={handleInputChange}>
+            <Equipment  />
+            </div>
+            
+         
+
             </div>
             <label>Bathroom</label>
             <div className="relative z-0 w-full mb-5">
@@ -233,8 +224,8 @@ const AddProperty = (props) => {
               type="submit"
               className="w-full px-6 py-3 mt-3  text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none flex justify-center">
               Add Property
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
             </button>
           </form>

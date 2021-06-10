@@ -1,49 +1,164 @@
-import React, { useState, useEffect, useContext } from "react";
-import app from "firebase/app";
-import { firebaseContext } from "../Firebase";
+import React, { useState } from "react";
 
 
 
-const GetEquipment = () => {
-  const db = app.firestore();
+
+
+export const GetEquipment = () => {
+
   const [Equipmentlist, setEquipmentlist] = useState([]);
-  const firebase = useContext(firebaseContext);
   
-
-  useEffect(() => {
-    firebase.auth.onAuthStateChanged(() => {
-      
-      GetData();
-    });
-  },[]);
-
-  const GetData = async () => {
-    const response = db.collection("Equipments").doc('a9a9rYvheUhTkUZNi0A6');
-    const items = await response.get();
-    setEquipmentlist(items.data());
+  const handleCheck = (e) => {
+    if (e.target.checked) {
+      setEquipmentlist([...Equipmentlist, e.target.value]);
+    } else {
+      setEquipmentlist(Equipmentlist.filter((equip) => equip !== e.target.value));
+    }
   };
 
-  
+
+
+ // console.log(checkedMap);
   console.log(Equipmentlist);
 
 
-  return(
+  return (
+
+    <>
+    <form>
+      <label>Wifi</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="1"
+        value="Wifi"
+        name="Wifi"
+        onChange={handleCheck}
+      />
+      
+      <label>Water Pool</label>
+      <input
+      className="m-2"
+        type="checkbox"
+        id="2"
+        value="WaterPool"
+        name="WaterPool"
+        onChange={handleCheck}
+      />
+      
+      <label>Sauna</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="3"
+        value="Sauna"
+        name="Sauna"
+        onChange={handleCheck}
+      />
+      <br/>
+        <label>Hall of sport</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="4"
+        value="Hall of sport"
+        name="Hall of sport"
+        onChange={handleCheck}
+      />
+      
+      <label>Transats</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="5"
+        value="Transats"
+        name="Transats"
+        onChange={handleCheck}
+      />
     
-    <div className="flex flex-col">
-
-
-
-
-                    <div className="text-base font-medium text-gray-900" >
-                   
-                  </div>
-
-                 
-
-
-
-  </div>
-    
+      <label>Water Pool</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="6"
+        value="WaterPool"
+        name="WaterPool"
+        onChange={handleCheck}
+      />
+     <br/>
+      <label>Barbecue</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="7"
+        value="Barbecue"
+        name="Barbecue"
+        onChange={handleCheck}
+      />
+      
+      <label>Ski Local</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="8"
+        value="Ski Local"
+        name="Ski Local"
+        onChange={handleCheck}
+      />
+      <br />
+      <label>Fitness equipment</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="9"
+        value="Fitness equipment"
+        name="Fitness equipment"
+        onChange={handleCheck}
+      />
+     
+      <label>Garden</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="10"
+        value="Garden"
+        name="Garden"
+        onChange={handleCheck}
+      />
+      
+      <label>Patio</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="11"
+        value="Patio"
+        name="Patio"
+        onChange={handleCheck}
+      />
+      <br />
+      <label>Panoramic view</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="12"
+        value="Panoramic view"
+        name="Panoramic view"
+        onChange={handleCheck}
+      />
+     
+      <label>Floor heating</label>
+      <input
+       className="m-2"
+        type="checkbox"
+        id="13"
+        value="Floor heating"
+        name="Floor heating"
+        onChange={handleCheck}
+      />
+     
+  
+    </form>
+  </>
   )
 
 
@@ -51,4 +166,4 @@ const GetEquipment = () => {
 }
 
 
-  export default GetEquipment;
+export default GetEquipment;
