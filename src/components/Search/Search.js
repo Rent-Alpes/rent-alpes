@@ -5,8 +5,8 @@ import { SearchBar } from "./SearchBar";
 import { useLocation } from "react-router-dom";
 import SearchInMap from "../MapLocations/SearchInMap";
 import { BiMapAlt } from "react-icons/bi";
-import { firebaseContext } from '../Firebase';
-import algoliasearch from 'algoliasearch';
+import { firebaseContext } from "../Firebase";
+import algoliasearch from "algoliasearch";
 import { SearchProperty } from "../Algolia/Algolia";
 
 const Search = (props) => {
@@ -27,7 +27,7 @@ const Search = (props) => {
   return (
     <>
       <HeaderDark />
-      <div className="flex">
+      <div className="flex mt-10">
         <SearchBar properties={properties} onChange={handleChange} />
         <button
           onClick={() => {

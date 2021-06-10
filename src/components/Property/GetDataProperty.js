@@ -37,7 +37,7 @@ const GetDataProperty = (props) => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-10">
       <div className="my-2 overflow-x-auto sm:-mx-4 lg:-mx-2 bg-gray-100">
         <div className="py-2 align-middle inline-block min-w-full sm:px-4 lg:px-5">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -80,7 +80,7 @@ const GetDataProperty = (props) => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-300">
                 <tr>
-                  <td colSpan='5' className="text-center">
+                  <td colSpan="5" className="text-center">
                     {propertylist.length === 0 && (
                       <p className="text-2xl"> You have no property </p>
                     )}
