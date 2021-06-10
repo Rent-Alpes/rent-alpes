@@ -8,6 +8,7 @@ import Profil from "../Profil/Profil";
 import Home from "../Home/Home";
 import Header from "../Header/Header";
 import Property from "../Property/AddProperty";
+import ViewProperty from "../Property/ViewProperty/ViewProperty";
 import GetDataProperty from "../Property/GetDataProperty";
 import EditDataProperty from "../Property/EditDataProperty";
 import app from "firebase/app";
@@ -61,6 +62,9 @@ function App() {
             addOrEditProperty={addOrEdit}
             idproperty={idproperty}
           />
+        </Route>
+        <Route path="/view-property">
+          <ViewProperty idproperty={idproperty} />
         </Route>
         {/* PENSER A CREER UN COMPOSANT POUR MAUVAIS PATH */}
       </Switch>
