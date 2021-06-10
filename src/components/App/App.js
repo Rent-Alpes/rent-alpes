@@ -2,13 +2,12 @@ import "../../App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Signup from "../Signup/Signup";
 import Login from "../Login/Login";
-import SearchInMap from "../MapLocations/SearchInMap";
-import ResultPage from "../SearchResult/ResultPage";
 import DatePicker from "../SearchResult/CardItem/DatePicker";
 import Search from "../Search/Search";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import Profil from "../Profil/Profil";
 import Home from "../Home/Home";
+import HeaderDark from "../HeaderDark/HeaderDark";
 import ErrorComponent from "../Error404/Error404";
 import Property from "../Property/AddProperty";
 import GetDataProperty from "../Property/GetDataProperty";
@@ -22,34 +21,51 @@ function App() {
   const idProperty = "";
   const [idproperty, setIdProperty] = useState("Default property");
   const addOrEdit = async (propertyObject) => {
-    await app.firestore().collection("Property").add(propertyObject).then(function(docRef){
-      AddProperty(propertyObject, docRef.id);
-      UploadFiles(docRef.id);
-    });
+    await app
+      .firestore()
+      .collection("Property")
+      .add(propertyObject)
+      .then(function (docRef) {
+        AddProperty(propertyObject, docRef.id);
+        UploadFiles(docRef.id);
+      });
   };
 
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
-        <Route path="/map" component={SearchInMap} />
-        <Route path="/result" component={ResultPage} />
+        <Route path="/signup">
+          <HeaderDark />
+          <Signup />
+        </Route>
+        <Route path="/login">
+          <HeaderDark />
+          <Login />
+        </Route>
+        <Route path="/forgetpassword">
+          <HeaderDark />
+          <ForgetPassword />
+        </Route>
+        <Route path="/profil">
+          <HeaderDark />
+          <Profil />
+        </Route>
         <Route path="/date" component={DatePicker} />
-        <Route path="/Search" component={Search} />
-        <Route path="/forgetpassword" component={ForgetPassword} />
-        <Route path="/profil" component={Profil} />
+        <Route path="/search" component={Search} />
         <Route path="/addproperty">
+          <HeaderDark />
           <Property addOrEditProperty={addOrEdit} />
         </Route>
         <Route path="/getdataproperty">
+          <HeaderDark />
           <GetDataProperty
             getIdproperty={idProperty}
             setIdProperty={setIdProperty}
           />
         </Route>
         <Route path="/editdataproperty">
+          <HeaderDark />
           <EditDataProperty
             addOrEditProperty={addOrEdit}
             idproperty={idproperty}
