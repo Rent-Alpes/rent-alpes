@@ -5,17 +5,24 @@
   "dependencies": {
     "@craco/craco": "^6.1.2",
     "@headlessui/react": "^1.1.1",
+    "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.1.10",
+    "algoliasearch": "^4.9.1",
     "craco": "0.0.3",
     "esri-leaflet-geocoder": "^3.0.0",
     "firebase": "^8.6.5",
     "leaflet-geosearch": "^3.3.2",
+    "moment": "^2.29.1",
+    "moment-range": "^4.0.2",
     "react": "^17.0.2",
+    "react-dates": "^21.8.0",
     "react-dom": "^17.0.2",
-    "react-google-places-autocomplete": "^3.3.1",
+    "react-google-places-autocomplete": "^3.3.0",
+    "react-icons": "^4.2.0",
+    "react-instantsearch-dom": "^6.11.0",
     "react-leaflet": "^3.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -34,18 +41,11 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.1.4",
     "autoprefixer": "^9.8.6",

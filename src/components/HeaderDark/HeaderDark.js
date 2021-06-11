@@ -12,7 +12,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Header = () => {
+const HeaderDark = () => {
   const firebase = useContext(firebaseContext);
 
   const [userSession, setUserSession] = useState(null);
@@ -43,14 +43,16 @@ const Header = () => {
 
   return (
     <div>
-      <div className="w-full h-32">
-        <nav className="flex  fixed  top-0 items-center justify-between pt-3 px-3 w-full">
+      <div className="w-full h-32 shadow">
+        <nav className="flex fixed top-0 bg-white z-10 items-center justify-between pt-3 px-3 w-full">
           <div className="flex w-6/12 text-white mr-6">
+            <Link to={"/"}>
             <img
               src={logo}
               className="object-contain h-28"
               alt="logo Rent'alpes"
             ></img>
+            </Link>
           </div>
 
           <div className="w-6/12 block flex-grow grid justify-items-stretch">
@@ -60,7 +62,7 @@ const Header = () => {
               {/*  <div className="flex justify-center">*/}
               {/*    <svg*/}
               {/*      xmlns="http://www.w3.org/2000/svg"*/}
-              {/*      className="h-10 w-10"*/}
+              {/*      className="h-10 w-10 text-gray-900"*/}
               {/*      fill="none"*/}
               {/*      viewBox="0 0 24 24"*/}
               {/*      stroke="currentColor"*/}
@@ -74,7 +76,7 @@ const Header = () => {
               {/*    </svg>*/}
               {/*  </div>*/}
               {/*  <span>*/}
-              {/*    <span className="text-xs">FAVORITES</span>*/}
+              {/*    <span className="text-xs text-gray-900">FAVORITES</span>*/}
               {/*  </span>*/}
               {/*</button>*/}
               {/* /////////////////////////////////////////////////////////////// */}
@@ -85,7 +87,7 @@ const Header = () => {
                   <div className="flex justify-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-10 w-10"
+                      className="h-10 w-10 text-gray-900"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -99,7 +101,7 @@ const Header = () => {
                     </svg>
                   </div>
                   <span>
-                    <span className="text-xs">BECOME HOST</span>
+                    <span className="text-xs text-gray-900">BECOME HOST</span>
                   </span>
                 </button>
               </Link>
@@ -115,7 +117,7 @@ const Header = () => {
                         <div className="flex">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-10 w-10"
+                            className="h-10 w-10 text-gray-900"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -129,7 +131,7 @@ const Header = () => {
                           </svg>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 self-end"
+                            className="h-6 w-6 self-end text-gray-900"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -143,7 +145,7 @@ const Header = () => {
                           </svg>
                         </div>
                         <span>
-                          <span className="text-xs">ACCOUNT</span>
+                          <span className="text-xs text-gray-900">ACCOUNT</span>
                         </span>
                       </Menu.Button>
                     </div>
@@ -271,4 +273,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderDark;

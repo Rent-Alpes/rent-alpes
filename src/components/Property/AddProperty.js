@@ -7,6 +7,7 @@ import { InputFileDelete } from "../InputFile/InputFile";
 import Equipment from "./GetEquipment";
 import { GetFile } from "../InputFile/InputFile";
 
+
 export const UploadFiles = (id) => {
   var files = GetFile();
   for (var i = 0; files.length > i; i++) {
@@ -33,14 +34,13 @@ const AddProperty = (props) => {
       propertyValues.equipments=Equipmentlist; 
       props.addOrEditProperty(propertyValues);
 
-      console.log(propertyValues);
+
       alert("Your property has been success add  !!");
     } catch {
       alert("Error add property");
     }
   };
   const handleInputChange = (e) => {
-    //console.log(propertyValues);
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
   };
 

@@ -46,7 +46,7 @@ const Profil = (props) => {
     return () => {
       listener();
     };
-  }, [userSession]);
+  }, [userSession, firebase, props.history]);
 
   //Attribution de la value
   const handleChange = (e) => {
@@ -61,9 +61,7 @@ const Profil = (props) => {
       var user = firebase.auth.currentUser;
       user
         .updateEmail(userData.email)
-        .then(function () {
-          console.log("Success modification");
-        })
+        .then()
         .catch(function (error) {
           console.log(error);
         });
@@ -83,14 +81,12 @@ const Profil = (props) => {
     user
       .delete()
       .then(function () {
-        console.log("Success deletion");
+        //delete users
+        firebase.user(userSession.uid).delete();
       })
       .catch(function (error) {
         console.log(error);
       });
-
-    //delete users
-    firebase.user(userSession.uid).delete();
   }
 
   return userSession === null ? (
