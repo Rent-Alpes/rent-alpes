@@ -39,10 +39,7 @@ function App() {
           <HeaderDark />
           <Signup />
         </Route>
-        <Route path="/login">
-          <HeaderDark />
-          <Login />
-        </Route>
+        <Route path="/login" component={Login}></Route>
         <Route path="/forgetpassword">
           <HeaderDark />
           <ForgetPassword />

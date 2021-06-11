@@ -49,6 +49,16 @@ const Login = (props) => {
   return (
     <div>
       <div className="bg-gray-50 min-h-screen flex flex-col">
+        <nav className="bg-white p-1 fixed w-full z-10 top-0 border flex justify-center ">
+          <Link to="/">
+            <img
+              src={logo}
+              className="object-contain h-20"
+              alt="logo Rent'alpes"
+            />
+          </Link>
+        </nav>
+
         <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
           <div className="bg-white px-6 py-8 rounded border text-black w-full">
             <h1 className="mb-8 text-3xl text-center"> Login </h1>
