@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { firebaseContext } from "../Firebase";
+import firebase from "firebase/app";
 
 const AddReview = () => {
-  const firebase = useContext(firebaseContext);
+  const firebaseDB = useContext(firebaseContext);
 
   //Objet contenant toutes les données remplies
   const data = {
@@ -32,7 +33,7 @@ const AddReview = () => {
   const [userSession, setUserSession] = useState(null);
 
   useEffect(() => {
-    firebase.auth.onAuthStateChanged((user) => {
+    firebaseDB.auth.onAuthStateChanged((user) => {
       setUserSession(user);
     });
   }, [userSession]);
@@ -83,10 +84,19 @@ const AddReview = () => {
         3;
       //Arrondir moyenne à la dizaine
       reviewData.averageRating = Number(averageRating.toFixed(1));
+      const idProperty = "3KkojaAe7CoNJTJEWQl8";
 
-      console.log(reviewData);
-
-      // firebase.review().set({});
+      firebaseDB
+        .review()
+        .add(reviewData)
+        .then((doc) =>
+          firebaseDB
+            .property()
+            .doc(idProperty)
+            .update({
+              avis: firebaseDB.firebase.firestore.FieldValue.arrayUnion(doc.id),
+            })
+        );
     }
   };
 

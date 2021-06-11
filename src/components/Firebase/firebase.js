@@ -17,6 +17,7 @@ class Firebase {
     app.initializeApp(config);
     this.auth = app.auth();
     this.db = app.firestore();
+    this.firebase = app;
   }
 
   // Inscription
@@ -35,7 +36,8 @@ class Firebase {
 
   //Collections
   user = (uid) => this.db.doc(`Users/${uid}`);
-  review = () => this.db.doc(`Review/`);
+  review = () => this.db.collection("Review");
+  property = () => this.db.collection("Property");
 }
 
 export default Firebase;
