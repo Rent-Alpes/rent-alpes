@@ -3,7 +3,6 @@ import { firebaseContext } from "../Firebase";
 import app from "firebase/app";
 import InputAutocompletteAdress from "./Address/InputAutocompletteAdress";
 import { InputFileChange } from "../InputFile/InputFile";
-import { InputFileDelete } from "../InputFile/InputFile";
 import Equipment from "./GetEquipment";
 import { GetFile } from "../InputFile/InputFile";
 
@@ -23,7 +22,7 @@ const AddProperty = (props) => {
   const [Equipmentlist, setEquipmentlist] = useState([]);
   const [propertyValues, setPropertyValues] = useState();
   const [address, setAddress] = useState([]);
-  //console.log(Equipmentlist);
+
   const handleSubmit = (e) => {
     try {
       e.preventDefault();
@@ -38,8 +37,6 @@ const AddProperty = (props) => {
         address.position.lat,
         address.position.lng
       );
-
-      console.log(propertyValues);
 
       props.addOrEditProperty(propertyValues);
 
@@ -73,7 +70,7 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="name"
-                //required
+                required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -87,7 +84,7 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="address"
-                //required
+                required
                 onChange={handleInputChange}
                 value={
                   address.length !== 0
@@ -103,7 +100,7 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="postalCode"
-                //required
+                required
                 onChange={handleInputChange}
                 value={address.length !== 0 ? address.address.postalCode : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -115,7 +112,7 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="city"
-                //required
+                required
                 onChange={handleInputChange}
                 value={address.length !== 0 ? address.address.city : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -126,7 +123,7 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="country"
-                //required
+                required
                 onChange={handleInputChange}
                 value={address.length !== 0 ? address.address.countryName : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -146,6 +143,8 @@ const AddProperty = (props) => {
               <input
                 type="number"
                 name="bathroom"
+                required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -155,7 +154,8 @@ const AddProperty = (props) => {
               <input
                 type="number"
                 name="room"
-                //required
+                required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -165,7 +165,8 @@ const AddProperty = (props) => {
               <input
                 type="number"
                 name="traveler"
-                //required
+                required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -186,7 +187,8 @@ const AddProperty = (props) => {
               <input
                 type="number"
                 name="surface"
-                //required
+                required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -197,7 +199,8 @@ const AddProperty = (props) => {
                 type="number"
                 name="price"
                 placeholder="Price / Night"
-                //required
+                required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -205,9 +208,9 @@ const AddProperty = (props) => {
             <label>Thumb</label>
             <div className="relative z-0 w-full mb-5">
               <input
-                type="text"
+                type="url"
                 name="thumb"
-                //required
+                required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />

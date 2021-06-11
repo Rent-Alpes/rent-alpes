@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { HereProvider } from "leaflet-geosearch";
 import AsyncSelect from "react-select/async";
-import { firebaseContext } from "../../Firebase";
 
 const InputAutocompletteAdress = (props) => {
-  const firebase = useContext(firebaseContext);
-
   const {
     address: [address, setAddress],
   } = {
