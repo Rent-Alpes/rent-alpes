@@ -14,8 +14,10 @@ import GetDataProperty from "../Property/GetDataProperty";
 import EditDataProperty from "../Property/EditDataProperty";
 import app from "firebase/app";
 import React, { useState } from "react";
+import Equipment from "../Property/GetEquipment"
 import { UploadFiles } from "../Property/AddProperty";
 import { AddProperty } from "../Algolia/Algolia";
+
 
 function App() {
   const idProperty = "";
@@ -30,7 +32,6 @@ function App() {
         UploadFiles(docRef.id);
       });
   };
-
   return (
     <Router>
       <Switch>

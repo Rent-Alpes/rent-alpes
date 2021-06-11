@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import app from "firebase/app";
 import { firebaseContext } from "../Firebase";
-import EditDataProperty from "./EditDataProperty";
 import { Link } from "react-router-dom";
+import Header from '../Header/Header';
 
 const GetDataProperty = (props) => {
   const db = app.firestore();
@@ -11,7 +11,7 @@ const GetDataProperty = (props) => {
   const [propertylist, setPropertylist] = useState([]);
   const firebase = useContext(firebaseContext);
 
-  //Récupération de L'id  utilisateur
+  //Récupération de L'id  property
   useEffect(() => {
     firebase.auth.onAuthStateChanged((data) => {
       setUser(data);
@@ -23,6 +23,7 @@ const GetDataProperty = (props) => {
     const response = db.collection("Property");
     const data = [];
     const items = await response.where("idUser", "==", id).get();
+
     items.forEach((doc) => {
       data.push({ idDocument: doc.id, ...doc.data() });
 
@@ -31,12 +32,9 @@ const GetDataProperty = (props) => {
     setPropertylist(data);
   };
 
-  function getIdproperty(id) {
-    //console.log(id);
-    return <EditDataProperty propertyData={id} />;
-  }
 
   return (
+
     <div className="flex flex-col mt-10">
       <div className="my-2 overflow-x-auto sm:-mx-4 lg:-mx-2 bg-gray-100">
         <div className="py-2 align-middle inline-block min-w-full sm:px-4 lg:px-5">
@@ -78,6 +76,7 @@ const GetDataProperty = (props) => {
                   </th>
                 </tr>
               </thead>
+
               <tbody className="bg-white divide-y divide-gray-300">
                 <tr>
                   <td colSpan="5" className="text-center">
@@ -88,8 +87,8 @@ const GetDataProperty = (props) => {
                 </tr>
                 {propertylist &&
                   propertylist.map((property) => (
-                    <tr key={property.name}>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                    <tr key={property.name} className=" hover:bg-gray-100">
+                      <td className="px-6 py-4 whitespace-nowrap ">
                         <div className="flex items-center">
                           <div className="flex-shrink-0">
                             <img
@@ -130,6 +129,7 @@ const GetDataProperty = (props) => {
                             pathname: `/editdataproperty/${property.idDocument}`,
                           }}
                         >
+
                           <div className="w-full focus:outline-none text-white text-sm p-3 rounded-md bg-yellow-500 hover:bg-yellow-600 hover:shadow-lg flex justify-center">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"

@@ -1,9 +1,12 @@
 import React, { useState, useContext } from "react";
-import { firebaseContext } from '../Firebase';
-import app from 'firebase/app';
-import InputAutocompletteAdress from './Address/InputAutocompletteAdress';
-import { InputFileChange } from '../InputFile/InputFile';
-import { GetFile } from '../InputFile/InputFile';
+import { firebaseContext } from "../Firebase";
+import app from "firebase/app";
+import InputAutocompletteAdress from "./Address/InputAutocompletteAdress";
+import { InputFileChange } from "../InputFile/InputFile";
+import { InputFileDelete } from "../InputFile/InputFile";
+import Equipment from "./GetEquipment";
+import { GetFile } from "../InputFile/InputFile";
+
 
 export const UploadFiles = (id) => {
   var files = GetFile();
@@ -18,36 +21,20 @@ export const UploadFiles = (id) => {
 
 const AddProperty = (props) => {
   const firebase = useContext(firebaseContext);
-  const initialPropertyValues = {
-    name: "",
-    address: "",
-    postalCode: "",
-    city: "",
-    country: "",
-    bathroom: "",
-    description: "",
-    equipments: "",
-    room: "",
-    traveler: "",
-    picture: "",
-    idUser: "",
-    price: "",
-    thumb: "",
-    surface: "",
-  };
-
-  const adresse = <InputAutocompletteAdress />;
-  initialPropertyValues.address = adresse;
-
+  const [Equipmentlist, setEquipmentlist] = useState([]);
   const [propertyValues, setPropertyValues] = useState();
-  
+  const [address, setAddress] = useState([]);
+  //console.log(Equipmentlist);
   const handleSubmit = (e) => {
     try {
       e.preventDefault();
-
       var user = firebase.auth.currentUser;
+    
       propertyValues.idUser = user.uid;
+      propertyValues.equipments=Equipmentlist; 
       props.addOrEditProperty(propertyValues);
+
+
       alert("Your property has been success add  !!");
     } catch {
       alert("Error add property");
@@ -55,12 +42,7 @@ const AddProperty = (props) => {
   };
   const handleInputChange = (e) => {
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
-
   };
-
-  const handleInputFileChange = () => {
-    InputFileChange(null);
-  }
 
   return (
     <>
@@ -70,7 +52,7 @@ const AddProperty = (props) => {
           backgroundImage: `url("https://images7.alphacoders.com/594/thumb-1920-594150.jpg")`,
         }}
       >
-        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto" style={{width: "450px"}}>
+        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto">
           <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
           <form
             id="form"
@@ -88,18 +70,29 @@ const AddProperty = (props) => {
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
+            <InputAutocompletteAdress
+              state={{ address: [address, setAddress] }}
+         
+            />
 
-            <InputAutocompletteAdress />
-            <label>Address</label>
-            <div className="relative z-0 w-full mb-5" InputAutocompletteAdress>
+            <label className=" mb-5">Address</label>
+            <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
                 name="address"
                 required
                 onChange={handleInputChange}
+                value={
+                  address.length !== 0
+                    ? address.raw.address.houseNumber +
+                      " " +
+                      address.raw.address.street
+                    : ""
+                }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
+
             <label>Postal Code</label>
             <div className="relative z-0 w-full mb-5">
               <input
@@ -107,9 +100,13 @@ const AddProperty = (props) => {
                 name="postalCode"
                 required
                 onChange={handleInputChange}
+                value={
+                  address.length !== 0 ? address.raw.address.postalCode : ""
+                }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
+
             <label>City</label>
             <div className="relative z-0 w-full mb-5">
               <input
@@ -117,6 +114,7 @@ const AddProperty = (props) => {
                 name="city"
                 required
                 onChange={handleInputChange}
+                value={address.length !== 0 ? address.raw.address.city : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
@@ -127,8 +125,20 @@ const AddProperty = (props) => {
                 name="country"
                 required
                 onChange={handleInputChange}
+                value={
+                  address.length !== 0 ? address.raw.address.countryName : ""
+                }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
+            </div>
+            <label>Equipment</label>
+            <div className="relative z-0 w-full mb-5">
+              <div name="equipments" onChange={handleInputChange}>
+                <Equipment
+                  Equipmentlist={Equipmentlist}
+                  setEquipmentlist={setEquipmentlist}
+                />
+              </div>
             </div>
             <label>Bathroom</label>
             <div className="relative z-0 w-full mb-5">
@@ -206,7 +216,10 @@ const AddProperty = (props) => {
               <div className="mt-5 text-center">
                 <label
                   htmlFor="property-images"
-                  className="btn flex justify-center border-2 rounded-lg p-3 text-2xl cursor-pointer hover:border-0 hover:bg-gray-300">+ Add picture</label>
+                  className="btn flex justify-center border-2 rounded-lg p-3 text-2xl cursor-pointer hover:border-0 hover:bg-gray-300"
+                >
+                  + Add pictures
+                </label>
                 <input
                   type="file"
                   name="property-images"
@@ -228,15 +241,15 @@ const AddProperty = (props) => {
               Add Property
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-8 w-8"
+                className="h-8 w-8"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                 />
               </svg>
