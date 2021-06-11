@@ -30,7 +30,7 @@ export const SearchBar = (props) => {
         value={query}
         name="query"
         id="search-input"
-        placeholder="Rechercher..."
+        placeholder="Search..."
         onChange={handleChange}
         className="static w-full pl-7 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white bg-opacity-90"
       />

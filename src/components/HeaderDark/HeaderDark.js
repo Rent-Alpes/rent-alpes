@@ -47,11 +47,11 @@ const HeaderDark = () => {
         <nav className="flex fixed top-0 bg-white z-10 items-center justify-between pt-3 px-3 w-full">
           <div className="flex w-6/12 text-white mr-6">
             <Link to={"/"}>
-            <img
-              src={logo}
-              className="object-contain h-28"
-              alt="logo Rent'alpes"
-            ></img>
+              <img
+                src={logo}
+                className="object-contain h-28"
+                alt="logo Rent'alpes"
+              ></img>
             </Link>
           </div>
 
@@ -213,7 +213,7 @@ const HeaderDark = () => {
                                     "block px-4 py-2 text-sm"
                                   )}
                                 >
-                                  Profil
+                                  Profile
                                 </Link>
                               )}
                             </Menu.Item>

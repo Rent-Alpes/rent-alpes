@@ -211,7 +211,7 @@ const Header = () => {
                                     "block px-4 py-2 text-sm"
                                   )}
                                 >
-                                  Profil
+                                  Profile
                                 </Link>
                               )}
                             </Menu.Item>
