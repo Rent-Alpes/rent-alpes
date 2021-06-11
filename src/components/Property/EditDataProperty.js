@@ -115,7 +115,7 @@ const EditProperty = (props) => {
   return (
     <>
       <div
-        className="min-h-screen bg-gray-200 p-0 sm:p-15 w-full h-screen overflow-hidden flex"
+        className="min-h-screen bg-no-repeat bg-cover bg-center p-0 sm:p-15 w-full h-screen overflow-hidden flex"
         style={{
           backgroundImage: `url(" https://images2.alphacoders.com/238/thumb-1920-238870.jpg")`,
         }}
