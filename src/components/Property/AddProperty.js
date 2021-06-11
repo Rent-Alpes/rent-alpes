@@ -31,8 +31,7 @@ const AddProperty = (props) => {
 
       propertyValues.idUser = user.uid;
       propertyValues.equipments = Equipmentlist;
-      console.log(propertyValues);
-      // props.addOrEditProperty(propertyValues);
+      props.addOrEditProperty(propertyValues);
 
       alert("Your property has been success add  !!");
     } catch {
