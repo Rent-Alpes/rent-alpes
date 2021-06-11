@@ -28,9 +28,19 @@ const AddProperty = (props) => {
     try {
       e.preventDefault();
       var user = firebase.auth.currentUser;
-
       propertyValues.idUser = user.uid;
       propertyValues.equipments = Equipmentlist;
+      propertyValues.address = e.target[2].value;
+      propertyValues.postalCode = e.target[3].value;
+      propertyValues.city = e.target[4].value;
+      propertyValues.country = e.target[5].value;
+      propertyValues.position = new app.firestore.GeoPoint(
+        address.position.lat,
+        address.position.lng
+      );
+
+      console.log(propertyValues);
+
       props.addOrEditProperty(propertyValues);
 
       alert("Your property has been success add  !!");
@@ -63,7 +73,7 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="name"
-                required
+                //required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -77,13 +87,11 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="address"
-                required
+                //required
                 onChange={handleInputChange}
                 value={
                   address.length !== 0
-                    ? address.raw.address.houseNumber +
-                      " " +
-                      address.raw.address.street
+                    ? address.address.houseNumber + " " + address.address.street
                     : ""
                 }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -95,11 +103,9 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="postalCode"
-                required
+                //required
                 onChange={handleInputChange}
-                value={
-                  address.length !== 0 ? address.raw.address.postalCode : ""
-                }
+                value={address.length !== 0 ? address.address.postalCode : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
@@ -109,9 +115,9 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="city"
-                required
+                //required
                 onChange={handleInputChange}
-                value={address.length !== 0 ? address.raw.address.city : ""}
+                value={address.length !== 0 ? address.address.city : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
@@ -120,11 +126,9 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="country"
-                required
+                //required
                 onChange={handleInputChange}
-                value={
-                  address.length !== 0 ? address.raw.address.countryName : ""
-                }
+                value={address.length !== 0 ? address.address.countryName : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
@@ -151,7 +155,7 @@ const AddProperty = (props) => {
               <input
                 type="number"
                 name="room"
-                required
+                //required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -161,7 +165,7 @@ const AddProperty = (props) => {
               <input
                 type="number"
                 name="traveler"
-                required
+                //required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -182,7 +186,7 @@ const AddProperty = (props) => {
               <input
                 type="number"
                 name="surface"
-                required
+                //required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -193,7 +197,7 @@ const AddProperty = (props) => {
                 type="number"
                 name="price"
                 placeholder="Price / Night"
-                required
+                //required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -203,7 +207,7 @@ const AddProperty = (props) => {
               <input
                 type="text"
                 name="thumb"
-                required
+                //required
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
