@@ -46,38 +46,39 @@ const HeaderDark = () => {
       <div className="w-full h-32 shadow">
         <nav className="flex fixed top-0 bg-white z-10 items-center justify-between pt-3 px-3 w-full">
           <div className="flex w-6/12 text-white mr-6">
+            <Link to={"/"}>
             <img
               src={logo}
-              href="/"
               className="object-contain h-28"
               alt="logo Rent'alpes"
             ></img>
+            </Link>
           </div>
 
           <div className="w-6/12 block flex-grow grid justify-items-stretch">
             <div className="flex justify-end">
               {/* //////////////////////////// FAVORITES //////////////////////////// */}
-              <button className="inline-block text-sm pl-4 mdrounded text-white mt-6 font-bold block text-center focus:outline-none">
-                <div className="flex justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-10 w-10 text-gray-900"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    />
-                  </svg>
-                </div>
-                <span>
-                  <span className="text-xs text-gray-900">FAVORITES</span>
-                </span>
-              </button>
+              {/*<button className="inline-block text-sm pl-4 mdrounded text-white mt-6 font-bold block text-center focus:outline-none">*/}
+              {/*  <div className="flex justify-center">*/}
+              {/*    <svg*/}
+              {/*      xmlns="http://www.w3.org/2000/svg"*/}
+              {/*      className="h-10 w-10 text-gray-900"*/}
+              {/*      fill="none"*/}
+              {/*      viewBox="0 0 24 24"*/}
+              {/*      stroke="currentColor"*/}
+              {/*    >*/}
+              {/*      <path*/}
+              {/*        strokeLinecap="round"*/}
+              {/*        strokeLinejoin="round"*/}
+              {/*        strokeWidth={2}*/}
+              {/*        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"*/}
+              {/*      />*/}
+              {/*    </svg>*/}
+              {/*  </div>*/}
+              {/*  <span>*/}
+              {/*    <span className="text-xs text-gray-900">FAVORITES</span>*/}
+              {/*  </span>*/}
+              {/*</button>*/}
               {/* /////////////////////////////////////////////////////////////// */}
 
               {/* //////////////////////////// ADD PROPERTY //////////////////////////// */}
