@@ -7,7 +7,6 @@ import { InputFileDelete } from "../InputFile/InputFile";
 import Equipment from "./GetEquipment";
 import { GetFile } from "../InputFile/InputFile";
 
-
 export const UploadFiles = (id) => {
   var files = GetFile();
   for (var i = 0; files.length > i; i++) {
@@ -29,11 +28,11 @@ const AddProperty = (props) => {
     try {
       e.preventDefault();
       var user = firebase.auth.currentUser;
-    
-      propertyValues.idUser = user.uid;
-      propertyValues.equipments=Equipmentlist; 
-      props.addOrEditProperty(propertyValues);
 
+      propertyValues.idUser = user.uid;
+      propertyValues.equipments = Equipmentlist;
+      console.log(propertyValues);
+      // props.addOrEditProperty(propertyValues);
 
       alert("Your property has been success add  !!");
     } catch {
@@ -72,7 +71,6 @@ const AddProperty = (props) => {
             </div>
             <InputAutocompletteAdress
               state={{ address: [address, setAddress] }}
-         
             />
 
             <label className=" mb-5">Address</label>
@@ -133,7 +131,7 @@ const AddProperty = (props) => {
             </div>
             <label>Equipment</label>
             <div className="relative z-0 w-full mb-5">
-              <div name="equipments" onChange={handleInputChange}>
+              <div name="equipments">
                 <Equipment
                   Equipmentlist={Equipmentlist}
                   setEquipmentlist={setEquipmentlist}
