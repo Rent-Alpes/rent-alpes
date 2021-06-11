@@ -18,7 +18,7 @@ import app from "firebase/app";
 import React, { useState } from "react";
 import { UploadFiles } from "../Property/AddProperty";
 import { AddProperty } from "../Algolia/Algolia";
-import Review from "../Review/Review";
+import Review from "../Review/AddReview";
 
 function App() {
   const idProperty = "";

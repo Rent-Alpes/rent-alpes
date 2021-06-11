@@ -1,7 +1,20 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { firebaseContext } from "../Firebase";
 
-const Review = () => {
-<<<<<<< HEAD
+const AddReview = () => {
+  const firebase = useContext(firebaseContext);
+
+  //Objet contenant toutes les données remplies
+  const data = {
+    title: "",
+    comment: "",
+    cleanless: "",
+    location: "",
+    equipments: "",
+    averageRating: "",
+    idUser: "",
+  };
+
   //  CLEANLESS
   const [ratingCleanless, setRatingCleanless] = useState(null);
   const [hoverCleanless, setHoverCleanless] = useState(null);
@@ -11,12 +24,75 @@ const Review = () => {
   const [hoverLocation, setHoverLocation] = useState(null);
 
   // Equipment
-  const [ratingEquipment, setRatingEquipment] = useState(null);
-  const [hoverEquipment, setHoverEquipment] = useState(null);
+  const [ratingEquipments, setRatingEquipments] = useState(null);
+  const [hoverEquipments, setHoverEquipments] = useState(null);
+
+  //Review
+  const [reviewData, setReviewData] = useState(data);
+  const [userSession, setUserSession] = useState(null);
+
+  useEffect(() => {
+    firebase.auth.onAuthStateChanged((user) => {
+      setUserSession(user);
+    });
+  }, [userSession]);
+
+  //Attribution des values
+  const handleChange = (e) => {
+    setReviewData({ ...reviewData, [e.target.id]: e.target.value });
+  };
+
+  const { title, comment } = reviewData;
+
+  //Gestion Erreurs
+  var errorMsg = "";
+  function verifyData() {
+    if (ratingLocation === null) {
+      errorMsg = "Please rate the location";
+      document.getElementById("spanErrorMessage").innerHTML = errorMsg;
+    } else if (ratingEquipments === null) {
+      errorMsg = "Please rate the equipments";
+      document.getElementById("spanErrorMessage").innerHTML = errorMsg;
+    } else if (ratingCleanless === null) {
+      errorMsg = "Please rate the cleanless";
+      document.getElementById("spanErrorMessage").innerHTML = errorMsg;
+    } else if (title === "" && comment === "") {
+      errorMsg = "Please fill out the review";
+      document.getElementById("spanErrorMessage").innerHTML = errorMsg;
+    } else if (title === "") {
+      errorMsg = "Please enter a title";
+      document.getElementById("spanErrorMessage").innerHTML = errorMsg;
+    } else if (comment === "") {
+      errorMsg = "Please enter a comment";
+      document.getElementById("spanErrorMessage").innerHTML = errorMsg;
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (errorMsg === "") {
+      reviewData.cleanless = ratingCleanless;
+      reviewData.equipments = ratingEquipments;
+      reviewData.location = ratingLocation;
+      reviewData.idUser = userSession.uid;
+
+      //Calcule moyenne
+      const averageRating =
+        (reviewData.cleanless + reviewData.equipments + reviewData.location) /
+        3;
+      //Arrondir moyenne à la dizaine
+      reviewData.averageRating = Number(averageRating.toFixed(1));
+
+      console.log(reviewData);
+
+      // firebase.review().set({});
+    }
+  };
 
   return (
     <div className="bg-white w-full h-full">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col w-full 2xl:w-5/12 xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-full">
           <div className="flex flex-wrap flex-row">
             <div className="flex flex-col xl:ml-2 sm:ml-5 w-full xl:w-40 md:w-40 sm:w-40">
@@ -26,7 +102,7 @@ const Review = () => {
                 {[...Array(5)].map((star, i) => {
                   const locationRatingValue = i + 1;
                   return (
-                    <label>
+                    <label key={i}>
                       <input
                         type="radio"
                         name="rating"
@@ -59,19 +135,21 @@ const Review = () => {
               </div>
               <br />
 
-              {/* EQUIPMENT */}
-              <p className="flex bold justify-center">Equipment</p>
+              {/* EQUIPMENTS */}
+              <p className="flex bold justify-center">Equipments</p>
               <div className="flex flex-row justify-center xl:justify-start md:justify-start sm:justify-center ">
                 {[...Array(5)].map((star, i) => {
-                  const equipmentRatingValue = i + 1;
+                  const equipmentsRatingValue = i + 1;
                   return (
-                    <label>
+                    <label key={i}>
                       <input
                         type="radio"
                         name="rating"
                         className="hidden"
-                        value={equipmentRatingValue}
-                        onClick={() => setRatingEquipment(equipmentRatingValue)}
+                        value={equipmentsRatingValue}
+                        onClick={() =>
+                          setRatingEquipments(equipmentsRatingValue)
+                        }
                       />
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -80,15 +158,15 @@ const Review = () => {
                         viewBox="0 0 20 20"
                         fill="currentColor"
                         color={
-                          equipmentRatingValue <=
-                          (hoverEquipment || ratingEquipment)
+                          equipmentsRatingValue <=
+                          (hoverEquipments || ratingEquipments)
                             ? "#ffc107"
                             : "#e4e5e9"
                         }
                         onMouseEnter={() =>
-                          setHoverEquipment(equipmentRatingValue)
+                          setHoverEquipments(equipmentsRatingValue)
                         }
-                        onMouseLeave={() => setHoverEquipment(null)}
+                        onMouseLeave={() => setHoverEquipments(null)}
                       >
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
@@ -104,7 +182,7 @@ const Review = () => {
                 {[...Array(5)].map((star, i) => {
                   const cleanlessRatingValue = i + 1;
                   return (
-                    <label>
+                    <label key={i}>
                       <input
                         type="radio"
                         name="rating"
@@ -141,23 +219,39 @@ const Review = () => {
               <div className="flex flex-row w-full">
                 <input
                   type="text"
-                  defaultValue=""
                   className="block border border-grey-light w-full p-3 rounded mb-7 mt-2"
                   name="title"
                   id="title"
                   placeholder="Title of review"
+                  onChange={handleChange}
+                  value={title}
                 />
               </div>
               <div className="flex flex-row h-48 xl:h-full md:h-full sm:h-full">
                 <textarea
+                  name="comment"
+                  id="comment"
                   className="block border border-grey-light w-full p-3 rounded mb-6 self-stretch"
                   placeholder="Comment"
+                  onChange={handleChange}
+                  value={comment}
                 ></textarea>
               </div>
             </div>
           </div>
           <div className="flex flex-grow col-span-1 justify-center align-center">
-            <button className="justify-center mx-5 w-full align-center focus:outline-none text-white text-sm mb-2 p-3 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">
+            <p className="red-text">
+              <span id="spanErrorMessage"></span>
+            </p>
+          </div>
+          <div className="flex flex-grow col-span-1 justify-center align-center">
+            <p className="red-text">
+              <span id="spanErrorMessage"></span>
+            </p>
+            <button
+              onClick={verifyData}
+              className="justify-center mx-5 w-full align-center focus:outline-none text-white text-sm mb-2 p-3 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg"
+            >
               SUBMIT
             </button>
           </div>
@@ -167,4 +261,4 @@ const Review = () => {
   );
 };
 
-export default Review;
+export default AddReview;
