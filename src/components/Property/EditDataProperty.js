@@ -108,7 +108,7 @@ const EditProperty = (props) => {
           backgroundImage: `url(" https://images2.alphacoders.com/238/thumb-1920-238870.jpg")`,
         }}
       >
-        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto">
+        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto" style={{width: "450px"}}>
           <h1 className="text-2xl font-bold mb-8">Update your Property</h1>
           {propertyData && (
             <form

@@ -70,7 +70,7 @@ const AddProperty = (props) => {
           backgroundImage: `url("https://images7.alphacoders.com/594/thumb-1920-594150.jpg")`,
         }}
       >
-        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto">
+        <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl h-5/6 my-auto" style={{width: "450px"}}>
           <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
           <form
             id="form"
@@ -206,10 +206,7 @@ const AddProperty = (props) => {
               <div className="mt-5 text-center">
                 <label
                   htmlFor="property-images"
-                  className="btn flex justify-center border-2 rounded-lg p-3 text-2xl cursor-pointer hover:border-0 hover:bg-gray-300"
-                >
-                  + Add
-                </label>
+                  className="btn flex justify-center border-2 rounded-lg p-3 text-2xl cursor-pointer hover:border-0 hover:bg-gray-300">+ Add picture</label>
                 <input
                   type="file"
                   name="property-images"
