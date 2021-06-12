@@ -22,9 +22,9 @@ const ImageSlider = ({ images }) => {
 
   return (
     images.length > 0 && (
-      <div>
+      <div className="w-8/12 h-4/5 rounded inline-block">
         <button onClick={slideLeft}>{"<"}</button>
-        <img src={images[index]} alt={index} />
+        <img className="rounded-lg" src={images[index].url} alt={index} />
         <button onClick={slideRight}>{">"}</button>
       </div>
     )
