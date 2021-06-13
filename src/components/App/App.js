@@ -2,7 +2,6 @@ import "../../App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Signup from "../Signup/Signup";
 import Login from "../Login/Login";
-import DatePicker from "../SearchResult/CardItem/DatePicker";
 import Search from "../Search/Search";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import Profil from "../Profil/Profil";
