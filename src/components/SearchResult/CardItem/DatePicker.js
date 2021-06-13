@@ -5,11 +5,13 @@ import Moment from "moment";
 import { extendMoment } from "moment-range";
 import { DateRangePicker } from "react-dates";
 
-const DatePicker = () => {
+const DatePicker = (props) => {
   const moment = extendMoment(Moment);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [focusedInput, setFocusedInput] = useState();
+  let numberDays = 1;
+
   const bookings = [
     {
       startDate: moment("15/05/2021", "DD/MM/YYYY"),
@@ -26,7 +28,14 @@ const DatePicker = () => {
   ];
 
   useEffect(() => {
-    console.log(startDate, "->", endDate);
+    numberDays =
+      moment(endDate, "DD-MM-YYYY").diff(
+        moment(startDate, "DD-MM-YYYY"),
+        "days"
+      ) + 1;
+    if (endDate) {
+      props.nights({ startDate, endDate, numberDays });
+    }
   }, [startDate, endDate]);
 
   const isBlocked = (date) => {
@@ -42,19 +51,21 @@ const DatePicker = () => {
     return blocked;
   };
 
+  function handleChangeDates({ startDate, endDate }) {
+    setStartDate(startDate);
+    setEndDate(endDate);
+  }
+
   return (
     <DateRangePicker
       minimumNights={3}
-      displayFormat="d MMM yyyy"
+      displayFormat="DD MMM yyyy"
       isDayBlocked={isBlocked}
       startDate={startDate} // momentPropTypes.momentObj or null,
       startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
       endDate={endDate} // momentPropTypes.momentObj or null,
       endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-      onDatesChange={({ startDate, endDate }) => {
-        setStartDate(startDate);
-        setEndDate(endDate);
-      }} // PropTypes.func.isRequired,
+      onDatesChange={handleChangeDates} // PropTypes.func.isRequired,
       focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
       onFocusChange={(focusedInput) => setFocusedInput(focusedInput)} // PropTypes.func.isRequired,
     />
