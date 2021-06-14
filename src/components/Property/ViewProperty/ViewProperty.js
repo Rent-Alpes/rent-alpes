@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import app from "firebase/app";
+import Firebase from "../../Firebase";
 import HeaderDark from "../../HeaderDark/HeaderDark";
 import Slider from "./Slider";
-import { BiMap, BiGroup } from "react-icons/bi";
-import CardPriceButton from "../../SearchResult/CardItem/CardPriceButton";
+import { BiMap, BiGroup, BiCalendar } from "react-icons/bi";
 import ViewPropertyIcons from "./ViewPropertyIcons";
 import DatePicker from "../../SearchResult/CardItem/DatePicker";
 import PropertyMap from "../../MapLocations/PropertyMap";
+import moment from "moment";
 
 const ViewProperty = () => {
+  console.log(Firebase);
   const db = app.firestore();
   const [propertyData, setpropertyData] = useState(null);
   const [files, setFiles] = useState(null);
@@ -57,6 +59,14 @@ const ViewProperty = () => {
 
   function callback(nights) {
     setDays(nights);
+  }
+
+  function handleClick() {
+    console.log(
+      moment(days.startDate).format("DD/MM/yyyy"),
+      moment(days.endDate).format("DD/MM/yyyy"),
+      propertyId
+    );
   }
 
   return (
@@ -114,10 +124,22 @@ const ViewProperty = () => {
                       </div>
                       {propertyData && (
                         <div className="mt-3">
-                          <CardPriceButton
-                            days={days.numberDays}
-                            price={propertyData.price}
-                          />
+                          <button
+                            onClick={handleClick}
+                            className="bg-gold hover:bg-gray-200 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+                          >
+                            {days.numberDays !== undefined ? (
+                              <div className="flex items-center">
+                                <BiCalendar className="mr-2" />
+                                {propertyData.price * days.numberDays}
+                                <span className="ml-1 text-sm"> €</span>
+                              </div>
+                            ) : (
+                              <span className="ml-1 text-sm">
+                                Select your dates
+                              </span>
+                            )}
+                          </button>
                         </div>
                       )}
                     </div>

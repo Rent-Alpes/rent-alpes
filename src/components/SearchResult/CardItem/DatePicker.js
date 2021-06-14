@@ -58,6 +58,8 @@ const DatePicker = (props) => {
 
   return (
     <DateRangePicker
+      openDirection="up"
+      numberOfMonths={1}
       minimumNights={3}
       displayFormat="DD MMM yyyy"
       isDayBlocked={isBlocked}

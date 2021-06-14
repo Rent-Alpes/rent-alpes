@@ -38,7 +38,7 @@ function App() {
           <HeaderDark />
           <Signup />
         </Route>
-        <Route path="/login" component={Login}></Route>
+        <Route path="/login" component={Login}/>
         <Route path="/forgetpassword">
           <HeaderDark />
           <ForgetPassword />
@@ -47,7 +47,6 @@ function App() {
           <HeaderDark />
           <Profil />
         </Route>
-        <Route path="/date" component={DatePicker} />
         <Route path="/search" component={Search} />
         <Route path="/addproperty">
           <HeaderDark />

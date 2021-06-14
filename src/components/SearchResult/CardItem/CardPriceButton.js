@@ -1,12 +1,12 @@
 import { BiCalendar } from "react-icons/bi";
 
-const CardPriceButton = ({ days, price }) => {
+const CardPriceButton = (props) => {
   return (
     <button className="bg-gold hover:bg-gray-200 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-      {days !== undefined ? (
+      {props.days !== undefined ? (
         <div className="flex items-center">
           <BiCalendar className="mr-2" />
-          {price * days}
+          {props.price * props.days}
           <span className="ml-1 text-sm"> €</span>
         </div>
       ) : (

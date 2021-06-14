@@ -2,7 +2,6 @@ import "../../App.css";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 
 export default function SearchInMap({ position }) {
-  console.log(position);
   return (
     <>
       <MapContainer
