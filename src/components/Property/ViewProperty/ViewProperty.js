@@ -1,20 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import app from "firebase/app";
-import Firebase from "../../Firebase";
 import HeaderDark from "../../HeaderDark/HeaderDark";
 import Slider from "./Slider";
-import { BiMap, BiGroup, BiCalendar } from "react-icons/bi";
+import { BiMap, BiGroup, BiCalendar, BiLockAlt } from "react-icons/bi";
 import ViewPropertyIcons from "./ViewPropertyIcons";
 import DatePicker from "../../SearchResult/CardItem/DatePicker";
 import PropertyMap from "../../MapLocations/PropertyMap";
 import moment from "moment";
+import { firebaseContext } from "../../Firebase";
 
 const ViewProperty = () => {
-  console.log(Firebase);
+  const firebase = useContext(firebaseContext);
+
+  console.log(firebase.auth);
   const db = app.firestore();
   const [propertyData, setpropertyData] = useState(null);
   const [files, setFiles] = useState(null);
   const [days, setDays] = useState([]);
+  const [user, setUser] = useState(null);
   const propertyId = window.location.href.split("/")[4];
   const storageRef = app.storage().ref();
   const [travelers, setTravelers] = useState([]);
@@ -26,6 +29,7 @@ const ViewProperty = () => {
       .then((doc) => {
         if (doc.exists) {
           setpropertyData(doc.data());
+          getUser();
           setTravelers([...Array(doc.data().traveler).keys()]);
         } else {
           console.log("No such document!");
@@ -53,8 +57,16 @@ const ViewProperty = () => {
     };
     loadImages();
   }
+
+  function getUser() {
+    if (firebase.auth.currentUser) {
+      setUser(firebase.auth.currentUser.uid);
+    }
+  }
+
   useEffect(() => {
     getImages();
+    getUser();
   }, []);
 
   function callback(nights) {
@@ -62,11 +74,13 @@ const ViewProperty = () => {
   }
 
   function handleClick() {
-    console.log(
+    const reservation = [
       moment(days.startDate).format("DD/MM/yyyy"),
       moment(days.endDate).format("DD/MM/yyyy"),
-      propertyId
-    );
+      propertyId,
+      user,
+    ];
+    console.log(reservation);
   }
 
   return (
@@ -122,7 +136,7 @@ const ViewProperty = () => {
                           </select>
                         </div>
                       </div>
-                      {propertyData && (
+                      {propertyData && user ? (
                         <div className="mt-3">
                           <button
                             onClick={handleClick}
@@ -139,6 +153,17 @@ const ViewProperty = () => {
                                 Select your dates
                               </span>
                             )}
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="mt-3">
+                          <button className="bg-red-200 disabled:opacity-10 text-white font-bold py-2 px-4 rounded inline-flex items-center disabled">
+                            <div className="flex items-center">
+                              <BiLockAlt className="mr-2" />
+                              <span className="ml-1 text-sm">
+                                YOU MUST BE LOGGED {user}
+                              </span>
+                            </div>
                           </button>
                         </div>
                       )}
