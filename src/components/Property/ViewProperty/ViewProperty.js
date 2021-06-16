@@ -2,7 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import app from "firebase/app";
 import HeaderDark from "../../HeaderDark/HeaderDark";
 import Slider from "./Slider";
-import { BiMap, BiGroup, BiCalendar, BiLockAlt } from "react-icons/bi";
+import ModalReservation from "../ViewProperty/ModalReservation";
+import { BiMap, BiGroup, BiLockAlt } from "react-icons/bi";
 import ViewPropertyIcons from "./ViewPropertyIcons";
 import DatePicker from "../../SearchResult/CardItem/DatePicker";
 import PropertyMap from "../../MapLocations/PropertyMap";
@@ -11,16 +12,16 @@ import { firebaseContext } from "../../Firebase";
 
 const ViewProperty = () => {
   const firebase = useContext(firebaseContext);
-
-  console.log(firebase.auth);
   const db = app.firestore();
   const [propertyData, setpropertyData] = useState(null);
   const [files, setFiles] = useState(null);
   const [days, setDays] = useState([]);
   const [user, setUser] = useState(null);
+  const [travelers, setTravelers] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const propertyId = window.location.href.split("/")[4];
   const storageRef = app.storage().ref();
-  const [travelers, setTravelers] = useState([]);
+  const [reservation, setReservation] = useState([]);
 
   function getImages() {
     var docRef = db.collection("Property").doc(propertyId);
@@ -74,13 +75,14 @@ const ViewProperty = () => {
   }
 
   function handleClick() {
-    const reservation = [
+    setReservation([
       moment(days.startDate).format("DD/MM/yyyy"),
       moment(days.endDate).format("DD/MM/yyyy"),
       propertyId,
       user,
-    ];
-    console.log(reservation);
+    ]);
+    setShowModal(true);
+    console.log(showModal);
   }
 
   return (
@@ -120,7 +122,7 @@ const ViewProperty = () => {
                   </div>
                   <div className="bg-gray ml-10 p-6 rounded-b-lg shadow-lg">
                     <div className="pb-4">
-                      <DatePicker nights={callback} small />
+                      <DatePicker id={propertyId} nights={callback} small />
                     </div>
                     <div className="flex justify-center items-center">
                       <div className="flex items-center justify-around">
@@ -138,22 +140,14 @@ const ViewProperty = () => {
                       </div>
                       {propertyData && user ? (
                         <div className="mt-3">
-                          <button
-                            onClick={handleClick}
-                            className="bg-gold hover:bg-gray-200 text-white font-bold py-2 px-4 rounded inline-flex items-center"
-                          >
-                            {days.numberDays !== undefined ? (
-                              <div className="flex items-center">
-                                <BiCalendar className="mr-2" />
-                                {propertyData.price * days.numberDays}
-                                <span className="ml-1 text-sm"> €</span>
-                              </div>
-                            ) : (
-                              <span className="ml-1 text-sm">
-                                Select your dates
-                              </span>
-                            )}
-                          </button>
+                          <ModalReservation
+                            handleClick={handleClick}
+                            days={days}
+                            propertyData={propertyData}
+                            showModal={showModal}
+                            setShowModal={setShowModal}
+                            reservation={reservation}
+                          />
                         </div>
                       ) : (
                         <div className="mt-3">

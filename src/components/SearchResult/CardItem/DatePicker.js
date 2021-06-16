@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "react-dates/lib/css/_datepicker.css";
 import "react-dates/initialize";
 import Moment from "moment";
+import app from "firebase/app";
 import { extendMoment } from "moment-range";
 import { DateRangePicker } from "react-dates";
 
@@ -10,7 +11,30 @@ const DatePicker = (props) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [focusedInput, setFocusedInput] = useState();
+  const [bookingDates, setBookingDates] = useState([]);
   let numberDays = 1;
+  const db = app.firestore();
+
+  function getBookedDates() {
+    db.collection("Booking")
+      .where("idProperty", "==", props.id)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          setBookingDates([
+            {
+              ...bookingDates,
+              startDate: moment(doc.data().startDate, "DD/MM/YYYY"),
+              endDate: moment(doc.data().endDate, "DD/MM/YYYY"),
+            },
+          ]);
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  }
 
   const bookings = [
     {
@@ -28,6 +52,7 @@ const DatePicker = (props) => {
   ];
 
   useEffect(() => {
+    getBookedDates();
     numberDays =
       moment(endDate, "DD-MM-YYYY").diff(
         moment(startDate, "DD-MM-YYYY"),
@@ -36,12 +61,13 @@ const DatePicker = (props) => {
     if (endDate) {
       props.nights({ startDate, endDate, numberDays });
     }
-  }, [startDate, endDate]);
+  }, []);
 
+  console.log(bookingDates);
   const isBlocked = (date) => {
     let bookedRanges = [];
     let blocked;
-    bookings.map((booking) => {
+    bookingDates.map((booking) => {
       bookedRanges = [
         ...bookedRanges,
         moment.range(booking.startDate, booking.endDate),
