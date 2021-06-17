@@ -21,10 +21,10 @@ const DatePicker = (props) => {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          setBookingDates([
+          console.log(doc.data());
+          setBookingDates((bookingDates) => [
+            ...bookingDates,
             {
-              ...bookingDates,
               startDate: moment(doc.data().startDate, "DD/MM/YYYY"),
               endDate: moment(doc.data().endDate, "DD/MM/YYYY"),
             },
@@ -35,7 +35,6 @@ const DatePicker = (props) => {
         console.log("Error getting documents: ", error);
       });
   }
-
   const bookings = [
     {
       startDate: moment("15/05/2021", "DD/MM/YYYY"),
@@ -62,12 +61,11 @@ const DatePicker = (props) => {
       props.nights({ startDate, endDate, numberDays });
     }
   }, []);
-
-  console.log(bookingDates);
   const isBlocked = (date) => {
+    console.log(bookingDates);
     let bookedRanges = [];
     let blocked;
-    bookingDates.map((booking) => {
+    bookingDates.forEach((booking) => {
       bookedRanges = [
         ...bookedRanges,
         moment.range(booking.startDate, booking.endDate),
