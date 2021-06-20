@@ -27,7 +27,6 @@ const ModalReservation = ({
   function handleRegisterClick() {
     setShowModal(false);
     registerReservation();
-    window.location.reload();
   }
 
   function handleClick() {

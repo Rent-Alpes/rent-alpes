@@ -49,7 +49,6 @@ const DatePicker = (props) => {
     let bookedRanges = [];
     let blocked;
     bookingDates.forEach((booking) => {
-      console.log(booking);
       bookedRanges = [
         ...bookedRanges,
         moment.range(booking.startDate, booking.endDate),
