@@ -12,8 +12,8 @@ const DatePicker = (props) => {
   const [endDate, setEndDate] = useState();
   const [focusedInput, setFocusedInput] = useState();
   const [bookingDates, setBookingDates] = useState([]);
-  let numberDays = 1;
   const db = app.firestore();
+  let numberDays = 1;
 
   function getBookedDates() {
     db.collection("Booking")
@@ -21,7 +21,6 @@ const DatePicker = (props) => {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          console.log(doc.data());
           setBookingDates((bookingDates) => [
             ...bookingDates,
             {
@@ -35,20 +34,6 @@ const DatePicker = (props) => {
         console.log("Error getting documents: ", error);
       });
   }
-  const bookings = [
-    {
-      startDate: moment("15/05/2021", "DD/MM/YYYY"),
-      endDate: moment("21/05/2021", "DD/MM/YYYY"),
-    },
-    {
-      startDate: moment("15/07/2021", "DD/MM/YYYY"),
-      endDate: moment("21/07/2021", "DD/MM/YYYY"),
-    },
-    {
-      startDate: moment("15/06/2021", "DD/MM/YYYY"),
-      endDate: moment("21/06/2021", "DD/MM/YYYY"),
-    },
-  ];
 
   useEffect(() => {
     getBookedDates();
@@ -57,15 +42,14 @@ const DatePicker = (props) => {
         moment(startDate, "DD-MM-YYYY"),
         "days"
       ) + 1;
-    if (endDate) {
-      props.nights({ startDate, endDate, numberDays });
-    }
-  }, []);
+    props.nights({ startDate, endDate, numberDays });
+  }, [startDate, endDate]);
+
   const isBlocked = (date) => {
-    console.log(bookingDates);
     let bookedRanges = [];
     let blocked;
     bookingDates.forEach((booking) => {
+      console.log(booking);
       bookedRanges = [
         ...bookedRanges,
         moment.range(booking.startDate, booking.endDate),
@@ -83,7 +67,7 @@ const DatePicker = (props) => {
   return (
     <DateRangePicker
       openDirection="up"
-      numberOfMonths={1}
+      numberOfMonths={2}
       minimumNights={3}
       displayFormat="DD MMM yyyy"
       isDayBlocked={isBlocked}

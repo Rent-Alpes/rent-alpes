@@ -7,7 +7,6 @@ import { BiMap, BiGroup, BiLockAlt } from "react-icons/bi";
 import ViewPropertyIcons from "./ViewPropertyIcons";
 import DatePicker from "../../SearchResult/CardItem/DatePicker";
 import PropertyMap from "../../MapLocations/PropertyMap";
-import moment from "moment";
 import { firebaseContext } from "../../Firebase";
 
 const ViewProperty = () => {
@@ -19,9 +18,9 @@ const ViewProperty = () => {
   const [user, setUser] = useState(null);
   const [travelers, setTravelers] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [people, setPeople] = useState(null);
   const propertyId = window.location.href.split("/")[4];
   const storageRef = app.storage().ref();
-  const [reservation, setReservation] = useState([]);
 
   function getImages() {
     var docRef = db.collection("Property").doc(propertyId);
@@ -70,21 +69,17 @@ const ViewProperty = () => {
     getUser();
   }, []);
 
-  function callback(nights) {
+  const callback = (nights) => {
     setDays(nights);
-  }
+  };
 
   function handleClick() {
-    setReservation([
-      moment(days.startDate).format("DD/MM/yyyy"),
-      moment(days.endDate).format("DD/MM/yyyy"),
-      propertyId,
-      user,
-    ]);
     setShowModal(true);
-    console.log(showModal);
   }
 
+  function handlePeople(e) {
+    setPeople(e.target.value);
+  }
   return (
     <>
       <HeaderDark />
@@ -128,7 +123,10 @@ const ViewProperty = () => {
                       <div className="flex items-center justify-around">
                         <BiGroup className="text-3xl mt-2 mr-2" />
                         <div>
-                          <select className="border rounded p-2 mt-3 mr-4">
+                          <select
+                            className="border rounded p-2 mt-3 mr-4"
+                            onChange={handlePeople}
+                          >
                             {travelers}
                             {travelers.map((number) => (
                               <option key={number} value={number}>
@@ -145,8 +143,10 @@ const ViewProperty = () => {
                             days={days}
                             propertyData={propertyData}
                             showModal={showModal}
+                            people={people}
                             setShowModal={setShowModal}
-                            reservation={reservation}
+                            propertyId={propertyId}
+                            user={user}
                           />
                         </div>
                       ) : (

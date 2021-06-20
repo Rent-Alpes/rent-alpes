@@ -3,36 +3,53 @@ import { BiCalendar, BiCheckCircle, BiCoin, BiXCircle } from "react-icons/bi";
 import app from "firebase/app";
 import moment from "moment";
 
-const ModalReservation = (props) => {
+const ModalReservation = ({
+  user,
+  propertyId,
+  propertyData,
+  setShowModal,
+  days,
+  showModal,
+  people,
+}) => {
   const db = app.firestore();
 
-  function handleClick() {
-    props.setShowModal(false);
+  function registerReservation() {
     return db.collection("Booking").add({
-      startDate: props.reservation[0],
-      endDate: props.reservation[1],
-      price: props.propertyData.price,
-      idProperty: props.reservation[2],
-      idUser: props.reservation[3],
+      startDate: moment(days.startDate).format("DD/MM/YYYY"),
+      endDate: moment(days.endDate).format("DD/MM/YYYY"),
+      price: propertyData.price,
+      idProperty: propertyId,
+      idUser: user,
+      travelers: people,
     });
+  }
+  function handleRegisterClick() {
+    setShowModal(false);
+    registerReservation();
+    window.location.reload();
+  }
+
+  function handleClick() {
+    setShowModal(true);
   }
   return (
     <>
       <button
-        onClick={props.handleClick}
+        onClick={handleClick}
         className="bg-gold hover:bg-gray-200 text-white font-bold py-2 px-4 rounded inline-flex items-center"
       >
-        {props.days.numberDays !== undefined ? (
+        {isNaN(days.numberDays) ? (
+          <span className="ml-1 text-sm">Select your dates</span>
+        ) : (
           <div className="flex items-center">
             <BiCalendar className="mr-2" />
-            {props.propertyData.price * props.days.numberDays}
+            {propertyData.price * days.numberDays}
             <span className="ml-1 text-sm"> €</span>
           </div>
-        ) : (
-          <span className="ml-1 text-sm">Select your dates</span>
         )}
       </button>
-      {props.showModal ? (
+      {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-sm">
@@ -49,16 +66,19 @@ const ModalReservation = (props) => {
                   </div>
                   <p className="my-4 text-blueGray-500 text-lgleading-10">
                     <strong>Property :</strong>
-                    {props.propertyData.name}
+                    {propertyData.name}
                     <br />
                     <strong>Arrival date :</strong>
-                    {props.reservation[0]}
+                    {moment(days.startDate).format("DD-MM-YYYY")}
                     <br />
                     <strong>Depart date :</strong>
-                    {props.reservation[1]}
+                    {moment(days.endDate).format("DD-MM-YYYY")}
+                    <br />
+                    <strong>Travelers :</strong>
+                    {people}
                     <br />
                     <strong>Price :</strong>
-                    {props.propertyData.price * props.days.numberDays} €
+                    {propertyData.price * days.numberDays} €
                     <br />
                   </p>
                 </div>
@@ -67,7 +87,7 @@ const ModalReservation = (props) => {
                   <button
                     className="bg-red-500 mr-6 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => props.setShowModal(false)}
+                    onClick={() => setShowModal(false)}
                   >
                     <div className="flex items-center">
                       <BiXCircle className="mr-2" /> CANCEL
@@ -76,7 +96,7 @@ const ModalReservation = (props) => {
                   <button
                     className="bg-gold text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={handleClick}
+                    onClick={handleRegisterClick}
                   >
                     <div className="flex items-center">
                       <BiCoin className="mr-2" /> CONFIRMATION
