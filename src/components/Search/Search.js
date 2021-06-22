@@ -18,7 +18,6 @@ const Search = (props) => {
     setProperties(value);
   }
 
-  console.log(properties);
 
   useEffect(() => {
     setProperties(state);

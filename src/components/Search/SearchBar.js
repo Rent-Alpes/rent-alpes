@@ -1,26 +1,72 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import algoliasearch from "algoliasearch";
 import { SearchProperty } from "../Algolia/Algolia";
+import { ApplyFiltersParams } from "../Algolia/Algolia";
+import { Checkbox } from "@material-ui/core";
 
 export const SearchBar = (props) => {
+  var [filterParams, setfilterParams] = useState({
+    maxprice: "",
+    minprice: "",
+    surface: "",
+    room: "",
+    traveler: "",
+    bathroom: "",
+  });
+  var [filterUse, setfilterUse] = useState(false);
+
   const resarchdata = {
     query: "",
     results: {},
     loading: false,
     message: "",
   };
-  const client = algoliasearch(
-    "WM2R73MT8D",
-    "8f1fea58043949f2ba7714b32998a65d"
-  );
 
   const handleChange = (event) => {
-    const query = event.target.value;
-    resarchdata.query = query;
-    resarchdata.loading = true;
-    resarchdata.message = "";
-    props.onChange(SearchProperty(query));
+    if (event.target.id === "filter-check") {
+      if (event.target.checked === true) {
+        setfilterUse(filterUse = event.target.checked);
+      }
+      else if (event.target.checked === false) {
+        setfilterUse(filterUse = event.target.checked);
+        setfilterParams(filterParams = {})
+        ApplyFiltersParams(filterParams, false);
+      }
+
+    } else {
+      const query = event.target.value;
+      resarchdata.query = query;
+      resarchdata.loading = true;
+      resarchdata.message = "";
+      props.onChange(SearchProperty(query));
+    }
+  };  
+  const filtersChange = (event) => {
+    if(event.target.value != ""){
+      setfilterParams({ ...filterParams, [event.target.name]: event.target.value });
+    }
+    else{
+      delete filterParams[event.target.name];
+    }
   };
+const searchClick = ()=>{
+  props.onChange(SearchProperty(" "));
+}
+  const activeFilters = (event) => {
+    if(filterUse)
+    {
+      if (filterParams.minprice != "" && filterParams.maxprice != "") {
+        var maxPrice = filterParams.maxprice;
+        var minPrice = filterParams.minprice;
+        if (parseInt(filterParams.minprice) > parseInt(filterParams.maxprice)) {
+          document.getElementById("max-price").value = minPrice;
+          document.getElementById("min-price").value = maxPrice;
+        }
+      }
+      ApplyFiltersParams(filterParams, true);
+    }
+  };
+
 
   const { query } = resarchdata.query;
   return (
@@ -34,9 +80,51 @@ export const SearchBar = (props) => {
         onChange={handleChange}
         className="static w-full pl-7 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white bg-opacity-90"
       />
-
+      <Checkbox id="filter-check" onChange={handleChange}></Checkbox>
+      <br />
+      <br />
+      <label>Prix Min</label>
+      <input id="min-price" name="minprice" type="number" onChange={filtersChange} className="border-2 border-black"></input>
+      <br />
+      <br />
+      <br />
+      <br />
+      <label>Prix Max</label>
+      <input id="max-price" name="maxprice" type="number" onChange={filtersChange} className="border-2 border-black"></input>
+      <br />
+      <br />
+      <br />
+      <br />
+      <label>Taille Min</label>
+      <input id="min-size" name="surface" type="number" onChange={filtersChange} className="border-2 border-black"></input>
+      <br />
+      <br />
+      <br />
+      <br />
+      <label>chambre Min</label>
+      <input id="min-room" name="room" type="number" onChange={filtersChange}  className="border-2 border-black"></input>
+      <br />
+      <br />
+      <br />
+      <br />
+      <label>Voyageur Min</label>
+      <input id="min-traveler" name="traveler" type="number" onChange={filtersChange} className="border-2 border-black"></input>
+      <br />
+      <br />
+      <br />
+      <br />
+      <label>Douche Min</label>
+      <input id="min-bathroom" name="bathroom" type="number" onChange={filtersChange} className="border-2 border-black"></input>
+      <br />
+      <br />
+      {/* <label>Ville : </label>
+      <input id="city" onChange={filtersChange} type="text" className="border-2 border-black"></input> */}
+      <br />
+      <br />
+      <button onClick={activeFilters}>Validate</button>
       <div className="absolute inset-y-0 right-0">
-        <button className="static h-14 px-5 rounded-md focus:outline-none">
+        <button className="static h-14 px-5 rounded-md focus:outline-none"
+        onClick={searchClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
