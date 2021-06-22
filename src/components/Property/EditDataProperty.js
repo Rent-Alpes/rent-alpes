@@ -5,8 +5,6 @@ import app from "firebase/app";
 import { Link } from "react-router-dom";
 import { SetInputFile } from "../InputFile/InputFile";
 import { InputFileChange } from "../InputFile/InputFile";
-import { UpdateAlgolia } from "../Algolia/Algolia";
-import { DeleteAlgolia } from "../Algolia/Algolia";
 
 const EditProperty = (props) => {
   const firebase = useContext(firebaseContext);
@@ -52,7 +50,6 @@ const EditProperty = (props) => {
     ref.update({ ...propertyData });
     alert("Update property success !");
     <GetDataList />;
-    UpdateAlgolia(propertyData, propertyId);
   }
   function deleteProperty() {
     db.collection("Property").doc(propertyId).delete();
@@ -61,7 +58,6 @@ const EditProperty = (props) => {
       alert("Delete property success !");
       <GetDataList />;
       deleteFiles();
-      DeleteAlgolia(propertyId);
     }
   }
   const deleteFiles = async () => {

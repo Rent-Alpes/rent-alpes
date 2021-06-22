@@ -15,25 +15,9 @@ var filterParams = {
   bathroom: "",
 };
 
-
-export const AddProperty = (propertyValues, propertyId) => {
-  const objects = propertyValues;
-  objects.objectID = propertyId;
-  index.saveObject(objects);
-};
-
-export const UpdateAlgolia = (propertyValues, propertyId) => {
-  const objects = propertyValues;
-  objects.objectID = propertyId;
-  index.saveObject(objects);
-};
-export const DeleteAlgolia = (propertyId) => {
-  index.deleteObject(propertyId)
-};
 export const ApplyFiltersParams = (filters, withFilters) => {
   filterParams = filters;
-  filtered = withFilters
- // console.log(filterParams);
+  filtered = withFilters;
 };
 export const SearchProperty = (searchText) => {
   index.setSettings({
@@ -77,7 +61,6 @@ export const SearchProperty = (searchText) => {
     };
 
     filters = filters.substr(0, filters.length - 3)
-    //console.log(filters);
 
     index.search(searchText, {
       filters: filters
@@ -87,7 +70,19 @@ export const SearchProperty = (searchText) => {
       }).catch(err => {
         console.log(err);
       });
-    //console.log(resultProperty);
+    return resultProperty;
+  } else if (searchText == "" || searchText == " " || searchText == null || searchText == undefined) {
+    let hits = [];
+    index.browseObjects({
+      query: '', // Empty query will match all records
+      batch: batch => {
+        hits = hits.concat(batch);
+      }
+    }).then(() => {
+      resultProperty = hits;
+    }).catch(err => {
+      console.log(err);
+    });
     return resultProperty;
   }
   else {
@@ -97,25 +92,6 @@ export const SearchProperty = (searchText) => {
       }).catch(err => {
         console.log(err);
       });
-
-    //console.log(resultProperty);
     return resultProperty;
   }
-}
-
-export const SynchPropertys = async () => {
-  const propertyList = await GetProperty();
-  index.saveObjects(propertyList);
-}
-async function GetProperty() {
-  const db = app.firestore();
-  const citiesRef = db.collection('Property');
-  const snapshot = await citiesRef.get();
-  var propertyList = [];
-  snapshot.forEach(doc => {
-    const property = doc.data();
-    property.objectID = doc.id;
-    propertyList.push(property);
-  });
-  return propertyList;
 }

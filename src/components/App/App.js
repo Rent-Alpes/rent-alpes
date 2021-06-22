@@ -15,7 +15,6 @@ import EditDataProperty from "../Property/EditDataProperty";
 import app from "firebase/app";
 import React, { useState } from "react";
 import { UploadFiles } from "../Property/AddProperty";
-import { AddProperty } from "../Algolia/Algolia";
 
 function App() {
   const idProperty = "";
@@ -26,7 +25,6 @@ function App() {
       .collection("Property")
       .add(propertyObject)
       .then(function (docRef) {
-        AddProperty(propertyObject, docRef.id);
         UploadFiles(docRef.id);
       });
   };
