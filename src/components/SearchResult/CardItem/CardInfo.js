@@ -27,7 +27,11 @@ const CardInfo = (props) => {
           {props.city}
         </div>
         <div className="flex justify-end mt-4">
-          <CardPriceButton price={props.price} propertyId={props.name} />
+          <CardPriceButton
+            idproperty={props.idproperty}
+            price={props.price}
+            propertyId={props.name}
+          />
         </div>
       </div>
     </div>
