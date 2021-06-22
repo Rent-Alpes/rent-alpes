@@ -7,11 +7,29 @@ import { SetInputFile } from "../InputFile/InputFile";
 import { InputFileChange } from "../InputFile/InputFile";
 import { UpdateAlgolia } from "../Algolia/Algolia";
 import { DeleteAlgolia } from "../Algolia/Algolia";
+import Equipment from "./GetEquipment";
+
 
 const EditProperty = (props) => {
   const firebase = useContext(firebaseContext);
   const db = app.firestore();
   const propertyId = window.location.href.split("/")[4];
+ 
+const tab=[
+
+  "Wifi",
+  "WaterPool",
+  "Sauna",
+  "Hall of sport",
+  "Transats",
+  "Barbecue",
+  "Ski Local",
+  "Fitness equipment",
+  "Garden",
+  "Patio",
+  "Panoramic view",
+  "Floor heating"
+]
 
   function getPropertyData() {
     var docRef = db.collection("Property").doc(propertyId);
@@ -19,7 +37,14 @@ const EditProperty = (props) => {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          setpropertyData(doc.data());
+
+           const myData = doc.data();
+          setpropertyData(myData);
+          console.log(myData.equipments);
+          //setEquipmentlist(tab)
+    
+
+            
         } else {
           console.log("No such document!");
         }
@@ -27,8 +52,12 @@ const EditProperty = (props) => {
       .catch((error) => {
         console.log("Error getting document:", error);
       });
+     
+
   }
 
+ 
+  const [Equipmentlist, setEquipmentlist] = useState([]);
   const [userSession, setUserSession] = useState(null);
   const [propertyData, setpropertyData] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -38,18 +67,23 @@ const EditProperty = (props) => {
       user ? setUserSession(user) : props.history.push("/login");
       if (!userSession) {
         getPropertyData();
+
+       
+
       }
     });
     SetImageInput(propertyId);
   }, []);
-
+ 
   const handleInputChange = (e) => {
     setpropertyData({ ...propertyData, [e.target.name]: e.target.value });
+ 
   };
+//console.log(propertyData.equipments)
 
   function UpdateProperty() {
     const ref = db.collection("Property").doc(propertyId);
-    ref.update({ ...propertyData });
+    ref.update({ ...propertyData, equipments : Equipmentlist });
     alert("Update property success !");
     <GetDataList />;
     UpdateAlgolia(propertyData, propertyId);
@@ -112,6 +146,7 @@ const EditProperty = (props) => {
     InputFileChange(propertyId);
   };
 
+  
   return (
     <>
       <div
@@ -175,6 +210,22 @@ const EditProperty = (props) => {
                   className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
                 />
               </div>
+        
+              <div className="relative z-0 w-full mb-5">
+            
+                <label>Equipments</label>
+                <Equipment 
+
+                  name="equipments"
+                  Equipmentlist={Equipmentlist}
+                  setEquipmentlist={setEquipmentlist}
+                 
+               
+                />
+               
+              </div>
+
+          
               <div className="relative z-0 w-full mb-5">
                 <label>Country</label>
                 <input
@@ -185,8 +236,8 @@ const EditProperty = (props) => {
                   onChange={handleInputChange}
                   className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
                 />
+                
               </div>
-
               <div className="relative z-0 w-full mb-5">
                 <label>Bathroom</label>
                 <input
@@ -197,6 +248,7 @@ const EditProperty = (props) => {
                   className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
                 />
               </div>
+             
               <div className="relative z-0 w-full mb-5">
                 <label>Room</label>
                 <input

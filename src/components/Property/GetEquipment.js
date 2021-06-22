@@ -1,6 +1,8 @@
+import { Checkbox } from "@material-ui/core";
 import React, { useState } from "react";
 
 export const GetEquipment = (props) => {
+  
   const handleCheck = (e) => {
     if (e.target.checked) {
       props.setEquipmentlist([...props.Equipmentlist, e.target.value]);
@@ -11,7 +13,7 @@ export const GetEquipment = (props) => {
     }
   };
 
-  // console.log(checkedMap);
+
 
   return (
     <>
