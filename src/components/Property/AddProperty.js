@@ -3,10 +3,8 @@ import { firebaseContext } from "../Firebase";
 import app from "firebase/app";
 import InputAutocompletteAdress from "./Address/InputAutocompletteAdress";
 import { InputFileChange } from "../InputFile/InputFile";
-import { InputFileDelete } from "../InputFile/InputFile";
 import Equipment from "./GetEquipment";
 import { GetFile } from "../InputFile/InputFile";
-
 
 export const UploadFiles = (id) => {
   var files = GetFile();
@@ -24,16 +22,23 @@ const AddProperty = (props) => {
   const [Equipmentlist, setEquipmentlist] = useState([]);
   const [propertyValues, setPropertyValues] = useState();
   const [address, setAddress] = useState([]);
-  //console.log(Equipmentlist);
+
   const handleSubmit = (e) => {
     try {
       e.preventDefault();
       var user = firebase.auth.currentUser;
-    
       propertyValues.idUser = user.uid;
-      propertyValues.equipments=Equipmentlist; 
-      props.addOrEditProperty(propertyValues);
+      propertyValues.equipments = Equipmentlist;
+      propertyValues.address = e.target[2].value;
+      propertyValues.postalCode = e.target[3].value;
+      propertyValues.city = e.target[4].value;
+      propertyValues.country = e.target[5].value;
+      propertyValues.position = new app.firestore.GeoPoint(
+        address.position.lat,
+        address.position.lng
+      );
 
+      props.addOrEditProperty(propertyValues);
 
       alert("Your property has been success add  !!");
     } catch {
@@ -72,7 +77,6 @@ const AddProperty = (props) => {
             </div>
             <InputAutocompletteAdress
               state={{ address: [address, setAddress] }}
-         
             />
 
             <label className=" mb-5">Address</label>
@@ -84,9 +88,7 @@ const AddProperty = (props) => {
                 onChange={handleInputChange}
                 value={
                   address.length !== 0
-                    ? address.raw.address.houseNumber +
-                      " " +
-                      address.raw.address.street
+                    ? address.address.houseNumber + " " + address.address.street
                     : ""
                 }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -100,9 +102,7 @@ const AddProperty = (props) => {
                 name="postalCode"
                 required
                 onChange={handleInputChange}
-                value={
-                  address.length !== 0 ? address.raw.address.postalCode : ""
-                }
+                value={address.length !== 0 ? address.address.postalCode : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
@@ -114,7 +114,7 @@ const AddProperty = (props) => {
                 name="city"
                 required
                 onChange={handleInputChange}
-                value={address.length !== 0 ? address.raw.address.city : ""}
+                value={address.length !== 0 ? address.address.city : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
@@ -125,15 +125,13 @@ const AddProperty = (props) => {
                 name="country"
                 required
                 onChange={handleInputChange}
-                value={
-                  address.length !== 0 ? address.raw.address.countryName : ""
-                }
+                value={address.length !== 0 ? address.address.countryName : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
             <label>Equipment</label>
             <div className="relative z-0 w-full mb-5">
-              <div name="equipments" onChange={handleInputChange}>
+              <div name="equipments">
                 <Equipment
                   Equipmentlist={Equipmentlist}
                   setEquipmentlist={setEquipmentlist}
@@ -145,6 +143,8 @@ const AddProperty = (props) => {
               <input
                 type="number"
                 name="bathroom"
+                required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -155,6 +155,7 @@ const AddProperty = (props) => {
                 type="number"
                 name="room"
                 required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -165,6 +166,7 @@ const AddProperty = (props) => {
                 type="number"
                 name="traveler"
                 required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -186,6 +188,7 @@ const AddProperty = (props) => {
                 type="number"
                 name="surface"
                 required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -197,6 +200,7 @@ const AddProperty = (props) => {
                 name="price"
                 placeholder="Price / Night"
                 required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -204,7 +208,7 @@ const AddProperty = (props) => {
             <label>Thumb</label>
             <div className="relative z-0 w-full mb-5">
               <input
-                type="text"
+                type="url"
                 name="thumb"
                 required
                 onChange={handleInputChange}
