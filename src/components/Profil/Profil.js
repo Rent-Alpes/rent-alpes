@@ -1,5 +1,6 @@
 import React, { useState, Fragment, useContext, useEffect } from "react";
 import { firebaseContext } from "../Firebase";
+import { useHistory } from "react-router-dom";
 
 const Profil = (props) => {
   const firebase = useContext(firebaseContext);
@@ -21,10 +22,11 @@ const Profil = (props) => {
   const [userData, setUserData] = useState(data);
   const [orginalEmailData, setOrginalEmailData] = useState();
   const [showModal, setShowModal] = useState(false);
+  let history = useHistory();
 
   useEffect(() => {
     let listener = firebase.auth.onAuthStateChanged((user) => {
-      user ? setUserSession(user) : props.history.push("/login");
+      user ? setUserSession(user) : history.push("/login");
     });
 
     if (!!userSession) {

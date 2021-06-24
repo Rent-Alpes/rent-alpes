@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import app from "firebase/app";
 import { firebaseContext } from "../Firebase";
-import { Link } from "react-router-dom";
-import Header from '../Header/Header';
+import { Link, useHistory } from "react-router-dom";
+import Header from "../Header/Header";
 
 const GetDataProperty = (props) => {
   const db = app.firestore();
@@ -10,12 +10,16 @@ const GetDataProperty = (props) => {
   const [User, setUser] = useState(null);
   const [propertylist, setPropertylist] = useState([]);
   const firebase = useContext(firebaseContext);
+  let history = useHistory();
 
   //Récupération de L'id  property
   useEffect(() => {
     firebase.auth.onAuthStateChanged((data) => {
-      setUser(data);
-      GetData(data.uid);
+      data ? setUser(data) : history.push("/login");
+
+      if (!!User) {
+        GetData(data.uid);
+      }
     });
   }, [User]);
 
@@ -32,9 +36,7 @@ const GetDataProperty = (props) => {
     setPropertylist(data);
   };
 
-
   return (
-
     <div className="flex flex-col mt-10">
       <div className="my-2 overflow-x-auto sm:-mx-4 lg:-mx-2 bg-gray-100">
         <div className="py-2 align-middle inline-block min-w-full sm:px-4 lg:px-5">
@@ -129,7 +131,6 @@ const GetDataProperty = (props) => {
                             pathname: `/editdataproperty/${property.idDocument}`,
                           }}
                         >
-
                           <div className="w-full focus:outline-none text-white text-sm p-3 rounded-md bg-yellow-500 hover:bg-yellow-600 hover:shadow-lg flex justify-center">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"

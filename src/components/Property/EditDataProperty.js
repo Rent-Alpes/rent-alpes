@@ -7,11 +7,23 @@ import { SetInputFile } from "../InputFile/InputFile";
 import { InputFileChange } from "../InputFile/InputFile";
 import { UpdateAlgolia } from "../Algolia/Algolia";
 import { DeleteAlgolia } from "../Algolia/Algolia";
+import { useHistory } from "react-router-dom";
 
 const EditProperty = (props) => {
   const firebase = useContext(firebaseContext);
   const db = app.firestore();
   const propertyId = window.location.href.split("/")[4];
+  let history = useHistory();
+
+  useEffect(() => {
+    firebase.auth.onAuthStateChanged((user) => {
+      user ? setUserSession(user) : history.push("/login");
+      if (!userSession) {
+        getPropertyData();
+      }
+    });
+    SetImageInput(propertyId);
+  }, [userSession]);
 
   function getPropertyData() {
     var docRef = db.collection("Property").doc(propertyId);
@@ -32,17 +44,6 @@ const EditProperty = (props) => {
   const [userSession, setUserSession] = useState(null);
   const [propertyData, setpropertyData] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
-  useEffect(() => {
-    //let listener = firebase.auth.onAuthStateChanged((user) => {
-    firebase.auth.onAuthStateChanged((user) => {
-      user ? setUserSession(user) : props.history.push("/login");
-      if (!userSession) {
-        getPropertyData();
-      }
-    });
-    SetImageInput(propertyId);
-  }, []);
   //   return () => {
   //     listener();
   //   };

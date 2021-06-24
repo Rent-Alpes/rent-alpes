@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { firebaseContext } from "../Firebase";
 import app from "firebase/app";
 import InputAutocompletteAdress from "./Address/InputAutocompletteAdress";
 import { InputFileChange } from "../InputFile/InputFile";
 import Equipment from "./GetEquipment";
 import { GetFile } from "../InputFile/InputFile";
+import { useHistory } from "react-router-dom";
 
 export const UploadFiles = (id) => {
   var files = GetFile();
@@ -22,6 +23,13 @@ const AddProperty = (props) => {
   const [Equipmentlist, setEquipmentlist] = useState([]);
   const [propertyValues, setPropertyValues] = useState();
   const [address, setAddress] = useState([]);
+  let history = useHistory();
+
+  useEffect(() => {
+    firebase.auth.onAuthStateChanged((user) => {
+      user ? setUserSession(user) : history.push("/login");
+    });
+  }, []);
 
   const handleSubmit = (e) => {
     try {
