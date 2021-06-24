@@ -23,6 +23,7 @@ export const SearchProperty = (searchText) => {
   index.setSettings({
     attributesForFaceting: [
       'searchable(name)',
+      'searchable(city)',
       'searchable(description)',
       'filterOnly(price)',
       'filterOnly(bathroom)',
@@ -30,7 +31,6 @@ export const SearchProperty = (searchText) => {
       'filterOnly(traveler)',
       'filterOnly(surface)',
     ],
-    //minWordSizefor1Typo: 5,
     allowTyposOnNumericTokens: false,
     typoTolerance: 'min',
   }).then(() => {

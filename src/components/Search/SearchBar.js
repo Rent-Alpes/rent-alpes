@@ -80,40 +80,54 @@ const searchClick = ()=>{
         onChange={handleChange}
         className="static w-full pl-7 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white bg-opacity-90"
       />
+      {/* <div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+    <div class="relative py-3 sm:max-w-xl mx-auto">
+        <nav x-data="{ open: false }">
+            <button class="text-gray-500 w-10 h-10 relative focus:outline-none bg-white" @click="open = !open">
+                <span class="sr-only">Open main menu</span>
+                <div class="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2">
+                    <span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'rotate-45': open,' -translate-y-1.5': !open }"></span>
+                    <span aria-hidden="true" class="block absolute  h-0.5 w-5 bg-current   transform transition duration-500 ease-in-out" :class="{'opacity-0': open } "></span>
+                    <span aria-hidden="true" class="block absolute  h-0.5 w-5 bg-current transform  transition duration-500 ease-in-out" :class="{'-rotate-45': open, ' translate-y-1.5': !open}"></span>
+                </div>
+            </button>
+        </nav>
+    </div>
+</div> */}
       <Checkbox id="filter-check" onChange={handleChange}></Checkbox>
       <br />
       <br />
-      <label>Prix Min</label>
+      <label>Min price : </label>
       <input id="min-price" name="minprice" type="number" onChange={filtersChange} className="border-2 border-black"></input>
       <br />
       <br />
       <br />
       <br />
-      <label>Prix Max</label>
+      <label>Max price : </label>
       <input id="max-price" name="maxprice" type="number" onChange={filtersChange} className="border-2 border-black"></input>
       <br />
       <br />
       <br />
       <br />
-      <label>Taille Min</label>
+      <label>Min size : </label>
       <input id="min-size" name="surface" type="number" onChange={filtersChange} className="border-2 border-black"></input>
       <br />
       <br />
       <br />
       <br />
-      <label>chambre Min</label>
+      <label>Min rooms : </label>
       <input id="min-room" name="room" type="number" onChange={filtersChange}  className="border-2 border-black"></input>
       <br />
       <br />
       <br />
       <br />
-      <label>Voyageur Min</label>
+      <label>Min traveler : </label>
       <input id="min-traveler" name="traveler" type="number" onChange={filtersChange} className="border-2 border-black"></input>
       <br />
       <br />
       <br />
       <br />
-      <label>Douche Min</label>
+      <label>Min bathroom : </label>
       <input id="min-bathroom" name="bathroom" type="number" onChange={filtersChange} className="border-2 border-black"></input>
       <br />
       <br />
