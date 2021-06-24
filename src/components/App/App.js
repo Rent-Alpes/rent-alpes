@@ -19,6 +19,7 @@ import React, { useState } from "react";
 import { UploadFiles } from "../Property/AddProperty";
 import { AddProperty } from "../Algolia/Algolia";
 import Review from "../Review/AddReview";
+import getReview from "../Review/GetReview";
 
 function App() {
   const idProperty = "";
@@ -70,6 +71,7 @@ function App() {
           />
         </Route>
         <Route path="/review" component={Review} />
+        <Route path="/getReview" component={getReview} />
         <Route component={ErrorComponent} />
       </Switch>
     </Router>
