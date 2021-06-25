@@ -23,38 +23,25 @@ export const SearchBar = (props) => {
   };
 
   const handleChange = (event) => {
-    if (event.target.id === "filter-check") {
-      if (event.target.checked === true) {
-        setfilterUse(filterUse = event.target.checked);
-      }
-      else if (event.target.checked === false) {
-        setfilterUse(filterUse = event.target.checked);
-        setfilterParams(filterParams = {})
-        ApplyFiltersParams(filterParams, false);
-      }
-
-    } else {
-      const query = event.target.value;
-      resarchdata.query = query;
-      resarchdata.loading = true;
-      resarchdata.message = "";
-      props.onChange(SearchProperty(query));
-    }
-  };  
+    const query = event.target.value;
+    resarchdata.query = query;
+    resarchdata.loading = true;
+    resarchdata.message = "";
+    props.onChange(SearchProperty(query));
+  };
   const filtersChange = (event) => {
-    if(event.target.value != ""){
+    if (event.target.value != "") {
       setfilterParams({ ...filterParams, [event.target.name]: event.target.value });
     }
-    else{
+    else {
       delete filterParams[event.target.name];
     }
   };
-const searchClick = ()=>{
-  props.onChange(SearchProperty(" "));
-}
+  const searchClick = () => {
+    props.onChange(SearchProperty(" "));
+  }
   const activeFilters = (event) => {
-    if(filterUse)
-    {
+    if (filterUse) {
       if (filterParams.minprice != "" && filterParams.maxprice != "") {
         var maxPrice = filterParams.maxprice;
         var minPrice = filterParams.minprice;
@@ -69,7 +56,16 @@ const searchClick = ()=>{
 
   function OpenMenuFilter(event) {
     document.getElementById("burger-menu").classList.toggle("change");
-    
+    if (filterUse == true) {
+      setfilterUse(filterUse = false);
+      setfilterParams(filterParams = {})
+      ApplyFiltersParams(filterParams, false);
+      document.getElementById("group-filter").style.display = "none";
+    } else {
+      setfilterUse(filterUse = true);
+      document.getElementById("group-filter").style.display = "flex";
+    }
+
   }
 
   const { query } = resarchdata.query;
@@ -82,60 +78,20 @@ const searchClick = ()=>{
         id="search-input"
         placeholder="Search..."
         onChange={handleChange}
-        className="static w-full pl-7 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white bg-opacity-90"
+        className="static w-full pl-16 pr-28 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white bg-opacity-90"
       />
+      <div className="absolute inset-y-0 left-0 pr-2.5 border-r-2 p-px h-14 border-gray-900 text-gray-800 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600">
+        <div className="container mt-2 ml-3" id="burger-menu" onClick={OpenMenuFilter}>
+          <div className="bar1"></div>
+          <div className="bar2"></div>
+          <div className="bar3"></div>
+        </div>
+      </div>
 
-<div className="container" id="burger-menu" onClick={OpenMenuFilter}>
-  <div className="bar1"></div>
-  <div className="bar2"></div>
-  <div className="bar3"></div>
-</div>
 
-      <Checkbox id="filter-check" onChange={handleChange}></Checkbox>
-      <br />
-      <br />
-      <label>Min price : </label>
-      <input id="min-price" name="minprice" type="number" onChange={filtersChange} className="border-2 border-black"></input>
-      <br />
-      <br />
-      <br />
-      <br />
-      <label>Max price : </label>
-      <input id="max-price" name="maxprice" type="number" onChange={filtersChange} className="border-2 border-black"></input>
-      <br />
-      <br />
-      <br />
-      <br />
-      <label>Min size : </label>
-      <input id="min-size" name="surface" type="number" onChange={filtersChange} className="border-2 border-black"></input>
-      <br />
-      <br />
-      <br />
-      <br />
-      <label>Min rooms : </label>
-      <input id="min-room" name="room" type="number" onChange={filtersChange}  className="border-2 border-black"></input>
-      <br />
-      <br />
-      <br />
-      <br />
-      <label>Min traveler : </label>
-      <input id="min-traveler" name="traveler" type="number" onChange={filtersChange} className="border-2 border-black"></input>
-      <br />
-      <br />
-      <br />
-      <br />
-      <label>Min bathroom : </label>
-      <input id="min-bathroom" name="bathroom" type="number" onChange={filtersChange} className="border-2 border-black"></input>
-      <br />
-      <br />
-      {/* <label>Ville : </label>
-      <input id="city" onChange={filtersChange} type="text" className="border-2 border-black"></input> */}
-      <br />
-      <br />
-      <button onClick={activeFilters}>Validate</button>
       <div className="absolute inset-y-0 right-0">
         <button className="static h-14 px-5 rounded-md focus:outline-none"
-        onClick={searchClick}>
+          onClick={searchClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -152,24 +108,52 @@ const searchClick = ()=>{
           </svg>
         </button>
 
-        {
-          // <button className="inline-block border-l-2 h-14 border-gray-900 px-5 text-gray-800 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600">
-          //   <svg
-          //     xmlns="http://www.w3.org/2000/svg"
-          //     className="h-6 w-6"
-          //     fill="none"
-          //     viewBox="0 0 24 24"
-          //     stroke="currentColor"
-          //   >
-          //     <path
-          //       strokeLinecap="round"
-          //       strokeLinejoin="round"
-          //       strokeWidth={2}
-          //       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-          //     />
-          //   </svg>
-          // </button>
-        }
+
+        <button className="inline-block border-l-2 h-14 border-gray-900 px-5 text-gray-800 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div id="group-filter" className="relative w-full pt-3 grid grid-rows-3 grid-flow-col gap-4 hidden">
+        <div className="row-span-3">
+          <label className="block">Min price : </label>
+          <input id="min-price" name="minprice" type="number" onChange={filtersChange} className="border-2 border-black block"></input>
+
+          <label>Min traveler : </label>
+          <input id="min-traveler" name="traveler" type="number" onChange={filtersChange} className="border-2 border-black"></input>
+        </div>
+        <div className="row-span-3">
+
+          <label className="block">Max price : </label>
+          <input id="max-price" name="maxprice" type="number" onChange={filtersChange} className="border-2 border-black block"></input>
+
+          <label>Min bathroom : </label>
+          <input id="min-bathroom" name="bathroom" type="number" onChange={filtersChange} className="border-2 border-black"></input>
+        </div >
+        <div className="row-span-3">
+
+          <label className="block">Min size : </label>
+          <input id="min-size" name="surface" type="number" onChange={filtersChange} className="border-2 border-black block"></input>
+
+        </div>
+        <div className="row-span-3">
+          <button onClick={activeFilters}>Validate</button>
+        </div>
+        {/* <label>Ville : </label>
+      <input id="city" onChange={filtersChange} type="text" className="border-2 border-black"></input> */}
       </div>
     </div>
   );
