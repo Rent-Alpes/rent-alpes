@@ -5,11 +5,8 @@ import { SearchBar } from "./SearchBar";
 import { useLocation } from "react-router-dom";
 import SearchInMap from "../MapLocations/SearchInMap";
 import { BiMapAlt } from "react-icons/bi";
-import { firebaseContext } from "../Firebase";
-import algoliasearch from "algoliasearch";
-import { SearchProperty } from "../Algolia/Algolia";
 
-const Search = (props) => {
+const Search = () => {
   const [properties, setProperties] = useState();
   const [listIsVisible, setListIsVisible] = useState(true);
   const { state } = useLocation();
@@ -17,8 +14,6 @@ const Search = (props) => {
   function handleChange(value) {
     setProperties(value);
   }
-
-  console.log(properties);
 
   useEffect(() => {
     setProperties(state);
