@@ -17,7 +17,7 @@ const Search = () => {
 
   useEffect(() => {
     setProperties(state);
-  }, []);
+  }, [state]);
 
   return (
     <>
