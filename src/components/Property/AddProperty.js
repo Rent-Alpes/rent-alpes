@@ -6,6 +6,10 @@ import { InputFileChange } from "../InputFile/InputFile";
 import Equipment from "./GetEquipment";
 import { GetFile } from "../InputFile/InputFile";
 import { useHistory } from "react-router-dom";
+import GetDataList from "./GetDataProperty";
+import { Link } from "react-router-dom";
+
+
 
 export const UploadFiles = (id) => {
   var files = GetFile();
@@ -23,17 +27,22 @@ const AddProperty = (props) => {
   const [Equipmentlist, setEquipmentlist] = useState([]);
   const [propertyValues, setPropertyValues] = useState();
   const [address, setAddress] = useState([]);
+  const [userSession, setUserSession] = useState(null);
+
   let history = useHistory();
 
   useEffect(() => {
     firebase.auth.onAuthStateChanged((user) => {
       user ? setUserSession(user) : history.push("/login");
+      if (!userSession) {
+      }
     });
-  }, []);
+    
+  }, [userSession]);
 
-  const handleSubmit = (e) => {
+  function addproperty  (e) {
     try {
-      e.preventDefault();
+   e.preventDefault();
       var user = firebase.auth.currentUser;
       propertyValues.idUser = user.uid;
       propertyValues.equipments = Equipmentlist;
@@ -48,7 +57,9 @@ const AddProperty = (props) => {
 
       props.addOrEditProperty(propertyValues);
 
+     
       alert("Your property has been success add  !!");
+      <GetDataList/>
     } catch {
       alert("Error add property");
     }
@@ -69,7 +80,7 @@ const AddProperty = (props) => {
           <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
           <form
             id="form"
-            onSubmit={handleSubmit}
+           
             className="overflow-auto  my-auto px-6"
             style={{ height: "90%" }}
           >
@@ -245,13 +256,12 @@ const AddProperty = (props) => {
               </div>
               <div id="filesList"> </div>
             </div>
-            <button
-              id="button"
-              type="submit"
-              className="w-full px-6 py-3 mt-3  text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none flex justify-center"
-            >
-              Add Property
-              <svg
+            <Link to={{ pathname: `/getdataproperty` }}>
+                <div
+className="w-full px-6 py-3 mt-3  text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none flex justify-center"                  onClick={addproperty}
+                >
+                
+                  <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-8 w-8"
                 fill="none"
@@ -265,7 +275,9 @@ const AddProperty = (props) => {
                   d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                 />
               </svg>
-            </button>
+              Add Property
+                </div>
+              </Link>
           </form>
         </div>
       </div>
