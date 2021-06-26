@@ -45,7 +45,10 @@ export default function SearchInMap(props) {
                         room={property.bathroom}
                         traveler={property.traveler}
                       />
-                      <CardPriceButton price={property.price} />
+                      <CardPriceButton
+                        price={property.price}
+                        idproperty={property.objectID}
+                      />
                     </div>
                   </Popup>
                 </Marker>

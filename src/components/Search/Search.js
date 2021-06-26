@@ -5,11 +5,8 @@ import { SearchBar } from "./SearchBar";
 import { useLocation } from "react-router-dom";
 import SearchInMap from "../MapLocations/SearchInMap";
 import { BiMapAlt } from "react-icons/bi";
-import { firebaseContext } from "../Firebase";
-import algoliasearch from "algoliasearch";
-import { SearchProperty } from "../Algolia/Algolia";
 
-const Search = (props) => {
+const Search = () => {
   const [properties, setProperties] = useState();
   const [listIsVisible, setListIsVisible] = useState(true);
   const { state } = useLocation();
@@ -17,8 +14,6 @@ const Search = (props) => {
   function handleChange(value) {
     setProperties(value);
   }
-
-  console.log(properties);
 
   useEffect(() => {
     setProperties(state);
@@ -44,10 +39,11 @@ const Search = (props) => {
           ? properties &&
             properties.map((property) => (
               <div
-                key={property.name}
+                key={property.objectID}
                 className="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/4"
               >
                 <CardItem
+                  idproperty={property.objectID}
                   image={property.thumb}
                   name={property.name}
                   city={property.city}
