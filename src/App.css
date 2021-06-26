@@ -141,13 +141,14 @@
 .footer {
   margin-top: 1rem;
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.808);
+  background-color: #ff9f00ce;
   position: fixed;
   color: #fff;
   bottom: 0;
   left: 0;
   text-align: center;
-  height: 70px;
+  font-size: 0.8em;
+  height: 3rem;
   width: 100%;
   z-index: 1000;
 }

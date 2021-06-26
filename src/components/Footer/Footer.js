@@ -1,6 +1,8 @@
 const Footer = () => (
   <div className="footer">
-    <p>This is some content in sticky footer</p>
+    <p>
+      <strong>Rent'Alpes © All rights reserved 2021</strong>
+    </p>
   </div>
 );
 
