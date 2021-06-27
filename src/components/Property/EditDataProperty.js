@@ -52,20 +52,31 @@ const EditProperty = (props) => {
   };
 
   function UpdateProperty() {
-    setShowModalUpdate(false);
-    const ref = db.collection("Property").doc(propertyId);
-    ref.update({ ...propertyData, equipments: Equipmentlist });
-    UpdateAlgolia(propertyData, propertyId);
+    try{
+      setShowModalUpdate(false);
+      const ref = db.collection("Property").doc(propertyId);
+      ref.update({ ...propertyData, equipments: Equipmentlist });
+      UpdateAlgolia(propertyData, propertyId);
+    }
+    catch{
+alert("error");
+    }
+    
   }
   function deleteProperty() {
-    db.collection("Property").doc(propertyId).delete();
+    try{
+      db.collection("Property").doc(propertyId).delete();
 
-    if (!!propertyId) {
-      // alert("Delete property success !");
-
-      deleteFiles();
-      DeleteAlgolia(propertyId);
+      if (!!propertyId) {
+        // alert("Delete property success !");
+  
+        deleteFiles();
+        DeleteAlgolia(propertyId);
+      }
     }
+  catch{
+    alert("error");
+  }
   }
   const deleteFiles = async () => {
     var picture = await app.storage().ref("image/property");
