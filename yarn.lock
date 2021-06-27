@@ -5255,6 +5255,11 @@
     "minimalistic-assert" "^1.0.1"
     "minimalistic-crypto-utils" "^1.0.1"
 
+"emailjs-com@^3.1.0":
+  "integrity" "sha512-e6rs1F2wTl4vrsTXNNCUPK5cFfuPXYcKJlZgPtsThOidIp5dbgNS5SUrpnP3qxt9p5Om0lkFCVkmBi1a6hQFnw=="
+  "resolved" "https://registry.npmjs.org/emailjs-com/-/emailjs-com-3.1.0.tgz"
+  "version" "3.1.0"
+
 "emittery@^0.7.1":
   "integrity" "sha512-A8OG5SR/ij3SsJdWDJdkkSYUjQdCUx6APQXem0SaEePBSRg4eymGYwBkKo1Y6DU+af/Jn2dBQqDBvjnr9Vi8nQ=="
   "resolved" "https://registry.npmjs.org/emittery/-/emittery-0.7.2.tgz"
@@ -10776,6 +10781,11 @@
   "integrity" "sha512-5fbApkODamlU1kgwr6Y/OWfAiBXLoxaPTc+y35l/a/rbRjM6aaOrwH2+CDhIwbzmmoCoDLzg6xJrfuStVbAHgQ=="
   "resolved" "https://registry.npmjs.org/react-simple-image-slider/-/react-simple-image-slider-2.1.0.tgz"
   "version" "2.1.0"
+
+"react-tailwind-table@^1.1.1":
+  "integrity" "sha512-X+3MFk/6DBZ/TSlrOPAkKiwHTMaEOBqVKTVytzAW4F0aT8bEvokiiEjkQ1zPOYUETjW6LrRb2Hb9FczqWjJYnw=="
+  "resolved" "https://registry.npmjs.org/react-tailwind-table/-/react-tailwind-table-1.1.1.tgz"
+  "version" "1.1.1"
 
 "react-transition-group@^4.3.0", "react-transition-group@^4.4.0":
   "integrity" "sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg=="

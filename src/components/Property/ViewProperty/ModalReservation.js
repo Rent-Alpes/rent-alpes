@@ -3,6 +3,7 @@ import { BiCalendar, BiCheckCircle, BiCoin, BiXCircle } from "react-icons/bi";
 import { useHistory } from "react-router-dom";
 import app from "firebase/app";
 import moment from "moment";
+import emailjs from "emailjs-com";
 
 const ModalReservation = ({
   user,
