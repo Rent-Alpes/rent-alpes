@@ -1,9 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { firebaseContext } from "../Firebase";
 import app from "firebase/app";
 import InputAutocompletteAdress from "./Address/InputAutocompletteAdress";
 import { InputFileChange } from "../InputFile/InputFile";
+import Equipment from "./GetEquipment";
 import { GetFile } from "../InputFile/InputFile";
+import { useHistory } from "react-router-dom";
+
+
 
 export const UploadFiles = (id) => {
   var files = GetFile();
@@ -18,44 +22,54 @@ export const UploadFiles = (id) => {
 
 const AddProperty = (props) => {
   const firebase = useContext(firebaseContext);
-  const initialPropertyValues = {
-    name: "",
-    address: "",
-    postalCode: "",
-    city: "",
-    country: "",
-    bathroom: "",
-    description: "",
-    equipments: "",
-    room: "",
-    traveler: "",
-    picture: "",
-    idUser: "",
-    price: "",
-    thumb: "",
-    surface: "",
-  };
-
-  const adresse = <InputAutocompletteAdress />;
-  initialPropertyValues.address = adresse;
-
+  const [Equipmentlist, setEquipmentlist] = useState([]);
   const [propertyValues, setPropertyValues] = useState();
+  const [address, setAddress] = useState([]);
+  const [userSession, setUserSession] = useState(null);
 
-  const handleSubmit = (e) => {
-    try {
-      e.preventDefault();
+  let history = useHistory();
 
-      var user = firebase.auth.currentUser;
-      propertyValues.idUser = user.uid;
-      props.addOrEditProperty(propertyValues);
-      alert("Your property has been success add  !!");
-    } catch {
-      alert("Error add property");
-    }
-  };
+  useEffect(() => {
+    firebase.auth.onAuthStateChanged((user) => {
+      user ? setUserSession(user) : history.push("/login");
+      if (!userSession) {
+      }
+    });
+    
+  }, [userSession]);
+
+  
   const handleInputChange = (e) => {
     setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
   };
+
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    try {
+    
+ 
+      var user = firebase.auth.currentUser;
+      propertyValues.idUser = user.uid;
+      propertyValues.equipments = Equipmentlist;
+      propertyValues.address = e.target[2].value;
+      propertyValues.postalCode = e.target[3].value;
+      propertyValues.city = e.target[4].value;
+      propertyValues.country = e.target[5].value;
+      propertyValues.position = new app.firestore.GeoPoint(
+        address.position.lat,
+        address.position.lng
+      );
+    
+      props.addOrEditProperty(propertyValues);
+      alert("Your property has been success add  !!");
+      history.push('/getDataProperty');
+    
+    
+         
+        } catch {
+          alert("Error add property");
+        }
+  }
   return (
     <>
       <div
@@ -68,7 +82,7 @@ const AddProperty = (props) => {
           <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
           <form
             id="form"
-            onSubmit={handleSubmit}
+           onSubmit={handleSubmit}
             className="overflow-auto  my-auto px-6"
             style={{ height: "90%" }}
           >
@@ -82,18 +96,26 @@ const AddProperty = (props) => {
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
+            <InputAutocompletteAdress
+              state={{ address: [address, setAddress] }}
+            />
 
-            <InputAutocompletteAdress />
-            <label>Address</label>
-            <div className="relative z-0 w-full mb-5" InputAutocompletteAdress>
+            <label className=" mb-5">Address</label>
+            <div className="relative z-0 w-full mb-5">
               <input
                 type="text"
                 name="address"
                 required
                 onChange={handleInputChange}
+                value={
+                  address.length !== 0
+                    ? address.address.houseNumber + " " + address.address.street
+                    : ""
+                }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
+
             <label>Postal Code</label>
             <div className="relative z-0 w-full mb-5">
               <input
@@ -101,9 +123,11 @@ const AddProperty = (props) => {
                 name="postalCode"
                 required
                 onChange={handleInputChange}
+                value={address.length !== 0 ? address.address.postalCode : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
+
             <label>City</label>
             <div className="relative z-0 w-full mb-5">
               <input
@@ -111,6 +135,7 @@ const AddProperty = (props) => {
                 name="city"
                 required
                 onChange={handleInputChange}
+                value={address.length !== 0 ? address.address.city : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
@@ -121,14 +146,26 @@ const AddProperty = (props) => {
                 name="country"
                 required
                 onChange={handleInputChange}
+                value={address.length !== 0 ? address.address.countryName : ""}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
+            </div>
+            <label>Equipment</label>
+            <div className="relative z-0 w-full mb-5">
+              <div name="equipments">
+                <Equipment
+                  Equipmentlist={Equipmentlist}
+                  setEquipmentlist={setEquipmentlist}
+                />
+              </div>
             </div>
             <label>Bathroom</label>
             <div className="relative z-0 w-full mb-5">
               <input
                 type="number"
                 name="bathroom"
+                required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -139,6 +176,7 @@ const AddProperty = (props) => {
                 type="number"
                 name="room"
                 required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -149,6 +187,7 @@ const AddProperty = (props) => {
                 type="number"
                 name="traveler"
                 required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -170,6 +209,7 @@ const AddProperty = (props) => {
                 type="number"
                 name="surface"
                 required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -181,6 +221,7 @@ const AddProperty = (props) => {
                 name="price"
                 placeholder="Price / Night"
                 required
+                min="0"
                 onChange={handleInputChange}
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -188,7 +229,7 @@ const AddProperty = (props) => {
             <label>Thumb</label>
             <div className="relative z-0 w-full mb-5">
               <input
-                type="text"
+                type="url"
                 name="thumb"
                 required
                 onChange={handleInputChange}
@@ -202,7 +243,7 @@ const AddProperty = (props) => {
                   htmlFor="property-images"
                   className="btn flex justify-center border-2 rounded-lg p-3 text-2xl cursor-pointer hover:border-0 hover:bg-gray-300"
                 >
-                  + Add
+                  + Add pictures
                 </label>
                 <input
                   type="file"
@@ -217,27 +258,26 @@ const AddProperty = (props) => {
               </div>
               <div id="filesList"> </div>
             </div>
-            <button
-              id="button"
-              type="submit"
-              className="w-full px-6 py-3 mt-3  text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none flex justify-center"
-            >
-              Add Property
-              <svg
+            <button id="button" type="submit" className="w-full px-6 py-3 mt-3  text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none flex justify-center" >
+              
+             
+                  <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-8 w-8"
+                className="h-8 w-8"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                 />
               </svg>
-            </button>
+              Add Property
+              
+              </button>
           </form>
         </div>
       </div>
