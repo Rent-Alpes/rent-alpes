@@ -7,6 +7,7 @@ import { InputFileChange } from "../InputFile/InputFile";
 import { UpdateAlgolia } from "../Algolia/Algolia";
 import { DeleteAlgolia } from "../Algolia/Algolia";
 import { useHistory } from "react-router-dom";
+import Equipment from "./GetEquipment";
 
 const EditProperty = (props) => {
   const firebase = useContext(firebaseContext);
@@ -40,34 +41,27 @@ const EditProperty = (props) => {
       });
   }
 
-
   const [Equipmentlist, setEquipmentlist] = useState([]);
   const [userSession, setUserSession] = useState(null);
   const [propertyData, setpropertyData] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
 
-
   const handleInputChange = (e) => {
     setpropertyData({ ...propertyData, [e.target.name]: e.target.value });
   };
 
   function UpdateProperty() {
-
-
-      const ref = db.collection("Property").doc(propertyId);
-      ref.update({ ...propertyData, equipments : Equipmentlist });
-
-
-      UpdateAlgolia(propertyData, propertyId);
-
-
+    setShowModalUpdate(false);
+    const ref = db.collection("Property").doc(propertyId);
+    ref.update({ ...propertyData, equipments: Equipmentlist });
+    UpdateAlgolia(propertyData, propertyId);
   }
   function deleteProperty() {
     db.collection("Property").doc(propertyId).delete();
 
     if (!!propertyId) {
-     // alert("Delete property success !");
+      // alert("Delete property success !");
 
       deleteFiles();
       DeleteAlgolia(propertyId);
@@ -186,19 +180,13 @@ const EditProperty = (props) => {
               </div>
 
               <div className="relative z-0 w-full mb-5">
-
                 <label>Equipments</label>
                 <Equipment
-
                   name="equipments"
                   Equipmentlist={Equipmentlist}
                   setEquipmentlist={setEquipmentlist}
-
-
                 />
-
               </div>
-
 
               <div className="relative z-0 w-full mb-5">
                 <label>Country</label>
@@ -310,31 +298,30 @@ const EditProperty = (props) => {
                 </div>
               </div>
 
-
-                <button
-                  className="w-full px-2 py-2 mt-2 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-yellow-600 hover:shadow-lg focus:outline-none flex justify-center"
-                  type="button"
-                  onClick={() => setShowModalUpdate(true)}
+              <button
+                className="w-full px-2 py-2 mt-2 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-yellow-600 hover:shadow-lg focus:outline-none flex justify-center"
+                type="button"
+                onClick={() => setShowModalUpdate(true)}
+              >
+                <span>Update</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8 pl-1 "
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  <span>Update</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8 pl-1 "
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                    />
-                  </svg>
-                </button>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
+                </svg>
+              </button>
 
-                {showModalUpdate ? (
+              {showModalUpdate ? (
                 <>
-         <div
+                  <div
                     className="fixed z-10 inset-0 overflow-y-auto"
                     aria-labelledby="modal-title"
                     role="dialog"
@@ -357,10 +344,20 @@ const EditProperty = (props) => {
                         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                           <div className="sm:flex sm:items-start">
                             <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="#23682F">
-  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-</svg>
-
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-10 w-10"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="#23682F"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
                             </div>
                             <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                               <h3
@@ -371,7 +368,7 @@ const EditProperty = (props) => {
                               </h3>
                               <div className="mt-2">
                                 <p className="text-sm text-gray-500">
-                                Successful change !
+                                  Successful change !
                                 </p>
                               </div>
                             </div>
@@ -380,26 +377,20 @@ const EditProperty = (props) => {
                         <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                           <Link
                             type="button"
-
                             to={{ pathname: `/getDataProperty` }}
                             className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
-                            onClick={() => setShowModalUpdate(false),UpdateProperty}
-
+                            onClick={UpdateProperty}
                           >
-
                             Ok
                           </Link>
-
                         </div>
                       </div>
                     </div>
                   </div>
-
-            </>
+                </>
               ) : null}
               <button
                 className="w-full px-2 py-2 mt-2 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-red-700 hover:bg-red-600 hover:shadow-lg focus:outline-none flex justify-center"
-
                 type="button"
                 onClick={() => setShowModal(true)}
               >
