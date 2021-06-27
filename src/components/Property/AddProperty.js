@@ -6,6 +6,8 @@ import { InputFileChange } from "../InputFile/InputFile";
 import { InputFileDelete } from "../InputFile/InputFile";
 import Equipment from "./GetEquipment";
 import { GetFile } from "../InputFile/InputFile";
+import { Link } from "react-router-dom";
+import Alerts from "./Alert";
 
 
 export const UploadFiles = (id) => {
@@ -24,6 +26,14 @@ const AddProperty = (props) => {
   const [Equipmentlist, setEquipmentlist] = useState([]);
   const [propertyValues, setPropertyValues] = useState();
   const [address, setAddress] = useState([]);
+ 
+function add(){
+  var user = firebase.auth.currentUser;
+    
+  propertyValues.idUser = user.uid;
+  propertyValues.equipments=Equipmentlist; 
+  props.addOrEditProperty(propertyValues);
+}
   //console.log(Equipmentlist);
   const handleSubmit = (e) => {
     try {
@@ -34,8 +44,7 @@ const AddProperty = (props) => {
       propertyValues.equipments=Equipmentlist; 
       props.addOrEditProperty(propertyValues);
 
-
-      alert("Your property has been success add  !!");
+      
     } catch {
       alert("Error add property");
     }
@@ -233,28 +242,10 @@ const AddProperty = (props) => {
               </div>
               <div id="filesList"> </div>
             </div>
-            <button
-              id="button"
-              type="submit"
-              className="w-full px-6 py-3 mt-3  text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none flex justify-center"
-            >
-              Add Property
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                />
-              </svg>
-            </button>
+            <Alerts > </Alerts>
+       
           </form>
+            
         </div>
       </div>
     </>
