@@ -25,7 +25,7 @@ const ModalReservation = ({
       idUser: user,
       travelers: people,
     });
-    let url = "/getreservations";
+    let url = "/booking";
     history.push(url);
   }
 

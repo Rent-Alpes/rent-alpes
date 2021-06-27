@@ -21,7 +21,6 @@ import { AddProperty } from "../Algolia/Algolia";
 import Review from "../Review/AddReview";
 import getReview from "../Review/GetReview";
 
-
 function App() {
   const idProperty = "";
   const [idproperty, setIdProperty] = useState("Default property");
@@ -86,7 +85,7 @@ function App() {
             setIdProperty={setIdProperty}
           />
         </Route>
-        <Route path="/getreservations">
+        <Route path="/booking">
           <HeaderDark />
           <GetReservations propertyList={{ properties }} />
         </Route>
@@ -99,10 +98,6 @@ function App() {
         </Route>
         <Route path="/review" component={Review} />
         <Route path="/getReview" component={getReview} />
-        <Route path="/table">
-          <HeaderDark />
-          <TableReact />
-        </Route>
         <Route path="/view-property">
           <ViewProperty idproperty={idproperty} />
         </Route>
