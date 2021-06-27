@@ -6,8 +6,6 @@ import { InputFileChange } from "../InputFile/InputFile";
 import Equipment from "./GetEquipment";
 import { GetFile } from "../InputFile/InputFile";
 import { useHistory } from "react-router-dom";
-import GetDataList from "./GetDataProperty";
-import { Link } from "react-router-dom";
 
 
 
@@ -40,9 +38,16 @@ const AddProperty = (props) => {
     
   }, [userSession]);
 
-  function addproperty  (e) {
+  
+  const handleInputChange = (e) => {
+    setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit=(e)=>{
+    e.preventDefault();
     try {
-   e.preventDefault();
+    
+ 
       var user = firebase.auth.currentUser;
       propertyValues.idUser = user.uid;
       propertyValues.equipments = Equipmentlist;
@@ -54,20 +59,17 @@ const AddProperty = (props) => {
         address.position.lat,
         address.position.lng
       );
-
+    
       props.addOrEditProperty(propertyValues);
-
-     
       alert("Your property has been success add  !!");
-      <GetDataList/>
-    } catch {
-      alert("Error add property");
-    }
-  };
-  const handleInputChange = (e) => {
-    setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
-  };
-
+      history.push('/getDataProperty');
+    
+    
+         
+        } catch {
+          alert("Error add property");
+        }
+  }
   return (
     <>
       <div
@@ -80,7 +82,7 @@ const AddProperty = (props) => {
           <h1 className="text-2xl font-bold mb-8">Create a Property</h1>
           <form
             id="form"
-           
+           onSubmit={handleSubmit}
             className="overflow-auto  my-auto px-6"
             style={{ height: "90%" }}
           >
@@ -256,11 +258,9 @@ const AddProperty = (props) => {
               </div>
               <div id="filesList"> </div>
             </div>
-            <Link to={{ pathname: `/getdataproperty` }}>
-                <div
-className="w-full px-6 py-3 mt-3  text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none flex justify-center"                  onClick={addproperty}
-                >
-                
+            <button id="button" type="submit" className="w-full px-6 py-3 mt-3  text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-green-700 hover:bg-blue-700 hover:shadow-lg focus:outline-none flex justify-center" >
+              
+             
                   <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-8 w-8"
@@ -276,8 +276,8 @@ className="w-full px-6 py-3 mt-3  text-lg text-white transition-all duration-150
                 />
               </svg>
               Add Property
-                </div>
-              </Link>
+              
+              </button>
           </form>
         </div>
       </div>
