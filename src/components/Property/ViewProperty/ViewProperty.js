@@ -30,7 +30,7 @@ const ViewProperty = () => {
         if (doc.exists) {
           setpropertyData(doc.data());
           getUser();
-          setTravelers([...Array(doc.data().traveler).keys()]);
+          setTravelers([...Array(parseInt(doc.data().traveler) + 1).keys()]);
         } else {
           console.log("No such document!");
         }
@@ -80,6 +80,7 @@ const ViewProperty = () => {
   function handlePeople(e) {
     setPeople(e.target.value);
   }
+
   return (
     <>
       <HeaderDark />
@@ -165,7 +166,7 @@ const ViewProperty = () => {
                   </div>
                 </div>
               </div>
-              <div className="relative bg-white rounded-lg shadow-lg flex mt-3 z-0">
+              <div className="relative bg-white rounded-lg shadow-lg flex mt-3 z-0 mb-20">
                 {propertyData && (
                   <PropertyMap position={propertyData.position} />
                 )}
