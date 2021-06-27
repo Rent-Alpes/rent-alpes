@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import app from "firebase/app";
 import { firebaseContext } from "../Firebase";
+import Table from "react-tailwind-table";
 
 const GetReservations = (props) => {
   const db = app.firestore();
@@ -13,7 +14,32 @@ const GetReservations = (props) => {
     firebase.auth.onAuthStateChanged((data) => {
       GetReservations(data.uid);
     });
-  }, []);
+  }, [reservationList]);
+
+  const rowcheck = (row, column, display_value) => {
+    if (column.field === "idDocument") {
+      return (
+        <button
+          onClick={() => deleteReservation(display_value)}
+          className="border p-2 bg-red-700 text-white font-bold"
+        >
+          DELETE
+        </button>
+      );
+    }
+  };
+
+  function deleteReservation(docID) {
+    db.collection("Booking")
+      .doc(docID)
+      .delete()
+      .then(() => {
+        console.log("Document successfully deleted!");
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
+  }
 
   const GetReservations = async (id) => {
     const response = db.collection("Booking");
@@ -32,71 +58,43 @@ const GetReservations = (props) => {
     });
     setReservationList(data);
   };
+
+  const columns = [
+    {
+      field: "name",
+      use: "Property",
+    },
+    {
+      field: "startDate", //Object destructure
+      use: "Start Date",
+    },
+
+    {
+      field: "endDate",
+      use: "End Date",
+      // use_in_search:false
+    },
+    {
+      field: "travelers",
+      use: "Travelers",
+      // use_in_search:false
+    },
+    {
+      field: "idDocument",
+      use: "Actions",
+      use_in_search: false,
+    },
+  ];
+
   return (
-    <div className="flex flex-col mt-10">
-      <div className="my-2 overflow-x-auto sm:-mx-4 lg:-mx-2 bg-gray-100">
-        <div className="py-2 align-middle inline-block min-w-full sm:px-4 lg:px-5">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead>
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-2xl font-medium text-gray-500 tracking-wider"
-                  >
-                    Property
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-left text-2xl font-medium text-gray-500 tracking-wider"
-                  >
-                    Star Date
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-left text-2xl font-medium text-gray-500 tracking-wider"
-                  >
-                    End Date
-                  </th>
-
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-left text-2xl font-medium text-gray-500 tracking-wider"
-                  >
-                    Travelers
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody className="bg-white divide-y divide-gray-300">
-                <tr>
-                  <td colSpan="5" className="text-center">
-                    {reservationList.length === 0 && (
-                      <p className="text-2xl"> You have no property </p>
-                    )}
-                  </td>
-                </tr>
-                {reservationList &&
-                  reservationList.map((property) => (
-                    <tr key={property.idDocument}>
-                      <td className="px-3 py-3 text-left text-2xl font-medium text-gray-500 tracking-wider">
-                        <p>{property.name}</p>
-                      </td>
-                      <td className="px-3 py-3 text-left text-2xl font-medium text-gray-500 tracking-wider">
-                        <p>{property.startDate}</p>
-                      </td>
-                      <td className="px-3 py-3 text-left text-2xl font-medium text-gray-500 tracking-wider">
-                        <p>{property.endDate}</p>
-                      </td>
-                      <td className="px-3 py-3 text-left text-2xl font-medium text-gray-500 tracking-wider">
-                        <p>{property.travelers}</p>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+    <div className="flex justify-center mt-10">
+      <div className="w-4/5">
+        <Table
+          columns={columns}
+          rows={reservationList}
+          table_header="Your Reservation's List"
+          row_render={rowcheck}
+        />
       </div>
     </div>
   );

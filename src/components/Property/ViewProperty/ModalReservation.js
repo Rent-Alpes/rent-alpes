@@ -1,5 +1,6 @@
 import React from "react";
 import { BiCalendar, BiCheckCircle, BiCoin, BiXCircle } from "react-icons/bi";
+import { useHistory } from "react-router-dom";
 import app from "firebase/app";
 import moment from "moment";
 
@@ -13,9 +14,10 @@ const ModalReservation = ({
   people,
 }) => {
   const db = app.firestore();
+  const history = useHistory();
 
   function registerReservation() {
-    return db.collection("Booking").add({
+    db.collection("Booking").add({
       startDate: moment(days.startDate).format("DD/MM/YYYY"),
       endDate: moment(days.endDate).format("DD/MM/YYYY"),
       price: propertyData.price,
@@ -23,7 +25,10 @@ const ModalReservation = ({
       idUser: user,
       travelers: people,
     });
+    let url = "/getreservations";
+    history.push(url);
   }
+
   function handleRegisterClick() {
     setShowModal(false);
     registerReservation();

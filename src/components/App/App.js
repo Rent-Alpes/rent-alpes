@@ -17,6 +17,7 @@ import app from "firebase/app";
 import React, { useState, useEffect } from "react";
 import { UploadFiles } from "../Property/AddProperty";
 import { AddProperty } from "../Algolia/Algolia";
+import TableReact from "../Table/Table";
 
 function App() {
   const idProperty = "";
@@ -88,6 +89,10 @@ function App() {
             addOrEditProperty={addOrEdit}
             idproperty={idproperty}
           />
+        </Route>
+        <Route path="/table">
+          <HeaderDark />
+          <TableReact />
         </Route>
         <Route path="/view-property">
           <ViewProperty idproperty={idproperty} />
