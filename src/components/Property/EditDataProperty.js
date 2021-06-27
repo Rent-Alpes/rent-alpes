@@ -7,6 +7,7 @@ import { InputFileChange } from "../InputFile/InputFile";
 import { UpdateAlgolia } from "../Algolia/Algolia";
 import { DeleteAlgolia } from "../Algolia/Algolia";
 import { useHistory } from "react-router-dom";
+import Equipment from "./GetEquipment";
 
 const EditProperty = (props) => {
   const firebase = useContext(firebaseContext);
