@@ -18,12 +18,10 @@ const GetReview = () => {
     if (!!userSession) {
       firebase
         .property()
-        .doc("7J9U9CgnGovZjakqwR8j")
+        .doc("AiFPT2JeMsGp7TDCmzTe")
         .get()
         .then((doc) => {
           const reviews = doc.data().avis;
-          console.log(reviews);
-
           reviews.forEach((review) =>
             firebase
               .review()
@@ -40,8 +38,6 @@ const GetReview = () => {
         });
     }
   }, [userSession]);
-
-  function calculAverageRating(i) {}
 
   return (
     <div

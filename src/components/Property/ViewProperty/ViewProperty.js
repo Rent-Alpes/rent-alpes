@@ -8,6 +8,7 @@ import ViewPropertyIcons from "./ViewPropertyIcons";
 import DatePicker from "../../SearchResult/CardItem/DatePicker";
 import PropertyMap from "../../MapLocations/PropertyMap";
 import { firebaseContext } from "../../Firebase";
+import { data } from "autoprefixer";
 
 const ViewProperty = () => {
   const firebase = useContext(firebaseContext);
@@ -21,6 +22,9 @@ const ViewProperty = () => {
   const [people, setPeople] = useState(null);
   const propertyId = window.location.href.split("/")[4];
   const storageRef = app.storage().ref();
+  const [averageRatingReview, setAverageRatingReview] = useState(0);
+  const [ivalue, setIvalue] = useState(0);
+  var isBooking = false;
 
   function getImages() {
     var docRef = db.collection("Property").doc(propertyId);
@@ -31,6 +35,20 @@ const ViewProperty = () => {
           setpropertyData(doc.data());
           getUser();
           setTravelers([...Array(parseInt(doc.data().traveler) + 1).keys()]);
+          const reviews = doc.data().avis;
+          reviews.forEach((review) =>
+            firebase
+              .review()
+              .doc(review)
+              .get()
+              .then(
+                (rev) =>
+                  setAverageRatingReview(
+                    (rate) => rate + rev.data().averageRating
+                  ),
+                setIvalue((numb) => numb + 1)
+              )
+          );
         } else {
           console.log("No such document!");
         }
@@ -61,6 +79,19 @@ const ViewProperty = () => {
   function getUser() {
     if (firebase.auth.currentUser) {
       setUser(firebase.auth.currentUser.uid);
+
+      var docBooking = db.collection("Booking");
+
+      docBooking.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if (
+            doc.data().idUser == firebase.auth.currentUser.uid &&
+            doc.data().idProperty == propertyId
+          ) {
+            isBooking = true;
+          }
+        });
+      });
     }
   }
 
@@ -81,6 +112,39 @@ const ViewProperty = () => {
     setPeople(e.target.value);
   }
 
+  //Affichage Review
+  const displayReview = averageRatingReview !== 0 && (
+    <div className="text-3xl text-gray-800 ">
+      <div className="absolute mt-2">
+        <div className="flex flex-row">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-8 w-8 cursor-pointer star mt-auto"
+            fill="none"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            color={"#ffc107"}
+          >
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          {(averageRatingReview / ivalue).toFixed(1)}/5
+        </div>
+        <p className="text-base text-gray-800 ">
+          <a className="cursor-pointer underline">{ivalue} reviews</a>
+        </p>
+      </div>
+    </div>
+  );
+
+  // Affichage bouton review
+  const displayButtonReview = isBooking == false && (
+    <div>
+      <button className="focus:outline-none text-white text-sm mt-5 py-2 px-4 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg">
+        ADD REVIEW
+      </button>
+    </div>
+  );
+
   return (
     <>
       <HeaderDark />
@@ -91,8 +155,11 @@ const ViewProperty = () => {
             <div className="relative -top-4" style={{ maxWidth: "896px" }}>
               <div className="relative bg-white p-6 rounded-lg shadow-lg flex">
                 <div className="w-1/2">
-                  <h2 className="text-4xl font-bold mb-2 text-gray-800">
-                    {propertyData && propertyData.name}
+                  <h2 className="text-4xl mb-2 text-gray-800">
+                    {displayReview}
+                    <p className="font-bold">
+                      {propertyData && propertyData.name}
+                    </p>
                   </h2>
                   <div className="flex justify-center">
                     <div className="flex items-center gold-color mt-2 uppercase text-xs font-semibold tracking-wider">
@@ -163,6 +230,7 @@ const ViewProperty = () => {
                         </div>
                       )}
                     </div>
+                    {displayButtonReview}
                   </div>
                 </div>
               </div>
