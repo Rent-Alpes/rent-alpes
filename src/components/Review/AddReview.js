@@ -84,7 +84,7 @@ const AddReview = () => {
         3;
       //Arrondir moyenne à la dizaine
       reviewData.averageRating = Number(averageRating.toFixed(1));
-      const idProperty = "3KkojaAe7CoNJTJEWQl8";
+      const idProperty = "7J9U9CgnGovZjakqwR8j";
 
       firebaseDB
         .review()

@@ -7,32 +7,41 @@ const GetReview = () => {
 
   const [userSession, setUserSession] = useState(null);
   const [reviewList, setReviewList] = useState([]);
+  const [averageRatingReview, setAverageRatingReview] = useState(0);
+  const [ivalue, setIvalue] = useState(0);
 
   useEffect(() => {
-    let listener = firebase.auth.onAuthStateChanged((user) => {
+    firebase.auth.onAuthStateChanged((user) => {
       setUserSession(user);
     });
 
     if (!!userSession) {
       firebase
         .property()
-        .doc("3KkojaAe7CoNJTJEWQl8")
+        .doc("7J9U9CgnGovZjakqwR8j")
         .get()
         .then((doc) => {
           const reviews = doc.data().avis;
-          var reviewsList = [];
+          console.log(reviews);
 
           reviews.forEach((review) =>
             firebase
               .review()
               .doc(review)
               .get()
-              .then((doc) => reviewsList.push(doc.data()))
+              .then(
+                (rev) =>
+                  setAverageRatingReview(
+                    (rate) => rate + rev.data().averageRating
+                  ),
+                setIvalue((numb) => numb + 1)
+              )
           );
-          setReviewList(reviewsList);
         });
     }
   }, [userSession]);
+
+  function calculAverageRating(i) {}
 
   return (
     <div
@@ -84,7 +93,9 @@ const GetReview = () => {
                 <div className="flex flex-row mb-4 ">
                   <div className="w-1/5 text-center bg-gray-100 p-1 rounded">
                     <p className="text-sm font-base">Average Rating</p>
-                    <p className="text-5xl text-yellow-500">4.7/5</p>
+                    <p className="text-5xl md:text-4xl text-yellow-500">
+                      {(averageRatingReview / ivalue).toFixed(1)}/5
+                    </p>
                   </div>
                   <div className="w-full bg-gray-100 p-1 rounded ml-4 flex-grow">
                     <p className="text-sm font-base pl-2">
@@ -100,9 +111,9 @@ const GetReview = () => {
                   <div className="w-1/5 flex-grow text-center bg-white py-5 border-dotted border-t-2 border-b-2 border-gray-200">
                     <div>
                       <p className="text-xl font-normal pb-2">
-                        Rating breakdown (based on 381 reviews)
+                        Rating breakdown (based on {ivalue} reviews)
                       </p>
-                      <div className="flex flex-row justify-center">
+                      {/* <div className="flex flex-row justify-center">
                         {[...Array(5)].map((star, i) => {
                           return (
                             <label key={i}>
@@ -258,7 +269,7 @@ const GetReview = () => {
                         <p className="text-lg font-base pl-3 flex items-center w-8">
                           56
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
