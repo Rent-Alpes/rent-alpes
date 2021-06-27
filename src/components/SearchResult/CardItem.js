@@ -21,6 +21,7 @@ const CardItem = (props) => {
           price={props.price}
           traveler={props.traveler}
           surface={props.surface}
+          idproperty={props.idproperty}
         />
       </div>
     </div>

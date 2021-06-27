@@ -11,7 +11,9 @@ import ErrorComponent from "../Error404/Error404";
 import Property from "../Property/AddProperty";
 import ViewProperty from "../Property/ViewProperty/ViewProperty";
 import GetDataProperty from "../Property/GetDataProperty";
+import GetReservations from "../Property/GetReservations";
 import EditDataProperty from "../Property/EditDataProperty";
+import Privacy from "../Privacy/Privacy";
 import app from "firebase/app";
 import React, { useState } from "react";
 import { UploadFiles } from "../Property/AddProperty";
@@ -38,7 +40,7 @@ function App() {
           <HeaderDark />
           <Signup />
         </Route>
-        <Route path="/login" component={Login}/>
+        <Route path="/login" component={Login} />
         <Route path="/forgetpassword">
           <HeaderDark />
           <ForgetPassword />
@@ -52,12 +54,20 @@ function App() {
           <HeaderDark />
           <Property addOrEditProperty={addOrEdit} />
         </Route>
+        <Route path="/privacy">
+          <HeaderDark />
+          <Privacy />
+        </Route>
         <Route path="/getdataproperty">
           <HeaderDark />
           <GetDataProperty
             getIdproperty={idProperty}
             setIdProperty={setIdProperty}
           />
+        </Route>
+        <Route path="/getreservations">
+          <HeaderDark />
+          <GetReservations />
         </Route>
         <Route path="/editdataproperty">
           <HeaderDark />
