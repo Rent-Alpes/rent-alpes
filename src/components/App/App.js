@@ -14,13 +14,14 @@ import GetDataProperty from "../Property/GetDataProperty";
 import GetReservations from "../Property/GetReservations";
 import EditDataProperty from "../Property/EditDataProperty";
 import app from "firebase/app";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { UploadFiles } from "../Property/AddProperty";
 import { AddProperty } from "../Algolia/Algolia";
 
 function App() {
   const idProperty = "";
   const [idproperty, setIdProperty] = useState("Default property");
+  const properties = [];
   const addOrEdit = async (propertyObject) => {
     await app
       .firestore()
@@ -31,6 +32,23 @@ function App() {
         UploadFiles(docRef.id);
       });
   };
+
+  useEffect(() => {
+    getAllProperties();
+  }, []);
+
+  async function getAllProperties() {
+    await app
+      .firestore()
+      .collection("Property")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) =>
+          properties.push({ id: doc.id, ...doc.data() })
+        );
+      });
+  }
+
   return (
     <Router>
       <Switch>
@@ -62,7 +80,7 @@ function App() {
         </Route>
         <Route path="/getreservations">
           <HeaderDark />
-          <GetReservations />
+          <GetReservations propertyList={{ properties }} />
         </Route>
         <Route path="/editdataproperty">
           <HeaderDark />

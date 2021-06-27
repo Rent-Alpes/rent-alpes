@@ -4,18 +4,16 @@ import { firebaseContext } from "../Firebase";
 
 const GetReservations = (props) => {
   const db = app.firestore();
-
-  const [User, setUser] = useState(null);
+  const properties = props.propertyList.properties;
   const [reservationList, setReservationList] = useState([]);
   const firebase = useContext(firebaseContext);
 
   //Récupération de L'id  property
   useEffect(() => {
     firebase.auth.onAuthStateChanged((data) => {
-      setUser(data);
       GetReservations(data.uid);
     });
-  }, [User, reservationList]);
+  }, []);
 
   const GetReservations = async (id) => {
     const response = db.collection("Booking");
@@ -23,14 +21,17 @@ const GetReservations = (props) => {
     const items = await response.where("idUser", "==", id).get();
 
     items.forEach((item) => {
+      const res = properties.find(
+        (property) => property.id === item.data().idProperty
+      );
       data.push({
         idDocument: item.id,
+        name: res.name,
         ...item.data(),
       });
     });
     setReservationList(data);
   };
-
   return (
     <div className="flex flex-col mt-10">
       <div className="my-2 overflow-x-auto sm:-mx-4 lg:-mx-2 bg-gray-100">
@@ -77,7 +78,10 @@ const GetReservations = (props) => {
                 </tr>
                 {reservationList &&
                   reservationList.map((property) => (
-                    <tr>
+                    <tr key={property.idDocument}>
+                      <td className="px-3 py-3 text-left text-2xl font-medium text-gray-500 tracking-wider">
+                        <p>{property.name}</p>
+                      </td>
                       <td className="px-3 py-3 text-left text-2xl font-medium text-gray-500 tracking-wider">
                         <p>{property.startDate}</p>
                       </td>
