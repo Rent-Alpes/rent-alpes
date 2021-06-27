@@ -45,30 +45,29 @@
 }
 
 /* InputFile */
-.file-block{
-	display: flex;
-	margin: 5px;
-}
-.file-delete{
+.file-block {
   display: flex;
-	width: 24px;
-	color: initial;
-	background-color: #6eb4ff00;
-	font-size: large;
-	justify-content: center;
-	margin-right: 3px;
-	cursor: pointer;
+  margin: 5px;
+}
+.file-delete {
+  display: flex;
+  width: 24px;
+  color: initial;
+  background-color: #6eb4ff00;
+  font-size: large;
+  justify-content: center;
+  margin-right: 3px;
+  cursor: pointer;
 }
 
 .green-text {
-  color: #10B981;
+  color: #10b981;
 }
 
 .loader {
-	border-top-color: orange;
-	-webkit-animation: spinner 1.5s linear infinite;
-	animation: spinner 1.5s linear infinite;
-
+  border-top-color: orange;
+  -webkit-animation: spinner 1.5s linear infinite;
+  animation: spinner 1.5s linear infinite;
 }
 
 /* LOADER */
@@ -109,10 +108,6 @@
 }
 /* END LOADER */
 
-
-
-
-
 .leaflet-container {
   width: 100%;
   height: 100vh;
@@ -120,6 +115,10 @@
 
 .gold-color {
   color: #ff9f00;
+}
+
+.gold-b-color {
+  background-color: #ff9f00;
 }
 
 .bg-gold {
@@ -132,4 +131,23 @@
 
 .leaflet-popup-content p {
   margin: 5px 0;
+}
+
+.map-view-property {
+  height: 15rem;
+  border-radius: 5px;
+}
+
+.footer {
+  margin-top: 1rem;
+  background-color: #ff9f00ce;
+  position: fixed;
+  color: #fff;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  font-size: 0.8em;
+  height: 3rem;
+  width: 100%;
+  z-index: 1000;
 }
