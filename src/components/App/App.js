@@ -18,7 +18,9 @@ import app from "firebase/app";
 import React, { useState, useEffect } from "react";
 import { UploadFiles } from "../Property/AddProperty";
 import { AddProperty } from "../Algolia/Algolia";
-import TableReact from "../Table/Table";
+import Review from "../Review/AddReview";
+import getReview from "../Review/GetReview";
+
 
 function App() {
   const idProperty = "";
@@ -95,6 +97,8 @@ function App() {
             idproperty={idproperty}
           />
         </Route>
+        <Route path="/review" component={Review} />
+        <Route path="/getReview" component={getReview} />
         <Route path="/table">
           <HeaderDark />
           <TableReact />
