@@ -1,13 +1,36 @@
+import { useMemo } from "react";
 import "../../App.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { latLngBounds } from "leaflet";
 import CardPropertyIcons from "../SearchResult/CardItem/CardPropertyIcons";
 import CardPriceButton from "../SearchResult/CardItem/CardPriceButton";
 import { BiMap } from "react-icons/bi";
 
 export default function SearchInMap(props) {
+  let markers = [];
+  function getMarkers() {
+    props.propertyList.forEach((property) => {
+      if (property.position) {
+        markers.push([
+          property?.position.latitude,
+          property?.position.longitude,
+        ]);
+      }
+    });
+  }
+
+  const bounds = useMemo(() => {
+    getMarkers();
+    const b = latLngBounds(); // seemed to work without having to pass init arg
+    markers.forEach((coords) => {
+      b.extend(coords);
+    });
+    return b;
+  }, [markers]);
+
   return (
     <>
-      <MapContainer center={[45.855371, 6.6853104]} zoom={13}>
+      <MapContainer bounds={bounds} zoom={13}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

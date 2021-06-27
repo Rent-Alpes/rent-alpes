@@ -5,10 +5,12 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import Firebase from "./components/Firebase/firebase";
 import firebaseContext from "./components/Firebase/context";
+import Footer from "./components/Footer/Footer";
 
 ReactDOM.render(
   <firebaseContext.Provider value={new Firebase()}>
     <App />
+    <Footer />
   </firebaseContext.Provider>,
   document.getElementById("root")
 );

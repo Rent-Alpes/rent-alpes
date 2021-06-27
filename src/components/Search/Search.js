@@ -17,7 +17,7 @@ const Search = () => {
 
   useEffect(() => {
     setProperties(state);
-  }, []);
+  }, [state]);
 
   return (
     <>
@@ -34,7 +34,7 @@ const Search = () => {
         </button>
       </div>
 
-      <div className="flex flex-wrap overflow-hidden mt-10">
+      <div className="flex flex-wrap overflow-hidden mt-10 mb-10">
         {listIsVisible
           ? properties &&
             properties.map((property) => (

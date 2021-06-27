@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import app from "firebase/app";
 import { firebaseContext } from "../Firebase";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import Header from "../Header/Header";
 
 const GetDataProperty = (props) => {
   const db = app.firestore();
@@ -9,12 +10,16 @@ const GetDataProperty = (props) => {
   const [User, setUser] = useState(null);
   const [propertylist, setPropertylist] = useState([]);
   const firebase = useContext(firebaseContext);
+  let history = useHistory();
 
   //Récupération de L'id  property
   useEffect(() => {
     firebase.auth.onAuthStateChanged((data) => {
-      setUser(data);
-      GetData(data.uid);
+      data ? setUser(data) : history.push("/login");
+
+      if (!!User) {
+        GetData(data.uid);
+      }
     });
   }, [User]);
 
@@ -25,6 +30,8 @@ const GetDataProperty = (props) => {
 
     items.forEach((doc) => {
       data.push({ idDocument: doc.id, ...doc.data() });
+
+      // console.log(doc.id);
     });
     setPropertylist(data);
   };

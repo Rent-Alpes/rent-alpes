@@ -7,11 +7,23 @@ import { SetInputFile } from "../InputFile/InputFile";
 import { InputFileChange } from "../InputFile/InputFile";
 import { UpdateAlgolia } from "../Algolia/Algolia";
 import { DeleteAlgolia } from "../Algolia/Algolia";
+import { useHistory } from "react-router-dom";
 
 const EditProperty = (props) => {
   const firebase = useContext(firebaseContext);
   const db = app.firestore();
   const propertyId = window.location.href.split("/")[4];
+  let history = useHistory();
+
+  useEffect(() => {
+    firebase.auth.onAuthStateChanged((user) => {
+      user ? setUserSession(user) : history.push("/login");
+      if (!userSession) {
+        getPropertyData();
+      }
+    });
+    SetImageInput(propertyId);
+  }, [userSession]);
 
   function getPropertyData() {
     var docRef = db.collection("Property").doc(propertyId);
@@ -32,16 +44,10 @@ const EditProperty = (props) => {
   const [userSession, setUserSession] = useState(null);
   const [propertyData, setpropertyData] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
-  useEffect(() => {
-    firebase.auth.onAuthStateChanged((user) => {
-      user ? setUserSession(user) : props.history.push("/login");
-      if (!userSession) {
-        getPropertyData();
-      }
-    });
-    SetImageInput(propertyId);
-  }, []);
+  //   return () => {
+  //     listener();
+  //   };
+  // }, [userSession]);
 
   const handleInputChange = (e) => {
     setpropertyData({ ...propertyData, [e.target.name]: e.target.value });
@@ -115,7 +121,7 @@ const EditProperty = (props) => {
   return (
     <>
       <div
-        className="min-h-screen bg-no-repeat bg-cover bg-center p-0 sm:p-15 w-full h-screen overflow-hidden flex"
+        className="min-h-screen bg-gray-200 p-0 sm:p-15 w-full h-screen overflow-hidden flex"
         style={{
           backgroundImage: `url(" https://images2.alphacoders.com/238/thumb-1920-238870.jpg")`,
         }}
@@ -300,8 +306,8 @@ const EditProperty = (props) => {
                     stroke="currentColor"
                   >
                     <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                      strokelinecap="round"
+                      strokelinejoin="round"
                       d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                     />
                   </svg>
@@ -322,9 +328,9 @@ const EditProperty = (props) => {
                   fill="currentColor"
                 >
                   <path
-                    fillRule="evenodd"
+                    fill-rule="evenodd"
                     d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                    clipRule="evenodd"
+                    clip-rule="evenodd"
                   />
                 </svg>
               </button>

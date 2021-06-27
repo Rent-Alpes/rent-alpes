@@ -13,6 +13,7 @@ import ViewProperty from "../Property/ViewProperty/ViewProperty";
 import GetDataProperty from "../Property/GetDataProperty";
 import GetReservations from "../Property/GetReservations";
 import EditDataProperty from "../Property/EditDataProperty";
+import Privacy from "../Privacy/Privacy";
 import app from "firebase/app";
 import React, { useState, useEffect } from "react";
 import { UploadFiles } from "../Property/AddProperty";
@@ -71,6 +72,10 @@ function App() {
         <Route path="/addproperty">
           <HeaderDark />
           <Property addOrEditProperty={addOrEdit} />
+        </Route>
+        <Route path="/privacy">
+          <HeaderDark />
+          <Privacy />
         </Route>
         <Route path="/getdataproperty">
           <HeaderDark />
