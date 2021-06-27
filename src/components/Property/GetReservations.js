@@ -87,13 +87,14 @@ const GetReservations = (props) => {
   ];
 
   return (
-    <div className="flex justify-center mt-10">
+    <div className="flex justify-center mt-10 mb-20">
       <div className="w-4/5">
         <Table
           columns={columns}
           rows={reservationList}
           table_header="Your Reservation's List"
           row_render={rowcheck}
+          show_search={false}
         />
       </div>
     </div>
