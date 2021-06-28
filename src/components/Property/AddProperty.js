@@ -55,7 +55,6 @@ const AddProperty = (props) => {
         address.position.lat,
         address.position.lng
       );
-
       props.addOrEditProperty(propertyValues);
       setShowModal(true);
     } catch {
@@ -64,7 +63,14 @@ const AddProperty = (props) => {
   };
 
   const handleInputChange = (e) => {
-    setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
+    if (e.target.className.split(" ")[0] === "nb-input") {
+      setPropertyValues({
+        ...propertyValues,
+        [e.target.name]: parseInt(e.target.value),
+      });
+    } else {
+      setPropertyValues({ ...propertyValues, [e.target.name]: e.target.value });
+    }
   };
 
   return (
@@ -164,7 +170,7 @@ const AddProperty = (props) => {
                 required
                 min="0"
                 onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                className="nb-input pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
             <label>Room</label>
@@ -175,7 +181,7 @@ const AddProperty = (props) => {
                 required
                 min="0"
                 onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                className="nb-input pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
             <label>Traveler</label>
@@ -186,7 +192,7 @@ const AddProperty = (props) => {
                 required
                 min="0"
                 onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                className="nb-input pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
 
@@ -208,7 +214,7 @@ const AddProperty = (props) => {
                 required
                 min="0"
                 onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                className="nb-input pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
             <label>Price / night</label>
@@ -220,7 +226,7 @@ const AddProperty = (props) => {
                 required
                 min="0"
                 onChange={handleInputChange}
-                className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                className="nb-input pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
             </div>
             <label>Thumb</label>
