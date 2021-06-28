@@ -24,6 +24,7 @@ const GetReview = ({ propertyId, propertyName }) => {
         .get()
         .then((doc) => {
           const reviews = doc.data().avis;
+
           reviews.forEach((review) =>
             firebase
               .review()
@@ -32,7 +33,8 @@ const GetReview = ({ propertyId, propertyName }) => {
               .then(
                 (rev) =>
                   setAverageRatingReview(
-                    (rate) => rate + rev.data().averageRating
+                    (rate) => rate + rev.data().averageRating,
+                    setReviewList((review) => [...review, rev.data()])
                   ),
                 setIvalue((numb) => numb + 1)
               )
@@ -123,167 +125,15 @@ const GetReview = ({ propertyId, propertyName }) => {
                           <p className="text-xl font-normal pb-2">
                             Rating breakdown (based on {ivalue} reviews)
                           </p>
-                          {/* <div className="flex flex-row justify-center">
-                        {[...Array(5)].map((star, i) => {
-                          return (
-                            <label key={i}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-8 w-8 cursor-pointer star"
-                                fill="none"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                color="#ffc107"
-                              >
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                              </svg>
-                            </label>
-                          );
-                        })}
-                        <p className="text-lg font-base pl-3 flex items-center  w-8">
-                          148
-                        </p>
-                      </div>
-                      <div className="flex flex-row justify-center">
-                        {[...Array(4)].map((star, i) => {
-                          return (
-                            <label key={i}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-8 w-8 cursor-pointer star"
-                                fill="none"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                color="#ffc107"
-                              >
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                              </svg>
-                            </label>
-                          );
-                        })}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-8 w-8 cursor-pointer star"
-                          fill="none"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          color="#e4e5e9"
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <p className="text-lg font-base pl-3 flex items-center  w-8">
-                          68
-                        </p>
-                      </div>
-                      <div className="flex flex-row justify-center">
-                        {[...Array(3)].map((star, i) => {
-                          return (
-                            <label key={i}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-8 w-8 cursor-pointer star"
-                                fill="none"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                color="#ffc107"
-                              >
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                              </svg>
-                            </label>
-                          );
-                        })}
-                        {[...Array(2)].map((star, i) => {
-                          return (
-                            <label key={i}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-8 w-8 cursor-pointer star"
-                                fill="none"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                color="#e4e5e9"
-                              >
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                              </svg>
-                            </label>
-                          );
-                        })}
-                        <p className="text-lg font-base pl-3 flex items-center  w-8">
-                          97
-                        </p>
-                      </div>
-                      <div className="flex flex-row justify-center">
-                        {[...Array(2)].map((star, i) => {
-                          return (
-                            <label key={i}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-8 w-8 cursor-pointer star"
-                                fill="none"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                color="#ffc107"
-                              >
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                              </svg>
-                            </label>
-                          );
-                        })}
-                        {[...Array(3)].map((star, i) => {
-                          return (
-                            <label key={i}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-8 w-8 cursor-pointer star"
-                                fill="none"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                color="#e4e5e9"
-                              >
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                              </svg>
-                            </label>
-                          );
-                        })}
-                        <p className="text-lg font-base pl-3 flex items-center">
-                          12
-                        </p>
-                      </div>
-                      <div className="flex flex-row justify-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-8 w-8 cursor-pointer star"
-                          fill="none"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          color="#ffc107"
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        {[...Array(4)].map((star, i) => {
-                          return (
-                            <label key={i}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-8 w-8 cursor-pointer star"
-                                fill="none"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                color="#e4e5e9"
-                              >
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                              </svg>
-                            </label>
-                          );
-                        })}
-                        <p className="text-lg font-base pl-3 flex items-center w-8">
-                          56
-                        </p>
-                      </div> */}
                         </div>
                       </div>
                     </div>
-                    <ViewReview />
+                    <div className="h-96 overflow-auto">
+                      {reviewList &&
+                        reviewList.map((review, i) => {
+                          return <ViewReview key={i} review={review} />;
+                        })}
+                    </div>
                   </div>
                 </div>
               </div>
