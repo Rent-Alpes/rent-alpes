@@ -18,8 +18,7 @@ import app from "firebase/app";
 import React, { useState, useEffect } from "react";
 import { UploadFiles } from "../Property/AddProperty";
 import { AddProperty } from "../Algolia/Algolia";
-import Review from "../Review/AddReview";
-import getReview from "../Review/GetReview";
+import GetReviewList from "../Review/GetReviewList";
 
 function App() {
   const idProperty = "";
@@ -96,8 +95,10 @@ function App() {
             idproperty={idproperty}
           />
         </Route>
-        <Route path="/review" component={Review} />
-        <Route path="/getReview" component={getReview} />
+        <Route path="/review">
+          <HeaderDark />
+          <GetReviewList />
+        </Route>
         <Route path="/view-property">
           <ViewProperty idproperty={idproperty} />
         </Route>
