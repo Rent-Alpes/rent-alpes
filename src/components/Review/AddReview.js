@@ -142,7 +142,7 @@ const AddReview = ({ propertyId }) => {
                 onClick={close}
                 className="flex justify-end text-white cursor-pointer"
               >
-                <span>Close</span>
+                <span className="text-md">Close</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -158,7 +158,7 @@ const AddReview = ({ propertyId }) => {
                   />
                 </svg>
               </div>
-              <div className="bg-white w-full h-full justify-center items-center">
+              <div className="bg-white w-full h-full justify-center items-center py-4 px-2">
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-col w-full ">
                     <div className="flex flex-wrap flex-row">

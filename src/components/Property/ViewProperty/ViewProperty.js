@@ -10,6 +10,7 @@ import PropertyMap from "../../MapLocations/PropertyMap";
 import { firebaseContext } from "../../Firebase";
 import { data } from "autoprefixer";
 import AddReview from "../../Review/AddReview";
+import GetReview from "../../Review/GetReview";
 
 const ViewProperty = () => {
   const firebase = useContext(firebaseContext);
@@ -27,6 +28,7 @@ const ViewProperty = () => {
   const [ivalue, setIvalue] = useState(0);
   const [isBooking, setIsBooking] = useState(false);
   const [showModalAddReview, setShowModalAddReview] = useState(false);
+  const [showModalGetReview, setShowModalGetReview] = useState(false);
 
   function getImages() {
     var docRef = db.collection("Property").doc(propertyId);
@@ -114,6 +116,10 @@ const ViewProperty = () => {
     setShowModalAddReview(true);
   }
 
+  function handleClickGetReview() {
+    setShowModalGetReview(true);
+  }
+
   function handlePeople(e) {
     setPeople(e.target.value);
   }
@@ -135,9 +141,12 @@ const ViewProperty = () => {
           </svg>
           {(averageRatingReview / ivalue).toFixed(1)}/5
         </div>
-        <p className="text-base text-gray-800 ">
-          <a className="cursor-pointer underline">{ivalue} reviews</a>
-        </p>
+        <GetReview
+          handleClick={handleClickGetReview}
+          setShowModalGetReview={setShowModalGetReview}
+          propertyId={propertyId}
+          propertyName={propertyData.name}
+        />
       </div>
     </div>
   );
