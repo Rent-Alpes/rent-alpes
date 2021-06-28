@@ -155,7 +155,7 @@ const AddProperty = (props) => {
             </div>
             <label>Equipment</label>
             <div className="relative z-0 w-full mb-5">
-              <div name="equipments" onChange={handleInputChange}>
+              <div name="equipments">
                 <Equipment
                   Equipmentlist={Equipmentlist}
                   setEquipmentlist={setEquipmentlist}
