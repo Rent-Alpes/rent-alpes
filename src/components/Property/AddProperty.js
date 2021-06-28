@@ -115,9 +115,9 @@ const AddProperty = (props) => {
                 onChange={handleInputChange}
                 value={
                   address.length !== 0
-                    ? address.raw.address.houseNumber +
+                    ? address.address.houseNumber +
                       " " +
-                      address.raw.address.street
+                      address.address.street
                     : ""
                 }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -132,7 +132,7 @@ const AddProperty = (props) => {
                 required
                 onChange={handleInputChange}
                 value={
-                  address.length !== 0 ? address.raw.address.postalCode : ""
+                  address.length !== 0 ? address.address.postalCode : ""
                 }
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
@@ -162,7 +162,7 @@ const AddProperty = (props) => {
             </div>
             <label>Equipment</label>
             <div className="relative z-0 w-full mb-5">
-              <div name="equipments" onChange={handleInputChange}>
+              <div name="equipments" >
                 <Equipment
                   Equipmentlist={Equipmentlist}
                   setEquipmentlist={setEquipmentlist}
