@@ -14,6 +14,7 @@ const AddReview = ({ propertyId }) => {
     equipments: "",
     averageRating: "",
     idUser: "",
+    idProperty: "",
   };
 
   //  CLEANLESS
@@ -80,6 +81,7 @@ const AddReview = ({ propertyId }) => {
       reviewData.equipments = ratingEquipments;
       reviewData.location = ratingLocation;
       reviewData.idUser = userSession.uid;
+      reviewData.idProperty = propertyId;
 
       //Calcule moyenne
       const averageRating =
@@ -91,16 +93,32 @@ const AddReview = ({ propertyId }) => {
 
       firebaseDB
         .review()
-        .add(reviewData)
-        .then((doc) =>
-          firebaseDB
-            .property()
-            .doc(idProperty)
-            .update({
-              avis: firebaseDB.firebase.firestore.FieldValue.arrayUnion(doc.id),
-            })
-        );
-      setShowModalAddReview(false);
+        .get()
+        .then((review) => {
+          review.forEach((doc) => {
+            if (
+              doc.data().idUser == userSession.uid &&
+              doc.data().idProperty == propertyId
+            ) {
+              console.log("1");
+            } else {
+              firebaseDB
+                .review()
+                .add(reviewData)
+                .then((rev) => {
+                  firebaseDB
+                    .property()
+                    .doc(idProperty)
+                    .update({
+                      avis: firebaseDB.firebase.firestore.FieldValue.arrayUnion(
+                        rev.id
+                      ),
+                    });
+                  setShowModalAddReview(false);
+                });
+            }
+          });
+        });
     }
   };
 
