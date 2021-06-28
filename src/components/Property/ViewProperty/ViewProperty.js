@@ -9,6 +9,7 @@ import DatePicker from "../../SearchResult/CardItem/DatePicker";
 import PropertyMap from "../../MapLocations/PropertyMap";
 import { firebaseContext } from "../../Firebase";
 import { data } from "autoprefixer";
+import AddReview from "../../Review/AddReview";
 
 const ViewProperty = () => {
   const firebase = useContext(firebaseContext);
@@ -24,7 +25,8 @@ const ViewProperty = () => {
   const storageRef = app.storage().ref();
   const [averageRatingReview, setAverageRatingReview] = useState(0);
   const [ivalue, setIvalue] = useState(0);
-  var isBooking = false;
+  const [isBooking, setIsBooking] = useState(false);
+  const [showModalAddReview, setShowModalAddReview] = useState(false);
 
   function getImages() {
     var docRef = db.collection("Property").doc(propertyId);
@@ -88,7 +90,7 @@ const ViewProperty = () => {
             doc.data().idUser == firebase.auth.currentUser.uid &&
             doc.data().idProperty == propertyId
           ) {
-            isBooking = true;
+            setIsBooking(true);
           }
         });
       });
@@ -106,6 +108,10 @@ const ViewProperty = () => {
 
   function handleClick() {
     setShowModal(true);
+  }
+
+  function handleClickAddReview() {
+    setShowModalAddReview(true);
   }
 
   function handlePeople(e) {
@@ -133,15 +139,6 @@ const ViewProperty = () => {
           <a className="cursor-pointer underline">{ivalue} reviews</a>
         </p>
       </div>
-    </div>
-  );
-
-  // Affichage bouton review
-  const displayButtonReview = isBooking == false && (
-    <div>
-      <button className="focus:outline-none text-white text-sm mt-5 py-2 px-4 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg">
-        ADD REVIEW
-      </button>
     </div>
   );
 
@@ -230,7 +227,13 @@ const ViewProperty = () => {
                         </div>
                       )}
                     </div>
-                    {displayButtonReview}
+                    {isBooking && (
+                      <AddReview
+                        handleClick={handleClickAddReview}
+                        setShowModalAddReview={setShowModalAddReview}
+                        propertyId={propertyId}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
