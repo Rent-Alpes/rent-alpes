@@ -60,7 +60,10 @@ const ViewProperty = () => {
 
   function getUser() {
     if (firebase.auth.currentUser) {
-      setUser(firebase.auth.currentUser.uid);
+      setUser({
+        id: firebase.auth.currentUser.uid,
+        email: firebase.auth.currentUser.email,
+      });
     }
   }
 
@@ -147,7 +150,8 @@ const ViewProperty = () => {
                             people={people}
                             setShowModal={setShowModal}
                             propertyId={propertyId}
-                            user={user}
+                            user={user.id}
+                            mail={user.email}
                           />
                         </div>
                       ) : (
