@@ -29,31 +29,36 @@ const ModalReservation = ({
     let url = "/getreservations";
     history.push(url);
   }
-
   function handleRegisterClick() {
     setShowModal(false);
     registerReservation();
   }
-
   function handleClick() {
     setShowModal(true);
   }
   return (
     <>
-      <button
-        onClick={handleClick}
-        className="bg-gold hover:bg-gray-200 text-white font-bold py-2 px-4 rounded inline-flex items-center"
-      >
-        {isNaN(days.numberDays) ? (
+      {isNaN(days.numberDays) || people === null ? (
+        <button
+          onClick={handleClick}
+          className="bg-gold hover:bg-gray-200 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+          disabled
+        >
           <span className="ml-1 text-sm">Select your dates</span>
-        ) : (
+        </button>
+      ) : (
+        <button
+          onClick={handleClick}
+          className="bg-gold hover:bg-gray-200 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+        >
           <div className="flex items-center">
             <BiCalendar className="mr-2" />
             {propertyData.price * days.numberDays}
             <span className="ml-1 text-sm"> €</span>
           </div>
-        )}
-      </button>
+        </button>
+      )}
+
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
