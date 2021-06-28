@@ -100,7 +100,7 @@ const AddReview = ({ propertyId }) => {
               doc.data().idUser == userSession.uid &&
               doc.data().idProperty == propertyId
             ) {
-              console.log("1");
+              errorMsg = "Unable to post multiple reviews on the same property";
             } else {
               firebaseDB
                 .review()
