@@ -85,7 +85,7 @@ const Header = () => {
                   <div className="flex justify-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-10 w-10"
+                      className="h-10 w-10 "
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -99,7 +99,7 @@ const Header = () => {
                     </svg>
                   </div>
                   <span>
-                    <span className="text-xs">BECOME HOST</span>
+                    <span className="text-base">Become HOST</span>
                   </span>
                 </button>
               </Link>
@@ -112,7 +112,7 @@ const Header = () => {
                   <>
                     <div>
                       <Menu.Button className="inline-block text-sm pl-4 mr-10 sm:mr-0 md:mr-10 xl:mr-10 mdrounded text-white mt-6 font-bold block text-center focus:outline-none">
-                        <div className="flex">
+                        <div className="flex justify-center">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-10 w-10"
@@ -126,10 +126,11 @@ const Header = () => {
                               strokeWidth="2"
                               d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                             />
+                         
                           </svg>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 self-end"
+                            className="h-6 w-6 self-end flex justify-center"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -141,10 +142,17 @@ const Header = () => {
                               d="M19 9l-7 7-7-7"
                             />
                           </svg>
+                       <br/>
+                       
                         </div>
-                        <span>
-                          <span className="text-xs">ACCOUNT</span>
-                        </span>
+                        
+                        {userData && (
+                         <span className="text-base " > {userData.firstName} {userData.lastName} </span> 
+                    )}
+                        <span className="text-base flex justify-center">Account</span>
+
+
+                   
                       </Menu.Button>
                     </div>
 
