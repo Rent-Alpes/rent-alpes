@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { firebaseContext } from "../Firebase";
 import firebase from "firebase/app";
+import ViewReview from "../Review/ViewReview";
 
 const GetReview = ({ propertyId, propertyName }) => {
   const firebase = useContext(firebaseContext);
@@ -102,7 +103,7 @@ const GetReview = ({ propertyId, propertyName }) => {
                     <div className="flex flex-row mb-4 ">
                       <div className="w-1/5 text-center bg-gray-100 p-1 rounded">
                         <p className="text-sm font-base">Average Rating</p>
-                        <p className="text-5xl md:text-4xl text-yellow-500">
+                        <p className="text-5xl md:text-2xl sm:text-xl text-yellow-500">
                           {(averageRatingReview / ivalue).toFixed(1)}/5
                         </p>
                       </div>
@@ -282,6 +283,7 @@ const GetReview = ({ propertyId, propertyName }) => {
                         </div>
                       </div>
                     </div>
+                    <ViewReview />
                   </div>
                 </div>
               </div>
