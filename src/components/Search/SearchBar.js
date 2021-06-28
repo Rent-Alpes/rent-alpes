@@ -21,24 +21,38 @@ export const SearchBar = (props) => {
     loading: false,
     message: "",
   };
+ function Search(value) {
+  props.onChange(SearchProperty(value));
+ }
+ function TrashFilters(){
+  document.getElementById("min-price").value = "";
+  document.getElementById("max-price").value = "";
+  document.getElementById("min-traveler").value = "";
+  document.getElementById("min-bathroom").value = "";
+  document.getElementById("min-size").value = "";
 
+ }
   const handleChange = (event) => {
+    event.preventDefault();
     const query = event.target.value;
     resarchdata.query = query;
     resarchdata.loading = true;
     resarchdata.message = "";
-    props.onChange(SearchProperty(query));
+    Search(query);
   };
   const filtersChange = (event) => {
+    event.preventDefault();
     if (event.target.value != "") {
       setfilterParams({ ...filterParams, [event.target.name]: event.target.value });
     }
     else {
       delete filterParams[event.target.name];
     }
+    document.getElementById("btnActiveFilters").style.backgroundColor = "red";
+    document.getElementById("btnActiveFilters").style.color = "white";
   };
   const searchClick = () => {
-    props.onChange(SearchProperty(" "));
+    Search(document.getElementById("search-input").value);
   }
   const activeFilters = (event) => {
     if (filterUse) {
@@ -51,7 +65,11 @@ export const SearchBar = (props) => {
         }
       }
       ApplyFiltersParams(filterParams, true);
+      document.getElementById("btnActiveFilters").style.backgroundColor = "green";
+      document.getElementById("btnActiveFilters").style.color = "black";
+
     }
+    Search(document.getElementById("search-input").value);
   };
 
   function OpenMenuFilter(event) {
@@ -61,11 +79,17 @@ export const SearchBar = (props) => {
       setfilterParams(filterParams = {})
       ApplyFiltersParams(filterParams, false);
       document.getElementById("group-filter").style.display = "none";
+      document.getElementById("btnActiveFilters").style.backgroundColor = "red";
+      document.getElementById("btnActiveFilters").style.color = "white";
+      
     } else {
       setfilterUse(filterUse = true);
       document.getElementById("group-filter").style.display = "flex";
+      document.getElementById("btnActiveFilters").style.backgroundColor = "red";
+      document.getElementById("btnActiveFilters").style.color = "white";
     }
-
+    Search(document.getElementById("search-input").value);
+    TrashFilters();
   }
 
   const { query } = resarchdata.query;
@@ -149,8 +173,8 @@ export const SearchBar = (props) => {
           <input id="min-size" name="surface" type="number" onChange={filtersChange} className="border-2 border-black block"></input>
 
         </div>
-        <div className="row-span-3">
-          <button onClick={activeFilters}>Validate</button>
+        <div className="row-span-3 flex items-center">
+          <button id="btnActiveFilters" className="border-2 border-black rounded-md" onClick={activeFilters}>Validate</button>
         </div>
         {/* <label>Ville : </label>
       <input id="city" onChange={filtersChange} type="text" className="border-2 border-black"></input> */}

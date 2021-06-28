@@ -24,6 +24,7 @@ export const SearchProperty = (searchText) => {
     attributesForFaceting: [
       'searchable(name)',
       'searchable(city)',
+      'searchable(country)',
       'searchable(description)',
       'filterOnly(price)',
       'filterOnly(bathroom)',
@@ -47,21 +48,21 @@ export const SearchProperty = (searchText) => {
     }
     var filters = "";
     for (var [key, value] of Object.entries(filterParams)) {
+     var intValue = parseInt(value);
       if (value != "") {
         if (key == "maxprice") {
-          filters += " price <= " + value + " AND"
+          filters += " price <= " + intValue + " AND"
         }
         else if (key == "minprice") {
-          filters += " price >= " + value + " AND"
+          filters += " price >= " + intValue + " AND"
         }
         else {
-          filters += " " + key + " >= " + value + " AND"
+          filters += " " + key + " >= " + intValue + " AND"
         }
       }
     };
 
     filters = filters.substr(0, filters.length - 3)
-
     index.search(searchText, {
       filters: filters
     })
@@ -71,7 +72,8 @@ export const SearchProperty = (searchText) => {
         console.log(err);
       });
     return resultProperty;
-  } else if (searchText == "" || searchText == " " || searchText == null || searchText == undefined) {
+  } 
+  if (searchText == "" || searchText == " " || searchText == null || searchText == undefined) {
     let hits = [];
     index.browseObjects({
       query: '', // Empty query will match all records
@@ -92,6 +94,7 @@ export const SearchProperty = (searchText) => {
       }).catch(err => {
         console.log(err);
       });
+    console.log(resultProperty);
     return resultProperty;
   }
 }
