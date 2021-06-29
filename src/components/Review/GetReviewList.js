@@ -23,7 +23,18 @@ const GetReviewList = () => {
         .then((review) => {
           review.forEach((doc) => {
             if (doc.data().idUser == userSession.uid) {
-              setReviewList((review) => [...review, doc.data()]);
+              var idProperty = doc.data().idProperty;
+              console.log(idProperty);
+              db.collection("Property")
+                .doc(idProperty)
+                .get()
+                .then((rev) => {
+                  setReviewList((review) => [
+                    ...review,
+                    doc.data(),
+                    { name: rev.data().name },
+                  ]);
+                });
             }
           });
         });
@@ -63,9 +74,23 @@ const GetReviewList = () => {
       // use_in_search:false
     },
     {
+      field: "cleanless",
+      use: "Cleanless Rating",
+      // use_in_search:false
+    },
+    {
+      field: "location",
+      use: "Location Rating",
+      // use_in_search:false
+    },
+    {
+      field: "equipments",
+      use: "Equipments Rating",
+      // use_in_search:false
+    },
+    {
       field: "averageRating",
       use: "Average Rating",
-      // use_in_search:false
     },
     {
       field: "idDocument",
@@ -80,7 +105,7 @@ const GetReviewList = () => {
         <Table
           columns={columns}
           rows={reviewList}
-          table_header="Your Reservation's List"
+          table_header="Your Review's List"
           row_render={rowcheck}
           show_search={false}
         />
