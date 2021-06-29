@@ -146,10 +146,12 @@ const Header = () => {
                        
                         </div>
                         
-                        {userData && (
-                         <span className="text-base " > {userData.firstName} {userData.lastName} </span> 
-                    )}
-                        <span className="text-base flex justify-center">Account</span>
+                        {userData ? (
+                         <span className="text-base " > Hello {userData.firstName}</span> 
+                    ) : (<span className="text-base flex justify-center">Account</span>)}
+                      {/* {userData.lastName} */}
+
+                     
 
 
                    
