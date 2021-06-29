@@ -32,7 +32,6 @@ const ViewReview = ({ review }) => {
     <div className="w-full border-b-2 border-solid border-gray-100">
       <div className="flex flex-row px-2 py-5">
         <div className="flex">
-          <span className="text-sm my-auto pl-3">{user.lastName}</span>
           <span className="text-sm my-auto pl-1 pr-5">{user.firstName}</span>
         </div>
 
