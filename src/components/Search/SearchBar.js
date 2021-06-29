@@ -21,17 +21,16 @@ export const SearchBar = (props) => {
     loading: false,
     message: "",
   };
- function Search(value) {
-  props.onChange(SearchProperty(value));
- }
- function TrashFilters(){
-  document.getElementById("min-price").value = "";
-  document.getElementById("max-price").value = "";
-  document.getElementById("min-traveler").value = "";
-  document.getElementById("min-bathroom").value = "";
-  document.getElementById("min-size").value = "";
-
- }
+  function Search(value) {
+    props.onChange(SearchProperty(value));
+  }
+  function TrashFilters() {
+    document.getElementById("min-price").value = "";
+    document.getElementById("max-price").value = "";
+    document.getElementById("min-traveler").value = "";
+    document.getElementById("min-bathroom").value = "";
+    document.getElementById("min-size").value = "";
+  }
   const handleChange = (event) => {
     event.preventDefault();
     const query = event.target.value;
@@ -43,9 +42,11 @@ export const SearchBar = (props) => {
   const filtersChange = (event) => {
     event.preventDefault();
     if (event.target.value != "") {
-      setfilterParams({ ...filterParams, [event.target.name]: event.target.value });
-    }
-    else {
+      setfilterParams({
+        ...filterParams,
+        [event.target.name]: event.target.value,
+      });
+    } else {
       delete filterParams[event.target.name];
     }
     document.getElementById("btnActiveFilters").style.backgroundColor = "red";
@@ -53,7 +54,7 @@ export const SearchBar = (props) => {
   };
   const searchClick = () => {
     Search(document.getElementById("search-input").value);
-  }
+  };
   const activeFilters = (event) => {
     if (filterUse) {
       if (filterParams.minprice != "" && filterParams.maxprice != "") {
@@ -65,9 +66,9 @@ export const SearchBar = (props) => {
         }
       }
       ApplyFiltersParams(filterParams, true);
-      document.getElementById("btnActiveFilters").style.backgroundColor = "green";
+      document.getElementById("btnActiveFilters").style.backgroundColor =
+        "green";
       document.getElementById("btnActiveFilters").style.color = "black";
-
     }
     Search(document.getElementById("search-input").value);
   };
@@ -75,15 +76,14 @@ export const SearchBar = (props) => {
   function OpenMenuFilter(event) {
     document.getElementById("burger-menu").classList.toggle("change");
     if (filterUse == true) {
-      setfilterUse(filterUse = false);
-      setfilterParams(filterParams = {})
+      setfilterUse((filterUse = false));
+      setfilterParams((filterParams = {}));
       ApplyFiltersParams(filterParams, false);
       document.getElementById("group-filter").style.display = "none";
       document.getElementById("btnActiveFilters").style.backgroundColor = "red";
       document.getElementById("btnActiveFilters").style.color = "white";
-      
     } else {
-      setfilterUse(filterUse = true);
+      setfilterUse((filterUse = true));
       document.getElementById("group-filter").style.display = "flex";
       document.getElementById("btnActiveFilters").style.backgroundColor = "red";
       document.getElementById("btnActiveFilters").style.color = "white";
@@ -105,17 +105,22 @@ export const SearchBar = (props) => {
         className="static w-full pl-16 pr-28 rounded-md h-14 text-xl border-2 border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white bg-opacity-90"
       />
       <div className="absolute inset-y-0 left-0 pr-2.5 border-r-2 p-px h-14 border-gray-900 text-gray-800 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600">
-        <div className="container mt-2 ml-3" id="burger-menu" onClick={OpenMenuFilter}>
+        <div
+          className="container mt-2 ml-3"
+          id="burger-menu"
+          onClick={OpenMenuFilter}
+        >
           <div className="bar1"></div>
           <div className="bar2"></div>
           <div className="bar3"></div>
         </div>
       </div>
 
-
       <div className="absolute inset-y-0 right-0">
-        <button className="static h-14 px-5 rounded-md focus:outline-none"
-          onClick={searchClick}>
+        <button
+          className="static h-14 px-5 rounded-md focus:outline-none"
+          onClick={searchClick}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -131,7 +136,6 @@ export const SearchBar = (props) => {
             />
           </svg>
         </button>
-
 
         <button className="inline-block border-l-2 h-14 border-gray-900 px-5 text-gray-800 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600">
           <svg
@@ -151,30 +155,66 @@ export const SearchBar = (props) => {
         </button>
       </div>
 
-      <div id="group-filter" className="relative w-full pt-3 grid grid-rows-3 grid-flow-col gap-4 hidden">
+      <div
+        id="group-filter"
+        className="relative w-full pt-3 grid grid-rows-3 grid-flow-col gap-4 hidden"
+      >
         <div className="row-span-3">
           <label className="block">Min price : </label>
-          <input id="min-price" name="minprice" type="number" onChange={filtersChange} className="border-2 border-black block"></input>
+          <input
+            id="min-price"
+            name="minprice"
+            type="number"
+            onChange={filtersChange}
+            className="border-2 border-black block"
+          ></input>
 
           <label>Min traveler : </label>
-          <input id="min-traveler" name="traveler" type="number" onChange={filtersChange} className="border-2 border-black"></input>
+          <input
+            id="min-traveler"
+            name="traveler"
+            type="number"
+            onChange={filtersChange}
+            className="border-2 border-black"
+          ></input>
         </div>
         <div className="row-span-3">
-
           <label className="block">Max price : </label>
-          <input id="max-price" name="maxprice" type="number" onChange={filtersChange} className="border-2 border-black block"></input>
+          <input
+            id="max-price"
+            name="maxprice"
+            type="number"
+            onChange={filtersChange}
+            className="border-2 border-black block"
+          ></input>
 
           <label>Min bathroom : </label>
-          <input id="min-bathroom" name="bathroom" type="number" onChange={filtersChange} className="border-2 border-black"></input>
-        </div >
+          <input
+            id="min-bathroom"
+            name="bathroom"
+            type="number"
+            onChange={filtersChange}
+            className="border-2 border-black"
+          ></input>
+        </div>
         <div className="row-span-3">
-
           <label className="block">Min size : </label>
-          <input id="min-size" name="surface" type="number" onChange={filtersChange} className="border-2 border-black block"></input>
-
+          <input
+            id="min-size"
+            name="surface"
+            type="number"
+            onChange={filtersChange}
+            className="border-2 border-black block"
+          ></input>
         </div>
         <div className="row-span-3 flex items-center">
-          <button id="btnActiveFilters" className="border-2 border-black rounded-md" onClick={activeFilters}>Validate</button>
+          <button
+            id="btnActiveFilters"
+            className="border-2 border-black rounded-md"
+            onClick={activeFilters}
+          >
+            Validate
+          </button>
         </div>
         {/* <label>Ville : </label>
       <input id="city" onChange={filtersChange} type="text" className="border-2 border-black"></input> */}
