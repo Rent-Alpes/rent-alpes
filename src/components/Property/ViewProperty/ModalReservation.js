@@ -17,8 +17,6 @@ const ModalReservation = ({
 }) => {
   const db = app.firestore();
   const history = useHistory();
-  console.log(user, mail);
-
   function registerReservation() {
     db.collection("Booking").add({
       startDate: moment(days.startDate).format("DD/MM/YYYY"),

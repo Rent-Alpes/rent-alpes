@@ -8,9 +8,9 @@ import ViewPropertyIcons from "./ViewPropertyIcons";
 import DatePicker from "../../SearchResult/CardItem/DatePicker";
 import PropertyMap from "../../MapLocations/PropertyMap";
 import { firebaseContext } from "../../Firebase";
-import { data } from "autoprefixer";
 import AddReview from "../../Review/AddReview";
 import GetReview from "../../Review/GetReview";
+import Tag from "./TagEquipment";
 
 const ViewProperty = () => {
   const firebase = useContext(firebaseContext);
@@ -40,19 +40,21 @@ const ViewProperty = () => {
           getUser();
           setTravelers([...Array(parseInt(doc.data().traveler) + 1).keys()]);
           const reviews = doc.data().avis;
-          reviews.forEach((review) =>
-            firebase
-              .review()
-              .doc(review)
-              .get()
-              .then(
-                (rev) =>
-                  setAverageRatingReview(
-                    (rate) => rate + rev.data().averageRating
-                  ),
-                setIvalue((numb) => numb + 1)
-              )
-          );
+          if (reviews) {
+            reviews.forEach((review) =>
+              firebase
+                .review()
+                .doc(review)
+                .get()
+                .then(
+                  (rev) =>
+                    setAverageRatingReview(
+                      (rate) => rate + rev.data().averageRating
+                    ),
+                  setIvalue((numb) => numb + 1)
+                )
+            );
+          }
         } else {
           console.log("No such document!");
         }
@@ -92,8 +94,8 @@ const ViewProperty = () => {
       docBooking.get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           if (
-            doc.data().idUser == firebase.auth.currentUser.uid &&
-            doc.data().idProperty == propertyId
+            doc.data().idUser === firebase.auth.currentUser.uid &&
+            doc.data().idProperty === propertyId
           ) {
             setIsBooking(true);
           }
@@ -104,10 +106,12 @@ const ViewProperty = () => {
 
   useEffect(() => {
     firebase.auth.onAuthStateChanged((user) => {
-      setUser({
-        id: user.uid,
-        email: user.email,
-      });
+      if (user) {
+        setUser({
+          id: user.uid,
+          email: user.email,
+        });
+      }
     });
     getImages();
     getUser();
@@ -163,7 +167,7 @@ const ViewProperty = () => {
   return (
     <>
       <HeaderDark />
-      <div className="text-center">
+      <div className="text-center mb-14">
         <div className="inline-block">
           <div>{files && <Slider images={files} />}</div>
           <div>
@@ -184,6 +188,12 @@ const ViewProperty = () => {
                       {propertyData && propertyData.city}
                     </div>
                   </div>
+                  <div className="flex justify-center mt-3">
+                    {propertyData &&
+                      propertyData.equipments.map((equip) => (
+                        <Tag key={equip} equipment={equip} />
+                      ))}
+                  </div>
                   <p className="text-gray-700 text-justify w-full mt-5 ml-2">
                     {propertyData && propertyData.description}
                   </p>
@@ -200,7 +210,9 @@ const ViewProperty = () => {
                   </div>
                   <div className="bg-gray ml-10 p-6 rounded-b-lg shadow-lg">
                     <div className="pb-4">
-                      <DatePicker id={propertyId} nights={callback} small />
+                      {propertyData && (
+                        <DatePicker id={propertyId} nights={callback} small />
+                      )}
                     </div>
                     <div className="flex justify-center items-center">
                       <div className="flex items-center justify-around">
@@ -256,11 +268,9 @@ const ViewProperty = () => {
                   </div>
                 </div>
               </div>
-              <div className="relative bg-white rounded-lg shadow-lg flex mt-3 z-0 mb-20">
-                {propertyData && (
-                  <PropertyMap position={propertyData.position} />
-                )}
-              </div>
+            </div>
+            <div className="relative bg-white rounded-lg shadow-lg flex mt-3 z-0 mb-20">
+              {propertyData && <PropertyMap position={propertyData.position} />}
             </div>
           </div>
         </div>

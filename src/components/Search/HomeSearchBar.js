@@ -24,9 +24,7 @@ export const SearchBar = (props) => {
     setProperties(SearchProperty(query));
   };
 
-  const handleClick = (event) => {
-    console.log(event.target.value);
-  };
+  const handleClick = (event) => {};
 
   const { query } = resarchdata.query;
   return (
