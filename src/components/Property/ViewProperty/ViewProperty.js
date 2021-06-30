@@ -82,8 +82,10 @@ const ViewProperty = () => {
 
   function getUser() {
     if (firebase.auth.currentUser) {
-      setUser(firebase.auth.currentUser.uid,
-             email: firebase.auth.currentUser.email);
+      setUser({
+        id: firebase.auth.currentUser.uid,
+        email: firebase.auth.currentUser.email,
+      });
 
       var docBooking = db.collection("Booking");
 
@@ -101,6 +103,12 @@ const ViewProperty = () => {
   }
 
   useEffect(() => {
+    firebase.auth.onAuthStateChanged((user) => {
+      setUser({
+        id: user.uid,
+        email: user.email,
+      });
+    });
     getImages();
     getUser();
   }, []);
