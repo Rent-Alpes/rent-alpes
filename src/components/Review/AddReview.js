@@ -95,29 +95,29 @@ const AddReview = ({ propertyId }) => {
         .review()
         .get()
         .then((review) => {
-          review.forEach((doc) => {
-            if (
-              doc.data().idUser == userSession.uid &&
-              doc.data().idProperty == propertyId
-            ) {
-              errorMsg = "Unable to post multiple reviews on the same property";
-            } else {
+          // review.forEach((doc) => {
+          //   if (
+          //     doc.data().idUser == userSession.uid &&
+          //     doc.data().idProperty == propertyId
+          //   ) {
+          //     errorMsg = "Unable to post multiple reviews on the same property";
+          //   } else {
+          firebaseDB
+            .review()
+            .add(reviewData)
+            .then((rev) => {
               firebaseDB
-                .review()
-                .add(reviewData)
-                .then((rev) => {
-                  firebaseDB
-                    .property()
-                    .doc(idProperty)
-                    .update({
-                      avis: firebaseDB.firebase.firestore.FieldValue.arrayUnion(
-                        rev.id
-                      ),
-                    });
-                  setShowModalAddReview(false);
+                .property()
+                .doc(idProperty)
+                .update({
+                  avis: firebaseDB.firebase.firestore.FieldValue.arrayUnion(
+                    rev.id
+                  ),
                 });
-            }
-          });
+              setShowModalAddReview(false);
+            });
+          //   }
+          // });
         });
     }
   };
