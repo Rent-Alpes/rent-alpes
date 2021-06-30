@@ -11,6 +11,7 @@ import { firebaseContext } from "../../Firebase";
 import { data } from "autoprefixer";
 import AddReview from "../../Review/AddReview";
 import GetReview from "../../Review/GetReview";
+import Tag from "./TagEquipment";
 
 const ViewProperty = () => {
   const firebase = useContext(firebaseContext);
@@ -184,6 +185,12 @@ const ViewProperty = () => {
                       </span>
                       {propertyData && propertyData.city}
                     </div>
+                  </div>
+                  <div className="flex justify-center mt-3">
+                    {propertyData &&
+                      propertyData.equipments.map((equip) => (
+                        <Tag key={equip} equipment={equip} />
+                      ))}
                   </div>
                   <p className="text-gray-700 text-justify w-full mt-5 ml-2">
                     {propertyData && propertyData.description}
