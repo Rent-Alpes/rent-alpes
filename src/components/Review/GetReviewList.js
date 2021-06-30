@@ -24,24 +24,15 @@ const GetReviewList = () => {
           review.forEach((doc) => {
             if (doc.data().idUser == userSession.uid) {
               var idProperty = doc.data().idProperty;
+              console.log(idProperty);
               db.collection("Property")
                 .doc(idProperty)
                 .get()
-                .then((property) => {
+                .then((rev) => {
                   setReviewList((review) => [
                     ...review,
-                    {
-                      name: property.data().name,
-                      title: doc.data().title,
-                      comment: doc.data().comment,
-                      cleanless: doc.data().cleanless,
-                      location: doc.data().location,
-                      equipments: doc.data().equipments,
-                      averageRating: doc.data().averageRating,
-                      idProp: property.id,
-                      idReview: doc.id,
-                      propertyData: property.data(),
-                    },
+                    doc.data(),
+                    { name: rev.data().name },
                   ]);
                 });
             }
@@ -55,10 +46,10 @@ const GetReviewList = () => {
   }, [userSession]);
 
   const rowcheck = (row, column, display_value) => {
-    if (column.field === "idReview") {
+    if (column.field === "idDocument") {
       return (
         <button
-          onClick={() => deleteReview(display_value)}
+          //   onClick={() => deleteReservation(display_value)}
           className="border p-2 bg-red-700 text-white font-bold"
         >
           DELETE
@@ -66,22 +57,6 @@ const GetReviewList = () => {
       );
     }
   };
-
-  function deleteReview(docID) {
-    var reviewCollec = db.collection("Review");
-    reviewCollec
-      .doc(docID)
-      .get()
-      .then((doc) => {
-        var dataReview = doc.data().idProperty;
-        db.collection("Property")
-          .doc(dataReview)
-          .update({
-            avis: firebase.firebase.firestore.FieldValue.arrayRemove(docID),
-          })
-          .then(reviewCollec.doc(docID).delete(), document.location.reload());
-      });
-  }
 
   const columns = [
     {
@@ -118,7 +93,7 @@ const GetReviewList = () => {
       use: "Average Rating",
     },
     {
-      field: "idReview",
+      field: "idDocument",
       use: "Actions",
       use_in_search: false,
     },
