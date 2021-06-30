@@ -33,28 +33,21 @@ const Search = (props) => {
     setProperties(state);
   }, [state]);
 
-  const Hit = ({ hit }) => {
-    console.log(hit);
-    return (
-      <div className="my-3 px-3 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-3 md:px-3 md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/4">
-        <div>
-          <CardImage image={hit.thumb} />
-          <div className="absolute top-0.5 right-0.5">
-            {/* <AddFavorites /> */}
-          </div>
-        </div>
-        <CardInfo
-          city={hit.city}
-          name={hit.name}
-          bathroom={hit.bathroom}
-          room={hit.room}
-          price={hit.price}
-          traveler={hit.traveler}
-          surface={hit.surface}
-        />
-      </div>
-    );
-  };
+  const Hit = ({ hit }) => (
+    <div>
+      <CardItem
+        image={hit.thumb}
+        name={hit.name}
+        city={hit.city}
+        price={hit.price}
+        bathroom={hit.bathroom}
+        room={hit.room}
+        traveler={hit.traveler}
+        surface={hit.surface}
+      />
+    </div>
+  );
+
   return (
     <>
       <HeaderDark />

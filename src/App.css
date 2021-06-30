@@ -45,30 +45,29 @@
 }
 
 /* InputFile */
-.file-block{
-	display: flex;
-	margin: 5px;
-}
-.file-delete{
+.file-block {
   display: flex;
-	width: 24px;
-	color: initial;
-	background-color: #6eb4ff00;
-	font-size: large;
-	justify-content: center;
-	margin-right: 3px;
-	cursor: pointer;
+  margin: 5px;
+}
+.file-delete {
+  display: flex;
+  width: 24px;
+  color: initial;
+  background-color: #6eb4ff00;
+  font-size: large;
+  justify-content: center;
+  margin-right: 3px;
+  cursor: pointer;
 }
 
 .green-text {
-  color: #10B981;
+  color: #10b981;
 }
 
 .loader {
-	border-top-color: orange;
-	-webkit-animation: spinner 1.5s linear infinite;
-	animation: spinner 1.5s linear infinite;
-
+  border-top-color: orange;
+  -webkit-animation: spinner 1.5s linear infinite;
+  animation: spinner 1.5s linear infinite;
 }
 
 /* LOADER */
@@ -109,10 +108,6 @@
 }
 /* END LOADER */
 
-
-
-
-
 .leaflet-container {
   width: 100%;
   height: 100vh;
@@ -139,7 +134,9 @@
   cursor: pointer;
 }
 
-.bar1, .bar2, .bar3 {
+.bar1,
+.bar2,
+.bar3 {
   width: 35px;
   height: 5px;
   background-color: #333;
@@ -147,12 +144,28 @@
   transition: 0.4s;
 }
 
+.ais-Hits-item {
+  width: 24%;
+}
+
+ul {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+li {
+  list-style-type: none;
+  margin-right: 0.3em;
+}
+
 .change .bar1 {
   -webkit-transform: rotate(-45deg) translate(-9px, 6px);
   transform: rotate(-45deg) translate(-9px, 6px);
 }
 
-.change .bar2 {opacity: 0;}
+.change .bar2 {
+  opacity: 0;
+}
 
 .change .bar3 {
   -webkit-transform: rotate(45deg) translate(-8px, -8px);
