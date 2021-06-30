@@ -4,8 +4,6 @@ import app from "firebase/app";
 import { Link } from "react-router-dom";
 import { SetInputFile } from "../InputFile/InputFile";
 import { InputFileChange } from "../InputFile/InputFile";
-import { UpdateAlgolia } from "../Algolia/Algolia";
-import { DeleteAlgolia } from "../Algolia/Algolia";
 import { useHistory } from "react-router-dom";
 import Equipment from "./GetEquipment";
 
@@ -56,7 +54,6 @@ const EditProperty = () => {
       setShowModalUpdate(false);
       const ref = db.collection("Property").doc(propertyId);
       ref.update({ ...propertyData, equipments: Equipmentlist });
-      UpdateAlgolia(propertyData, propertyId);
     } catch {
       alert("error");
     }
@@ -69,7 +66,6 @@ const EditProperty = () => {
         // alert("Delete property success !");
 
         deleteFiles();
-        DeleteAlgolia(propertyId);
       }
     } catch {
       alert("error");

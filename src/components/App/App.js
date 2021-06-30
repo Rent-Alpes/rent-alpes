@@ -17,7 +17,6 @@ import Privacy from "../Privacy/Privacy";
 import app from "firebase/app";
 import React, { useState, useEffect } from "react";
 import { UploadFiles } from "../Property/AddProperty";
-import { AddProperty } from "../Algolia/Algolia";
 import GetReviewList from "../Review/GetReviewList";
 
 function App() {
@@ -30,7 +29,6 @@ function App() {
       .collection("Property")
       .add(propertyObject)
       .then(function (docRef) {
-        AddProperty(propertyObject, docRef.id);
         UploadFiles(docRef.id);
       });
   };

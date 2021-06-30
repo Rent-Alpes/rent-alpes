@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import algoliasearch from "algoliasearch";
 import { SearchProperty } from "../Algolia/Algolia";
 import { Link } from "react-router-dom";
 
@@ -11,10 +10,6 @@ export const SearchBar = (props) => {
     loading: false,
     message: "",
   };
-  const client = algoliasearch(
-    "WM2R73MT8D",
-    "8f1fea58043949f2ba7714b32998a65d"
-  );
 
   const handleChange = (event) => {
     const query = event.target.value;

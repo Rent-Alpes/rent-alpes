@@ -17,13 +17,13 @@ const Search = () => {
 
   useEffect(() => {
     setProperties(state);
-  }, [state]);
+  }, []);
 
   return (
     <>
       <HeaderDark />
       <div className="flex mt-10">
-        <SearchBar properties={properties} onChange={handleChange} />
+        <SearchBar properties={setProperties} onChange={handleChange} />
         <button
           onClick={() => {
             setListIsVisible(!listIsVisible);

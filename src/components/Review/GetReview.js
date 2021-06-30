@@ -53,7 +53,7 @@ const GetReview = ({ propertyId, propertyName }) => {
 
   return (
     <>
-      <p onClick={handleClick} className="text-base text-gray-800">
+      <p onClick={handleClick} className="text-xs text-gray-800">
         <a className="cursor-pointer underline">{ivalue} reviews</a> >
       </p>
 

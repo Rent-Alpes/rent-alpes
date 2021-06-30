@@ -8,7 +8,6 @@ import ViewPropertyIcons from "./ViewPropertyIcons";
 import DatePicker from "../../SearchResult/CardItem/DatePicker";
 import PropertyMap from "../../MapLocations/PropertyMap";
 import { firebaseContext } from "../../Firebase";
-import { data } from "autoprefixer";
 import AddReview from "../../Review/AddReview";
 import GetReview from "../../Review/GetReview";
 import Tag from "./TagEquipment";
@@ -138,8 +137,8 @@ const ViewProperty = () => {
 
   //Affichage Review
   const displayReview = averageRatingReview !== 0 && (
-    <div className="text-3xl text-gray-800 ">
-      <div className="absolute mt-2">
+    <div className="text-2xl text-gray-800 ">
+      <div className="mt-2">
         <div className="flex flex-row">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -173,24 +172,27 @@ const ViewProperty = () => {
               <div className="relative bg-white p-6 rounded-lg shadow-lg flex">
                 <div className="w-1/2">
                   <h2 className="text-4xl mb-2 text-gray-800">
-                    {displayReview}
                     <p className="font-bold">
                       {propertyData && propertyData.name}
                     </p>
                   </h2>
-                  <div className="flex justify-center">
-                    <div className="flex items-center gold-color mt-2 uppercase text-xs font-semibold tracking-wider">
-                      <span className="text-black pr-0.5">
-                        <BiMap />
-                      </span>
-                      {propertyData && propertyData.city}
+                  <div className="flex justify-start items-center">
+                    <div>{displayReview}</div>
+                    <div className="ml-4">
+                      <div className="flex items-center gold-color mt-2 uppercase text-xs font-semibold tracking-wider">
+                        <span className="text-black pr-0.5">
+                          <BiMap />
+                        </span>
+                        {propertyData && propertyData.city}
+                      </div>
+
+                      <div className="flex justify-start mt-3">
+                        {propertyData &&
+                          propertyData.equipments.map((equip) => (
+                            <Tag key={equip} equipment={equip} />
+                          ))}
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex justify-center mt-3">
-                    {propertyData &&
-                      propertyData.equipments.map((equip) => (
-                        <Tag key={equip} equipment={equip} />
-                      ))}
                   </div>
                   <p className="text-gray-700 text-justify w-full mt-5 ml-2">
                     {propertyData && propertyData.description}
