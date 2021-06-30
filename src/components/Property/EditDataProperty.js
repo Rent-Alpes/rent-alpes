@@ -9,7 +9,7 @@ import { DeleteAlgolia } from "../Algolia/Algolia";
 import { useHistory } from "react-router-dom";
 import Equipment from "./GetEquipment";
 
-const EditProperty = (props) => {
+const EditProperty = () => {
   const firebase = useContext(firebaseContext);
   const db = app.firestore();
   const propertyId = window.location.href.split("/")[4];
@@ -52,31 +52,28 @@ const EditProperty = (props) => {
   };
 
   function UpdateProperty() {
-    try{
+    try {
       setShowModalUpdate(false);
       const ref = db.collection("Property").doc(propertyId);
       ref.update({ ...propertyData, equipments: Equipmentlist });
       UpdateAlgolia(propertyData, propertyId);
+    } catch {
+      alert("error");
     }
-    catch{
-alert("error");
-    }
-    
   }
   function deleteProperty() {
-    try{
+    try {
       db.collection("Property").doc(propertyId).delete();
 
       if (!!propertyId) {
         // alert("Delete property success !");
-  
+
         deleteFiles();
         DeleteAlgolia(propertyId);
       }
+    } catch {
+      alert("error");
     }
-  catch{
-    alert("error");
-  }
   }
   const deleteFiles = async () => {
     var picture = await app.storage().ref("image/property");
@@ -194,7 +191,7 @@ alert("error");
                 <label>Equipments</label>
                 <Equipment
                   name="equipments"
-                  Equipmentlist={Equipmentlist}
+                  Equipmentlist={propertyData.equipments}
                   setEquipmentlist={setEquipmentlist}
                 />
               </div>
