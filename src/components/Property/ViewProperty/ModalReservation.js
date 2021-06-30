@@ -56,7 +56,6 @@ const ModalReservation = ({
       )
       .then(
         (result) => {
-          console.log(result.text);
           handleRegisterClick();
         },
         (error) => {

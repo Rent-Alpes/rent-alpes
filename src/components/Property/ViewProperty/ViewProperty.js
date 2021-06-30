@@ -41,19 +41,21 @@ const ViewProperty = () => {
           //getUser();
           setTravelers([...Array(parseInt(doc.data().traveler) + 1).keys()]);
           const reviews = doc.data().avis;
-          reviews.forEach((review) =>
-            firebase
-              .review()
-              .doc(review)
-              .get()
-              .then(
-                (rev) =>
-                  setAverageRatingReview(
-                    (rate) => rate + rev.data().averageRating
-                  ),
-                setIvalue((numb) => numb + 1)
-              )
-          );
+          if (reviews) {
+            reviews.forEach((review) =>
+              firebase
+                .review()
+                .doc(review)
+                .get()
+                .then(
+                  (rev) =>
+                    setAverageRatingReview(
+                      (rate) => rate + rev.data().averageRating
+                    ),
+                  setIvalue((numb) => numb + 1)
+                )
+            );
+          }
         } else {
           console.log("No such document!");
         }
@@ -93,8 +95,8 @@ const ViewProperty = () => {
       docBooking.get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           if (
-            doc.data().idUser == firebase.auth.currentUser.uid &&
-            doc.data().idProperty == propertyId
+            doc.data().idUser === firebase.auth.currentUser.uid &&
+            doc.data().idProperty === propertyId
           ) {
             setIsBooking(true);
           }
@@ -105,7 +107,6 @@ const ViewProperty = () => {
 
   useEffect(() => {
     firebase.auth.onAuthStateChanged((user) => {
-      console.log(user);
       /*setUser({
         id: user.uid,
         email: user.email,
@@ -143,7 +144,6 @@ const ViewProperty = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-8 w-8 cursor-pointer star mt-auto"
-            fill="none"
             viewBox="0 0 20 20"
             fill="currentColor"
             color={"#ffc107"}

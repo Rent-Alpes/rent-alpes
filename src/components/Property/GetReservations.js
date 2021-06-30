@@ -14,7 +14,7 @@ const GetReservations = (props) => {
     firebase.auth.onAuthStateChanged((data) => {
       GetReservations(data.uid);
     });
-  }, [reservationList]);
+  }, []);
 
   const rowcheck = (row, column, display_value) => {
     if (column.field === "idDocument") {
