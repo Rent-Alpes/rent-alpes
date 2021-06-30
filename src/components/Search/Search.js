@@ -19,12 +19,9 @@ const Search = (props) => {
   const [properties, setProperties] = useState();
   const [listIsVisible, setListIsVisible] = useState(true);
   const { state } = useLocation();
-  const client = algoliasearch(
-    "WM2R73MT8D",
-    "8f1fea58043949f2ba7714b32998a65d"
-  );
 
   function handleChange(value) {
+    console.log("update filters,", value);
     setProperties(value);
   }
 
@@ -32,22 +29,7 @@ const Search = (props) => {
     console.log(state);
     setProperties(state);
   }, [state]);
-
-  const Hit = ({ hit }) => (
-    <div>
-      <CardItem
-        image={hit.thumb}
-        name={hit.name}
-        city={hit.city}
-        price={hit.price}
-        bathroom={hit.bathroom}
-        room={hit.room}
-        traveler={hit.traveler}
-        surface={hit.surface}
-      />
-    </div>
-  );
-
+  console.log(properties);
   return (
     <>
       <HeaderDark />
@@ -61,11 +43,6 @@ const Search = (props) => {
         >
           <BiMapAlt />
         </button>
-      </div>
-      <div>
-        <InstantSearch indexName="Property" searchClient={client}>
-          <Hits hitComponent={Hit} />
-        </InstantSearch>
       </div>
 
       <div className="flex flex-wrap overflow-hidden mt-10">
