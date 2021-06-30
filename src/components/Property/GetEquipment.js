@@ -2,6 +2,7 @@ import React from "react";
 
 export const GetEquipment = (props) => {
   const handleCheck = (e) => {
+    console.log([...props.Equipmentlist, e.target.value]);
     if (e.target.checked) {
       props.setEquipmentlist([...props.Equipmentlist, e.target.value]);
     } else {
@@ -10,6 +11,12 @@ export const GetEquipment = (props) => {
       );
     }
   };
+
+  function getChecked(value) {
+    return props.Equipmentlist.some((equip) => value === equip);
+  }
+
+  getChecked();
 
   return (
     <>
@@ -22,6 +29,7 @@ export const GetEquipment = (props) => {
             value="Wifi"
             name="Wifi"
             onChange={handleCheck}
+            defaultChecked={getChecked("Wifi")}
           />
           <label>Wifi</label>
           <br />
@@ -33,6 +41,7 @@ export const GetEquipment = (props) => {
             value="Sauna"
             name="Sauna"
             onChange={handleCheck}
+            defaultChecked={getChecked("Sauna")}
           />
           <label>Sauna</label>
           <br />
@@ -44,6 +53,7 @@ export const GetEquipment = (props) => {
             value="Hall of sport"
             name="Hall of sport"
             onChange={handleCheck}
+            defaultChecked={getChecked("Hall of sport")}
           />
           <label>Hall of sport</label>
           <br />
@@ -55,6 +65,7 @@ export const GetEquipment = (props) => {
             value="Transats"
             name="Transats"
             onChange={handleCheck}
+            defaultChecked={getChecked("Transats")}
           />
           <label>Transats</label>
           <br />
@@ -65,6 +76,7 @@ export const GetEquipment = (props) => {
             value="WaterPool"
             name="WaterPool"
             onChange={handleCheck}
+            defaultChecked={getChecked("WaterPool")}
           />
           <label>Water Pool</label>
           <br />
@@ -76,6 +88,7 @@ export const GetEquipment = (props) => {
             value="Barbecue"
             name="Barbecue"
             onChange={handleCheck}
+            defaultChecked={getChecked("Barbecue")}
           />
           <label>Barbecue</label>
           <br />
@@ -87,6 +100,7 @@ export const GetEquipment = (props) => {
             value="Ski Local"
             name="Ski Local"
             onChange={handleCheck}
+            defaultChecked={getChecked("Ski Local")}
           />
           <label>Ski Local</label>
           <br />
@@ -99,6 +113,7 @@ export const GetEquipment = (props) => {
             value="Fitness equipment"
             name="Fitness equipment"
             onChange={handleCheck}
+            defaultChecked={getChecked("Fitness equipment")}
           />
           <label>Fitness equipment</label>
 
@@ -110,6 +125,7 @@ export const GetEquipment = (props) => {
             value="Garden"
             name="Garden"
             onChange={handleCheck}
+            defaultChecked={getChecked("Garden")}
           />
           <label>Garden</label>
           <br />
@@ -120,6 +136,7 @@ export const GetEquipment = (props) => {
             value="Patio"
             name="Patio"
             onChange={handleCheck}
+            defaultChecked={getChecked("Patio")}
           />
           <label>Patio</label>
           <br />
@@ -131,6 +148,7 @@ export const GetEquipment = (props) => {
             value="Panoramic view"
             name="Panoramic view"
             onChange={handleCheck}
+            defaultChecked={getChecked("Panoramic view")}
           />
           <label>Panoramic view</label>
           <br />
@@ -142,6 +160,7 @@ export const GetEquipment = (props) => {
             value="Floor heating"
             name="Floor heating"
             onChange={handleCheck}
+            defaultChecked={getChecked("Floor heating")}
           />
           <label>Floor heating</label>
         </div>

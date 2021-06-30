@@ -101,7 +101,7 @@ const HeaderDark = () => {
                     </svg>
                   </div>
                   <span>
-                    <span className="text-xs text-gray-900">BECOME HOST</span>
+                    <span className="text-base text-black">BECOME HOST</span>
                   </span>
                 </button>
               </Link>
@@ -113,11 +113,11 @@ const HeaderDark = () => {
                 {({ open }) => (
                   <>
                     <div>
-                      <Menu.Button className="inline-block text-sm pl-4 mr-10 sm:mr-0 md:mr-10 xl:mr-10 mdrounded text-white mt-6 font-bold block text-center focus:outline-none">
-                        <div className="flex">
+                      <Menu.Button className="inline-block text-sm pl-4 mr-10 sm:mr-0 md:mr-10 xl:mr-10 mdrounded text-black mt-6 font-bold block text-center focus:outline-none">
+                      <div className="flex justify-center">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-10 w-10 text-gray-900"
+                            className="h-10 w-10"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -128,10 +128,11 @@ const HeaderDark = () => {
                               strokeWidth="2"
                               d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                             />
+                         
                           </svg>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 self-end text-gray-900"
+                            className="h-6 w-6 self-end flex justify-center"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -143,10 +144,13 @@ const HeaderDark = () => {
                               d="M19 9l-7 7-7-7"
                             />
                           </svg>
+                       <br/>
+                       
                         </div>
-                        <span>
-                          <span className="text-xs text-gray-900">ACCOUNT</span>
-                        </span>
+                        
+                        {userData ? (
+                         <span className="text-base " > Hello {userData.firstName}</span> 
+                    ) : (<span className="text-base flex justify-center">Account</span>)}
                       </Menu.Button>
                     </div>
 

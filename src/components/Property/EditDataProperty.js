@@ -9,7 +9,7 @@ import { DeleteAlgolia } from "../Algolia/Algolia";
 import { useHistory } from "react-router-dom";
 import Equipment from "./GetEquipment";
 
-const EditProperty = (props) => {
+const EditProperty = () => {
   const firebase = useContext(firebaseContext);
   const db = app.firestore();
   const propertyId = window.location.href.split("/")[4];
@@ -52,19 +52,27 @@ const EditProperty = (props) => {
   };
 
   function UpdateProperty() {
-    setShowModalUpdate(false);
-    const ref = db.collection("Property").doc(propertyId);
-    ref.update({ ...propertyData, equipments: Equipmentlist });
-    UpdateAlgolia(propertyData, propertyId);
+    try {
+      setShowModalUpdate(false);
+      const ref = db.collection("Property").doc(propertyId);
+      ref.update({ ...propertyData, equipments: Equipmentlist });
+      UpdateAlgolia(propertyData, propertyId);
+    } catch {
+      alert("error");
+    }
   }
   function deleteProperty() {
-    db.collection("Property").doc(propertyId).delete();
+    try {
+      db.collection("Property").doc(propertyId).delete();
 
-    if (!!propertyId) {
-      // alert("Delete property success !");
+      if (!!propertyId) {
+        // alert("Delete property success !");
 
-      deleteFiles();
-      DeleteAlgolia(propertyId);
+        deleteFiles();
+        DeleteAlgolia(propertyId);
+      }
+    } catch {
+      alert("error");
     }
   }
   const deleteFiles = async () => {
@@ -183,7 +191,7 @@ const EditProperty = (props) => {
                 <label>Equipments</label>
                 <Equipment
                   name="equipments"
-                  Equipmentlist={Equipmentlist}
+                  Equipmentlist={propertyData.equipments}
                   setEquipmentlist={setEquipmentlist}
                 />
               </div>
