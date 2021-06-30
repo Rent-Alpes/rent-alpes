@@ -18,12 +18,16 @@ import algoliasearch from "algoliasearch";
 const Search = (props) => {
   const [properties, setProperties] = useState();
   const [listIsVisible, setListIsVisible] = useState(true);
-  //const { state } = useLocation();
+  const { state } = useLocation();
 
   function handleChange(value) {
     console.log("update filters,", value);
     setProperties(value);
   }
+
+  useEffect(() => {
+    setProperties(state);
+  }, []);
 
   console.log(properties);
   return (
