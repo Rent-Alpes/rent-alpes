@@ -2,7 +2,6 @@ import React from "react";
 
 export const GetEquipment = (props) => {
   const handleCheck = (e) => {
-    console.log([...props.Equipmentlist, e.target.value]);
     if (e.target.checked) {
       props.setEquipmentlist([...props.Equipmentlist, e.target.value]);
     } else {
