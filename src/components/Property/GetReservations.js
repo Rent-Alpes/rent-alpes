@@ -27,6 +27,9 @@ const GetReservations = (props) => {
         </button>
       );
     }
+    /*if (column.field === "name") {
+      return <a href={"/view-property/" + row.idDocument}>{display_value}</a>;
+    }*/
   };
 
   function deleteReservation(docID) {

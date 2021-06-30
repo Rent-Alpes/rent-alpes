@@ -82,7 +82,8 @@ const ViewProperty = () => {
 
   function getUser() {
     if (firebase.auth.currentUser) {
-      setUser(firebase.auth.currentUser.uid);
+      setUser(firebase.auth.currentUser.uid,
+             email: firebase.auth.currentUser.email);
 
       var docBooking = db.collection("Booking");
 
@@ -210,7 +211,7 @@ const ViewProperty = () => {
                           </select>
                         </div>
                       </div>
-                      {propertyData && user ? (
+                      {propertyData && user.id ? (
                         <div className="mt-3">
                           <ModalReservation
                             handleClick={handleClick}
@@ -220,7 +221,8 @@ const ViewProperty = () => {
                             people={people}
                             setShowModal={setShowModal}
                             propertyId={propertyId}
-                            user={user}
+                            user={user.id}
+                            mail={user.email}
                           />
                         </div>
                       ) : (
@@ -229,7 +231,7 @@ const ViewProperty = () => {
                             <div className="flex items-center">
                               <BiLockAlt className="mr-2" />
                               <span className="ml-1 text-sm">
-                                YOU MUST BE LOGGED {user}
+                                YOU MUST BE LOGGED
                               </span>
                             </div>
                           </button>

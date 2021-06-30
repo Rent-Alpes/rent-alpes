@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import app from "firebase/app";
 import { firebaseContext } from "../Firebase";
 import { Link, useHistory } from "react-router-dom";
-import Header from "../Header/Header";
 
-const GetDataProperty = (props) => {
+const GetDataProperty = () => {
   const db = app.firestore();
 
   const [User, setUser] = useState(null);
@@ -152,6 +151,11 @@ const GetDataProperty = (props) => {
 
                       {/*View property*/}
                       <td className=" whitespace-nowrap font-medium">
+                      <Link
+                          to={{
+                            pathname: `/view-property/${property.idDocument}`,
+                          }}
+                        >
                         <button className="w-full focus:outline-none text-white text-sm  p-3 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg flex justify-center">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -174,6 +178,7 @@ const GetDataProperty = (props) => {
                             />
                           </svg>
                         </button>
+                        </Link>
                       </td>
                     </tr>
                   ))}
