@@ -13,11 +13,9 @@ const ModalReservation = ({
   days,
   showModal,
   people,
-  mail,
 }) => {
   const db = app.firestore();
   const history = useHistory();
-  console.log(user, mail);
 
   function registerReservation() {
     db.collection("Booking").add({
@@ -25,7 +23,7 @@ const ModalReservation = ({
       endDate: moment(days.endDate).format("DD/MM/YYYY"),
       price: propertyData.price,
       idProperty: propertyId,
-      idUser: user,
+      idUser: user.id,
       travelers: people,
     });
     let url = "/booking";
@@ -155,7 +153,7 @@ const ModalReservation = ({
                       <input
                         type="hidden"
                         name="user_email"
-                        value={mail}
+                        value={user.email}
                         disabled
                       />
                       <br />

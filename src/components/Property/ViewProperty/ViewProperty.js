@@ -37,7 +37,7 @@ const ViewProperty = () => {
       .then((doc) => {
         if (doc.exists) {
           setpropertyData(doc.data());
-          getUser();
+          //getUser();
           setTravelers([...Array(parseInt(doc.data().traveler) + 1).keys()]);
           const reviews = doc.data().avis;
           reviews.forEach((review) =>
@@ -104,10 +104,11 @@ const ViewProperty = () => {
 
   useEffect(() => {
     firebase.auth.onAuthStateChanged((user) => {
-      setUser({
+      console.log(user);
+      /*setUser({
         id: user.uid,
         email: user.email,
-      });
+      });*/
     });
     getImages();
     getUser();
@@ -200,7 +201,9 @@ const ViewProperty = () => {
                   </div>
                   <div className="bg-gray ml-10 p-6 rounded-b-lg shadow-lg">
                     <div className="pb-4">
-                      <DatePicker id={propertyId} nights={callback} small />
+                      {propertyData && (
+                        <DatePicker id={propertyId} nights={callback} small />
+                      )}
                     </div>
                     <div className="flex justify-center items-center">
                       <div className="flex items-center justify-around">
@@ -219,7 +222,7 @@ const ViewProperty = () => {
                           </select>
                         </div>
                       </div>
-                      {propertyData && user.id ? (
+                      {propertyData && user ? (
                         <div className="mt-3">
                           <ModalReservation
                             handleClick={handleClick}
@@ -229,8 +232,7 @@ const ViewProperty = () => {
                             people={people}
                             setShowModal={setShowModal}
                             propertyId={propertyId}
-                            user={user.id}
-                            mail={user.email}
+                            user={user}
                           />
                         </div>
                       ) : (
