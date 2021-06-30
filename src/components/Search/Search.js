@@ -18,23 +18,19 @@ import algoliasearch from "algoliasearch";
 const Search = (props) => {
   const [properties, setProperties] = useState();
   const [listIsVisible, setListIsVisible] = useState(true);
-  const { state } = useLocation();
+  //const { state } = useLocation();
 
   function handleChange(value) {
     console.log("update filters,", value);
     setProperties(value);
   }
 
-  useEffect(() => {
-    console.log(state);
-    setProperties(state);
-  }, [state]);
   console.log(properties);
   return (
     <>
       <HeaderDark />
       <div className="flex mt-10">
-        <SearchBar properties={properties} onChange={handleChange} />
+        <SearchBar properties={setProperties} onChange={handleChange} />
         <button
           onClick={() => {
             setListIsVisible(!listIsVisible);

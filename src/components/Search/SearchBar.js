@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import algoliasearch from "algoliasearch";
+import React, { useState } from "react";
 import { SearchProperty } from "../Algolia/Algolia";
 import { ApplyFiltersParams } from "../Algolia/Algolia";
-import { Checkbox } from "@material-ui/core";
 
 export const SearchBar = (props) => {
   var [filterParams, setfilterParams] = useState({
@@ -52,12 +50,13 @@ export const SearchBar = (props) => {
     document.getElementById("btnActiveFilters").style.backgroundColor = "red";
     document.getElementById("btnActiveFilters").style.color = "white";
   };
+
   const searchClick = () => {
-    Search(document.getElementById("search-input").value);
+    props.onChange(Search(document.getElementById("search-input").value));
   };
   const activeFilters = (event) => {
     if (filterUse) {
-      if (filterParams.minprice != "" && filterParams.maxprice != "") {
+      if (filterParams.minprice !== "" && filterParams.maxprice !== "") {
         var maxPrice = filterParams.maxprice;
         var minPrice = filterParams.minprice;
         if (parseInt(filterParams.minprice) > parseInt(filterParams.maxprice)) {
