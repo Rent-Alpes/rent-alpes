@@ -106,10 +106,12 @@ const ViewProperty = () => {
 
   useEffect(() => {
     firebase.auth.onAuthStateChanged((user) => {
-      /*setUser({
-        id: user.uid,
-        email: user.email,
-      });*/
+      if (user) {
+        setUser({
+          id: user.uid,
+          email: user.email,
+        });
+      }
     });
     getImages();
     getUser();
